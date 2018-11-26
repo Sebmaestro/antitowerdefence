@@ -4,6 +4,7 @@ public class Main {
         System.out.println("Dennis har gjort sin commit");
         System.out.println("Ny commit");
         System.out.println("hej");
+        System.out.println("simons commit");
 
     }
 }
