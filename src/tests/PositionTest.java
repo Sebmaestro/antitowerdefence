@@ -1,8 +1,8 @@
 package tests;
-import model.Position;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import sourceCode.model.Position;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 
 public class PositionTest {
