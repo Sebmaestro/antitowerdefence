@@ -1,4 +1,4 @@
 package sourceCode.model;
 
-public class SquareZone {
+public interface Unit {
 }
