@@ -22,4 +22,13 @@ public class PathTileTest {
         Path path = new Path();
         assertFalse(path.canBuildTower);
     }
+    /*
+   @Test
+   public void shouldBeAbleToUseLandOn {
+
+    }
+    */
+
+
+
 }

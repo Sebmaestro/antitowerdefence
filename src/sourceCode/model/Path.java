@@ -1,7 +1,10 @@
 package sourceCode.model;
 
-public class Path extends Tile {
+public class Path implements Tile {
+
     public Path() {
 
     }
+
+
 }

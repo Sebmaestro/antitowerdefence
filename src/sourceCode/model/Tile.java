@@ -1,4 +1,4 @@
 package sourceCode.model;
 
-public abstract class Tile {
+public interface Tile extends Unit {
 }
