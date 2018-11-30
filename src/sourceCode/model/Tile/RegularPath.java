@@ -1,6 +1,8 @@
-package sourceCode.model;
+package sourceCode.model.Tile;
 
-import static sourceCode.model.TyleType.*;
+import sourceCode.model.Position;
+
+import static sourceCode.model.Tile.TyleType.*;
 
 public class RegularPath implements Path {
 

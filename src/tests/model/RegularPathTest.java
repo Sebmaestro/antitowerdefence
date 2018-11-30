@@ -2,9 +2,12 @@ package tests.model;
 
 import org.junit.Test;
 import sourceCode.model.*;
+import sourceCode.model.Tile.Path;
+import sourceCode.model.Tile.RegularPath;
+import sourceCode.model.Tile.Tile;
 
 import static org.junit.Assert.*;
-import static sourceCode.model.TyleType.PATH;
+import static sourceCode.model.Tile.TyleType.PATH;
 
 public class RegularPathTest {
 
