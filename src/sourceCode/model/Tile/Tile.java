@@ -2,15 +2,15 @@ package sourceCode.model.Tile;
 
 import sourceCode.model.Unit;
 
-public interface Tile extends Unit {
+public abstract class Tile implements Unit, LandOn {
 
-    boolean isWalkable = false;
-    boolean canBuildTower = false;
+    boolean isWalkable;
+    boolean canBuildTower;
 
 
     //Methods
-    boolean canWalk();
-    String getTileType();
-    String graphicChange();
-    boolean canBuildTower();
+    public abstract boolean canWalk();
+    abstract String getTileType();
+    abstract String graphicChange();
+    public abstract boolean canBuildTower();
 }

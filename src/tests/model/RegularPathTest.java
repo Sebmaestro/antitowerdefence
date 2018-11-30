@@ -2,7 +2,6 @@ package tests.model;
 
 import org.junit.Test;
 import sourceCode.model.*;
-import sourceCode.model.Tile.Path;
 import sourceCode.model.Tile.RegularPath;
 import sourceCode.model.Tile.Tile;
 
@@ -10,8 +9,6 @@ import static org.junit.Assert.*;
 import static sourceCode.model.Tile.TyleType.PATH;
 
 public class RegularPathTest {
-
-
 
     @Test
     public void shouldBeAbleToCreateNewPathTile() {
@@ -33,7 +30,7 @@ public class RegularPathTest {
 
     @Test
     public void typeShouldBePath() {
-        Path path = new RegularPath(new Position(1,1));
+        Tile path = new RegularPath(new Position(1,1));
         //Cant use tile because it does not have this
         //method as it is only used for the path
         assertEquals(PATH, path.landOn());

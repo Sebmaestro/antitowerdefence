@@ -1,7 +1,6 @@
 package sourceCode.model.Tile;
 
-public interface Path extends Tile {
+public interface LandOn {
 
-    //Methods
     TyleType landOn();
 }
