@@ -1,6 +1,6 @@
 package sourceCode.model;
 
-public class Path implements Tile {
+public class Path implements StaticTile {
 
     public Path() {
 
