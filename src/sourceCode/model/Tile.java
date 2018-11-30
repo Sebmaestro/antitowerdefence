@@ -7,9 +7,8 @@ public interface Tile extends Unit {
 
 
     //Methods
-    public TyleType landOn();
     public boolean canWalk();
     public String getTileType();
     public String graphicChange();
-    public boolean isLandOn();
+    public boolean canBuildTower();
 }
