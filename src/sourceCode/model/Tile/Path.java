@@ -27,11 +27,6 @@ public class Path extends Tile {
     }
 
     @Override
-    public String getTileType() {
-        return "path";
-    }
-
-    @Override
     public String graphicChange() {
         //Ej färdig
         return null;

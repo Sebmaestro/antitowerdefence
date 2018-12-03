@@ -17,11 +17,6 @@ public class Start extends Tile {
     }
 
     @Override
-    String getTileType() {
-        return "start";
-    }
-
-    @Override
     String graphicChange() {
         return null;
     }

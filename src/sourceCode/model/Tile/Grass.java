@@ -16,10 +16,6 @@ public class Grass extends Tile {
         return false;
     }
 
-    @Override
-    public String getTileType() {
-        return "grass";
-    }
 
     @Override
     public String graphicChange() {

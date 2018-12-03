@@ -17,11 +17,6 @@ public class Towerzone extends Tile {
     }
 
     @Override
-    String getTileType() {
-        return "towerzone";
-    }
-
-    @Override
     String graphicChange() {
         return null;
     }

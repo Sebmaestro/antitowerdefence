@@ -21,11 +21,6 @@ public class Booster extends Tile {
     }
 
     @Override
-    public String getTileType() {
-        return "booster";
-    }
-
-    @Override
     public boolean canBuildTower() {
         return false;
     }

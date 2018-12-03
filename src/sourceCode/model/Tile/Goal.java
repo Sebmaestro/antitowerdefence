@@ -16,10 +16,6 @@ public class Goal extends Tile {
         return true;
     }
 
-    @Override
-    public String getTileType() {
-        return "goal";
-    }
 
     @Override
     public boolean canBuildTower() {
