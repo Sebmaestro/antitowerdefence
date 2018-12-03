@@ -1,18 +1,13 @@
 package sourceCode.model.Tile;
-
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.BOOSTER;
+import static sourceCode.model.Tile.TyleType.QUICKSAND;
 
-public class Booster extends Tile {
+public class Quicksand extends Tile {
 
-    public Booster(Position p) {
+    public Quicksand(Position p) {
         this.p = p;
-        graphic = "booster";
-    }
-    @Override
-    public TyleType landOn() {
-        return BOOSTER;
+        graphic = "quicksand";
     }
 
     @Override
@@ -26,7 +21,12 @@ public class Booster extends Tile {
     }
 
     @Override
-    public String graphicChange() {
+    public TyleType landOn() {
+        return QUICKSAND;
+    }
+
+    @Override
+    String graphicChange() {
         return null;
     }
 }

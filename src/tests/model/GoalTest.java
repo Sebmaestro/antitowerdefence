@@ -1,5 +1,5 @@
+/*
 package tests.model;
-
 
 import org.junit.Test;
 import sourceCode.model.Position;
@@ -42,3 +42,4 @@ public class GoalTest {
     }
 
 }
+*/

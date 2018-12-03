@@ -2,23 +2,22 @@ package sourceCode.model.Tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.GRASS;
+import static sourceCode.model.Tile.TyleType.START;
 
-public class Grass extends Tile {
+public class Start extends Tile {
 
-    public Grass(Position p) {
+    public Start(Position p) {
         this.p = p;
-        graphic = "grass";
+        graphic = "start";
     }
 
     @Override
     public boolean canWalk() {
-        return false;
+        return true;
     }
 
-
     @Override
-    public String graphicChange() {
+    String graphicChange() {
         return null;
     }
 
@@ -29,6 +28,6 @@ public class Grass extends Tile {
 
     @Override
     public TyleType landOn() {
-        return GRASS;
+        return START;
     }
 }
