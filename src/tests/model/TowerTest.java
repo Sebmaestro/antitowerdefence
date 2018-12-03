@@ -18,11 +18,19 @@ public class TowerTest {
 
     @Test
     public void shouldBeAbleToShootWhenInRange() {
+        RegularTower rt = new RegularTower(5,4);
+        RegultarTroop regTroop = new RegularTroop(5,3);
+
+
 
     }
 
     @Test
     public void shouldNotBeAbleToShootWhenOutOfRange() {
+        RegularTower rt = new RegularTower(5,4);
+        RegultarTroop regTroop = new RegularTroop(1,2);
+
+
 
     }
 }
