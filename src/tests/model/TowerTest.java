@@ -1,4 +1,5 @@
 package tests.model;
+import static org.junit.Assert.*;
 
 import org.junit.*;
 
@@ -9,6 +10,9 @@ public class TowerTest {
 
     @Test
     public void shouldBeAbleToCreateTower() {
+        RegularTower rt = new RegularTower();
+
+        assertNotNull(rt);
 
     }
 
