@@ -6,8 +6,8 @@ import sourceCode.model.Unit;
 public abstract class Tile implements Unit, LandOn {
 
     protected Position p;
+    protected String graphic;
 
-    String graphic;
     boolean isWalkable;
     boolean canBuildTower;
 
