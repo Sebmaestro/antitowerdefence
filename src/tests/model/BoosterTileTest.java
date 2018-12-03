@@ -2,26 +2,21 @@ package tests.model;
 
 import org.junit.Before;
 import org.junit.Test;
+import sourceCode.model.Position;
+import sourceCode.model.Tile.Booster;
 import sourceCode.model.Tile.Tile;
 import static org.junit.Assert.*;
+import static sourceCode.model.Tile.TyleType.BOOSTER;
 
 public class BoosterTileTest {
-    Regular reg;
-    Boster booster;
+    Troop reg = new RegularTroop;
 
-    @Before{
-        reg = new Regular();
-        booster = new Booster(1,1);
-    }
-
-
-    Tile booster = new Booster(1, 1);
+    Tile booster = new Booster(new Position(1, 1));
 
     @Test
     public void shouldBeAbleToCreateNewBoosterTile() {
          assertNotNull(booster);
     }
-}
 
     @Test
     public void shoulReturnBOOSTER(){
@@ -29,3 +24,4 @@ public class BoosterTileTest {
 
         assertEquals(booster.landOn().toString(), BOOSTER);
     }
+}

@@ -2,19 +2,15 @@ package sourceCode.model.Tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.BOOSTER;
+import static sourceCode.model.Tile.TyleType.GOAL;
 
-public class Booster extends Tile {
+public class Goal extends Tile {
 
     private Position p;
 
-    public Booster(Position p) {
+    public Goal(Position p) {
         this.p = p;
-        graphic = "booster";
-    }
-    @Override
-    public TyleType landOn() {
-        return BOOSTER;
+        graphic = "goal";
     }
 
     @Override
@@ -24,8 +20,9 @@ public class Booster extends Tile {
 
     @Override
     public String getTileType() {
-        return "booster";
+        return "goal";
     }
+
 
     @Override
     public boolean canBuildTower() {
@@ -33,8 +30,13 @@ public class Booster extends Tile {
     }
 
     @Override
-    Position getPosition() {
+    public Position getPosition() {
         return p;
+    }
+
+    @Override
+    public TyleType landOn() {
+        return GOAL;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package sourceCode.model.Tile;
 
+import sourceCode.model.Position;
 import sourceCode.model.Unit;
 
 public abstract class Tile implements Unit, LandOn {
@@ -14,4 +15,10 @@ public abstract class Tile implements Unit, LandOn {
     abstract String getTileType();
     abstract String graphicChange();
     public abstract boolean canBuildTower();
+
+    abstract Position getPosition();
+
+    public String getGraphic() {
+        return graphic;
+    }
 }

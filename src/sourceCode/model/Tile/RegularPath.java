@@ -18,6 +18,11 @@ public class RegularPath extends Tile {
     }
 
     @Override
+    Position getPosition() {
+        return p;
+    }
+
+    @Override
     public TyleType landOn() {
         return PATH;
     }
@@ -34,6 +39,7 @@ public class RegularPath extends Tile {
 
     @Override
     public String graphicChange() {
+        //Ej färdig
         return null;
     }
 }
