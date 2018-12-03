@@ -27,5 +27,5 @@ public class BoosterTileTest {
     public void shoulReturnBOOSTER(){
 
 
-        assertEquals(booster.landOn().toString(), "BOOSTER");
+        assertEquals(booster.landOn().toString(), BOOSTER);
     }
