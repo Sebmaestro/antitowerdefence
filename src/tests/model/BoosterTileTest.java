@@ -1,3 +1,4 @@
+/*
 package tests.model;
 
 import org.junit.Before;
@@ -25,3 +26,4 @@ public class BoosterTileTest {
         assertEquals(booster.landOn().toString(), BOOSTER);
     }
 }
+*/

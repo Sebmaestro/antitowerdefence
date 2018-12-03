@@ -2,13 +2,13 @@ package sourceCode.model.Tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.GRASS;
+import static sourceCode.model.Tile.TyleType.TOWERZONE;
 
-public class Grass extends Tile {
+public class Towerzone extends Tile {
 
-    public Grass(Position p) {
+    public Towerzone(Position p) {
         this.p = p;
-        graphic = "grass";
+        graphic = "path";
     }
 
     @Override
@@ -17,22 +17,22 @@ public class Grass extends Tile {
     }
 
     @Override
-    public String getTileType() {
-        return "grass";
+    String getTileType() {
+        return "towerzone";
     }
 
     @Override
-    public String graphicChange() {
+    String graphicChange() {
         return null;
     }
 
     @Override
     public boolean canBuildTower() {
-        return false;
+        return true;
     }
 
     @Override
     public TyleType landOn() {
-        return GRASS;
+        return TOWERZONE;
     }
 }

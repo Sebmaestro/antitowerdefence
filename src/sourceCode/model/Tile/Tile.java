@@ -5,6 +5,8 @@ import sourceCode.model.Unit;
 
 public abstract class Tile implements Unit, LandOn {
 
+    protected Position p;
+
     String graphic;
     boolean isWalkable;
     boolean canBuildTower;
@@ -16,7 +18,9 @@ public abstract class Tile implements Unit, LandOn {
     abstract String graphicChange();
     public abstract boolean canBuildTower();
 
-    abstract Position getPosition();
+    public Position getPosition() {
+        return p;
+    }
 
     public String getGraphic() {
         return graphic;

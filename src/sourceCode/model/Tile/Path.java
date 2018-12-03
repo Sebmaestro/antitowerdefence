@@ -4,22 +4,16 @@ import sourceCode.model.Position;
 
 import static sourceCode.model.Tile.TyleType.*;
 
-public class RegularPath extends Tile {
+public class Path extends Tile {
 
-    private Position p;
-
-    public RegularPath(Position p) {
+    public Path(Position p) {
         this.p = p;
+        graphic = "path";
     }
 
     @Override
     public boolean canBuildTower() {
         return false;
-    }
-
-    @Override
-    Position getPosition() {
-        return p;
     }
 
     @Override

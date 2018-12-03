@@ -6,8 +6,6 @@ import static sourceCode.model.Tile.TyleType.BOOSTER;
 
 public class Booster extends Tile {
 
-    private Position p;
-
     public Booster(Position p) {
         this.p = p;
         graphic = "booster";
@@ -30,11 +28,6 @@ public class Booster extends Tile {
     @Override
     public boolean canBuildTower() {
         return false;
-    }
-
-    @Override
-    Position getPosition() {
-        return p;
     }
 
     @Override
