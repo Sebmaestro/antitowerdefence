@@ -37,7 +37,7 @@ public class Position {
      * @return Position
      */
     public Position getPosToSouth() {
-        return new Position(x, y+1);
+        return new Position(x, y-1);
     }
 
     /**
@@ -45,7 +45,7 @@ public class Position {
      * @return Position
      */
     public Position getPosToNorth() {
-        return new Position(x, y-1);
+        return new Position(x, y+1);
     }
 
     /**
@@ -64,6 +64,13 @@ public class Position {
         return new Position(x+1, y);
     }
 
+    public Position getPosToNorthWest() { return new Position(x-1, y+1); }
+
+    public Position getPosToNorthEast() { return new Position(x+1, y+1); }
+
+    public Position getPosToSouthEast() { return new Position(x+1,y-1); }
+
+    public Position getPosToSouthWest() { return new Position(x-1, y-1);}
     /**
      * Returns true if
      * @param obj
