@@ -1,5 +1,7 @@
 package sourceCode.view;
 
+import javafx.stage.Screen;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -19,6 +21,10 @@ public class View extends JFrame{
     }
 
     public void init() {
+        setLayout(new GridLayout(1, 1, 0, 0));
+
+
+
         setVisible(true);
     }
 }
