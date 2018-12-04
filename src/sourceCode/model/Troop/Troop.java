@@ -15,8 +15,9 @@ public abstract class Troop implements Unit {
     protected boolean hasReachedGoal = false;
     protected Direction direction;
 
-    public Troop(Position p) {
-        currentPosition = p;
+    public Troop(Position p, Direction direction) {
+        this.currentPosition = p;
+        this.direction = direction;
     }
 
     public Position getPosition() {
