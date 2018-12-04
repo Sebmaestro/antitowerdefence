@@ -5,6 +5,7 @@ import sourceCode.model.Troop.Troop;
 import sourceCode.model.Unit;
 
 public abstract class Tower implements Unit {
+    public Position p;
     public String Graphic;
     protected int damage;
     protected double range;
@@ -12,10 +13,12 @@ public abstract class Tower implements Unit {
     protected Troop target;
     protected Position towerPosition;
 
-
+    public Tower(Position p) {
+        this.p = p;
+    }
 
     public void attack(Troop t){
-        t.recieveDamage(damage);
+        t.receiveDamage(damage);
 
     }
 

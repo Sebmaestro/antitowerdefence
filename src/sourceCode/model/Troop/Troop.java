@@ -10,6 +10,7 @@ public abstract class Troop implements Unit {
     protected Position nextPosition;
     protected int hp;
     protected int speed;
+    protected int cost;
     protected boolean alive;
     protected boolean hasReachedGoal = false;
     protected Direction direction;
@@ -53,7 +54,7 @@ public abstract class Troop implements Unit {
         hp = hp - damage;
     }
 
-    public void setHp() {
+    public void initHp() {
         //Sätts förmodligen i subklassens konstruktor
     }
 
