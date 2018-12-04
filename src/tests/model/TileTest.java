@@ -6,6 +6,7 @@ import sourceCode.model.Tile.*;
 
 import static org.junit.Assert.*;
 import static sourceCode.model.Tile.TyleType.PATH;
+import static sourceCode.model.Troop.Direction.NORTH;
 
 public class TileTest {
     @Test
@@ -69,5 +70,12 @@ public class TileTest {
     public void shouldBeFalseLandOn() {
         Tile tile = new Goal(new Position(1,1));
         assertNotEquals(PATH, tile.landOn());
+    }
+
+    @Test
+    public void shouldChangeDirCorrectly() {
+        Tile ps = new PathSwitch(new Position(1, 1 ));
+        ps.clickOn();
+        assertEquals(NORTH, ((PathSwitch) ps).getDirection());
     }
 }

@@ -1,14 +1,17 @@
 package sourceCode.model.Tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.Troop.Direction;
 
-import static sourceCode.model.Tile.TyleType.START;
+import static sourceCode.model.Tile.TyleType.PATHSWITCH;
+import static sourceCode.model.Troop.Direction.*;
 
-public class Start extends Tile {
+public class PathSwitch extends Tile {
 
-    public Start(Position p) {
+    public PathSwitch(Position p) {
         super(p);
-        graphic = "start";
+        graphic = "pathswitch";
+        dir = SOUTH;
     }
 
     @Override
@@ -28,6 +31,10 @@ public class Start extends Tile {
 
     @Override
     public TyleType landOn() {
-        return START;
+        return PATHSWITCH;
+    }
+
+    public Direction getDirection() {
+        return dir;
     }
 }

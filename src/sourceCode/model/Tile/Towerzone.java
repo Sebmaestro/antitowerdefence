@@ -7,7 +7,7 @@ import static sourceCode.model.Tile.TyleType.TOWERZONE;
 public class Towerzone extends Tile {
 
     public Towerzone(Position p) {
-        this.p = p;
+        super(p);
         graphic = "path";
     }
 

@@ -6,7 +6,7 @@ import static sourceCode.model.Tile.TyleType.QUICKSAND;
 public class Quicksand extends Tile {
 
     public Quicksand(Position p) {
-        this.p = p;
+        super(p);
         graphic = "quicksand";
     }
 

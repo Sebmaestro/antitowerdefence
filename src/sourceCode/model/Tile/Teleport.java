@@ -2,13 +2,14 @@ package sourceCode.model.Tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.GOAL;
+import static sourceCode.model.Tile.TyleType.TELEPORT;
 
-public class Goal extends Tile {
+public class Teleport extends Tile {
 
-    public Goal(Position p) {
+
+    public Teleport(Position p) {
         super(p);
-        graphic = "goal";
+        graphic = "teleport";
     }
 
     @Override
@@ -16,6 +17,10 @@ public class Goal extends Tile {
         return true;
     }
 
+    @Override
+    String graphicChange() {
+        return null;
+    }
 
     @Override
     public boolean canBuildTower() {
@@ -24,11 +29,6 @@ public class Goal extends Tile {
 
     @Override
     public TyleType landOn() {
-        return GOAL;
-    }
-
-    @Override
-    public String graphicChange() {
-        return null;
+        return TELEPORT;
     }
 }

@@ -1,15 +1,24 @@
 package sourceCode.model.Tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.Troop.Direction;
 import sourceCode.model.Unit;
+
+import static sourceCode.model.Tile.TyleType.PATHSWITCH;
+import static sourceCode.model.Troop.Direction.*;
 
 public abstract class Tile implements Unit, LandOn {
 
+    protected Direction dir;
     protected Position p;
     protected String graphic;
 
     boolean isWalkable;
     boolean canBuildTower;
+
+    public Tile(Position p) {
+        this.p = p;
+    }
 
 
     //Methods
@@ -23,5 +32,15 @@ public abstract class Tile implements Unit, LandOn {
 
     public String getGraphic() {
         return graphic;
+    }
+
+    public void clickOn() {
+        //opposite direction of startvalue
+        if (dir == NORTH) {
+            dir = SOUTH;
+            graphic = "pathswitch south";
+        } else
+            dir = NORTH;
+            graphic = "pathswitch north";
     }
 }

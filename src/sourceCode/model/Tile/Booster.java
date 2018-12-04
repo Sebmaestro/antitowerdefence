@@ -7,7 +7,7 @@ import static sourceCode.model.Tile.TyleType.BOOSTER;
 public class Booster extends Tile {
 
     public Booster(Position p) {
-        this.p = p;
+        super(p);
         graphic = "booster";
     }
     @Override

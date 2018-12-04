@@ -14,4 +14,8 @@ public class RegularTower extends Tower{
         attackPeriod = 1;
     }
 
+    @Override
+    public Position getPosition() {
+        return null;
+    }
 }

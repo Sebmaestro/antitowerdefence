@@ -7,7 +7,7 @@ import static sourceCode.model.Tile.TyleType.*;
 public class Path extends Tile {
 
     public Path(Position p) {
-        this.p = p;
+        super(p);
         graphic = "path";
     }
 

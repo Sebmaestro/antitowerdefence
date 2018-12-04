@@ -10,7 +10,6 @@ public abstract class Troop implements Unit {
     protected Position nextPosition;
     protected int hp;
     protected int speed;
-    protected int cost;
     protected boolean alive;
     protected boolean hasReachedGoal = false;
     protected Direction direction;
@@ -74,4 +73,9 @@ public abstract class Troop implements Unit {
     public String getGraphic() {
         return graphic;
     }
+
+    public void clickOn() {
+        //Fixa detta senare
+    }
+
 }

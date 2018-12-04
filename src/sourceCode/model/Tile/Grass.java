@@ -7,7 +7,7 @@ import static sourceCode.model.Tile.TyleType.GRASS;
 public class Grass extends Tile {
 
     public Grass(Position p) {
-        this.p = p;
+        super(p);
         graphic = "grass";
     }
 
