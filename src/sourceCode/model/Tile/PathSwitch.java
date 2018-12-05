@@ -20,7 +20,7 @@ public class PathSwitch extends Tile {
     }
 
     @Override
-    String graphicChange() {
+    public String graphicChange() {
         return null;
     }
 

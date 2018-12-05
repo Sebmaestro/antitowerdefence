@@ -26,7 +26,7 @@ public class Quicksand extends Tile {
     }
 
     @Override
-    String graphicChange() {
+    public String graphicChange() {
         return null;
     }
 }

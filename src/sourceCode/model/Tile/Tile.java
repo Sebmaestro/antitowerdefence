@@ -23,7 +23,7 @@ public abstract class Tile implements Unit, LandOn {
 
     //Methods
     public abstract boolean canWalk();
-    abstract String graphicChange();
+    public abstract String graphicChange();
     public abstract boolean canBuildTower();
 
     public Position getPosition() {
