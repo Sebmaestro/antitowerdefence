@@ -2,14 +2,21 @@ package sourceCode.model;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
+import sourceCode.model.Tile.*;
+import sourceCode.model.Xmlparser.LevelParser;
 
 /**
  * Created by denni on 2018-12-05.
  */
 public class Model {
+    private int width;
+    private int height;
 
-    public Model() throws IOException{
-        InputStream inputStream = getClass().getResourceAsStream("./src/resources/testLevel.xml");
+    public Model(int height, int width) throws IOException{
+        Tile[][] tiles;
+
+        tiles = LevelParser.xmlparser("./src/resources/testLevel.xml");
+
     }
 
 }
