@@ -17,7 +17,7 @@ public class Start extends Tile {
     }
 
     @Override
-    String graphicChange() {
+    public String graphicChange() {
         return null;
     }
 

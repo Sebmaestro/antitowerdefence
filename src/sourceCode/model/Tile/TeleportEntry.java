@@ -2,14 +2,13 @@ package sourceCode.model.Tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.TELEPORT;
+import static sourceCode.model.Tile.TyleType.TELEPORTENTRY;
 
-public class Teleport extends Tile {
+public class TeleportEntry extends Tile {
 
-
-    public Teleport(Position p) {
+    public TeleportEntry(Position p) {
         super(p);
-        graphic = "teleport";
+        graphic = "teleportentry";
     }
 
     @Override
@@ -18,7 +17,7 @@ public class Teleport extends Tile {
     }
 
     @Override
-    String graphicChange() {
+    public String graphicChange() {
         return null;
     }
 
@@ -29,6 +28,6 @@ public class Teleport extends Tile {
 
     @Override
     public TyleType landOn() {
-        return TELEPORT;
+        return TELEPORTENTRY;
     }
 }

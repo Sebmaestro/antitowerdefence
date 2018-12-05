@@ -4,7 +4,6 @@ import sourceCode.model.Position;
 import sourceCode.model.Troop.Direction;
 import sourceCode.model.Unit;
 
-import static sourceCode.model.Tile.TyleType.PATHSWITCH;
 import static sourceCode.model.Troop.Direction.*;
 
 public abstract class Tile implements Unit, LandOn {
@@ -23,7 +22,7 @@ public abstract class Tile implements Unit, LandOn {
 
     //Methods
     public abstract boolean canWalk();
-    abstract String graphicChange();
+    public abstract String graphicChange();
     public abstract boolean canBuildTower();
 
     public Position getPosition() {
@@ -34,6 +33,7 @@ public abstract class Tile implements Unit, LandOn {
         return graphic;
     }
 
+    //For pathwswitch only
     public void clickOn() {
         //opposite direction of startvalue
         if (dir == NORTH) {

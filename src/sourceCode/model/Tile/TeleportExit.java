@@ -2,18 +2,18 @@ package sourceCode.model.Tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.TOWERZONE;
+import static sourceCode.model.Tile.TyleType.TELEPORTEXIT;
 
-public class Towerzone extends Tile {
+public class TeleportExit extends Tile {
 
-    public Towerzone(Position p) {
+    public TeleportExit(Position p) {
         super(p);
-        graphic = "path";
+        graphic = "teleportexit";
     }
 
     @Override
     public boolean canWalk() {
-        return false;
+        return true;
     }
 
     @Override
@@ -23,11 +23,11 @@ public class Towerzone extends Tile {
 
     @Override
     public boolean canBuildTower() {
-        return true;
+        return false;
     }
 
     @Override
     public TyleType landOn() {
-        return TOWERZONE;
+        return TELEPORTEXIT;
     }
 }
