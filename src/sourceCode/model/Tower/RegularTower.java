@@ -16,6 +16,6 @@ public class RegularTower extends Tower{
 
     @Override
     public Position getPosition() {
-        return null;
+        return p;
     }
 }

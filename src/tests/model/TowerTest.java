@@ -1,38 +1,41 @@
-/*
 package tests.model;
+
+
 import static org.junit.Assert.*;
+import static sourceCode.model.Troop.Direction.*;
 
 import org.junit.*;
+import sourceCode.model.Position;
+import sourceCode.model.Tower.*;
+import sourceCode.model.Troop.*;
 
 public class TowerTest {
-    public TowerTest() {
-
-    }
 
     @Test
     public void shouldBeAbleToCreateTower() {
-        RegularTower rt = new RegularTower();
-
+        Tower rt = new RegularTower(new Position(1, 1));
         assertNotNull(rt);
-
     }
 
     @Test
     public void shouldBeAbleToShootWhenInRange() {
-        RegularTower rt = new RegularTower(5,4);
-        RegultarTroop regTroop = new RegularTroop(5,3);
-
-
-
+        Tower rt = new RegularTower(new Position(1, 1));
+        RegularTroop regTroop = new RegularTroop(new Position(2,2), EAST);
+        assertTrue(rt.canReachTroop(regTroop));
     }
 
     @Test
     public void shouldNotBeAbleToShootWhenOutOfRange() {
-        RegularTower rt = new RegularTower(5,4);
-        RegultarTroop regTroop = new RegularTroop(1,2);
+        RegularTower rt = new RegularTower(new Position(1, 1));
+        RegularTroop regTroop = new RegularTroop(new Position(10, 10), WEST);
+        assertFalse(rt.canReachTroop(regTroop));
+    }
 
-
-
+    @Test
+    public void towerShouldDamageTroopWhenShooting() {
+        Tower rt = new RegularTower(new Position(1, 1));
+        RegularTroop regTroop = new RegularTroop(new Position(2,2), EAST);
+        rt.attack(regTroop);
+        assertEquals(99, regTroop.getHp());
     }
 }
-*/
