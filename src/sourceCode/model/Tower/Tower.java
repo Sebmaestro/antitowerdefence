@@ -5,69 +5,68 @@ import sourceCode.model.Troop.Troop;
 import sourceCode.model.Unit;
 
 public abstract class Tower implements Unit {
-    public Position p;
+
     public String Graphic;
     protected int damage;
     protected double range;
     protected double attackPeriod;
     protected Troop target;
-    protected Position towerPosition;
+    protected Position p;
 
     public Tower(Position p) {
         this.p = p;
     }
 
-    public void attack(Troop t){
+    public void attack(Troop t) {
         t.receiveDamage(damage);
-
     }
 
     public int getAttackDamage(){
         return damage;
     }
-    public boolean canReachTroop(Troop t){
 
-        if(towerPosition.getPosToEast().equals(t.getPosition())){
+    public boolean canReachTroop(Troop t) {
+
+        if(p.getPosToEast().equals(t.getPosition())){
             this.target = t;
             attack(target);
             return true;
         }
-        else if(towerPosition.getPosToSouthEast().equals(t.getPosition())){
+        else if(p.getPosToSouthEast().equals(t.getPosition())){
             this.target = t;
             attack(target);
             return true;
         }
-        else if(towerPosition.getPosToSouth().equals(t.getPosition())){
+        else if(p.getPosToSouth().equals(t.getPosition())){
             this.target = t;
             attack(target);
             return true;
         }
-        else if(towerPosition.getPosToSouthWest().equals(t.getPosition())){
+        else if(p.getPosToSouthWest().equals(t.getPosition())){
             this.target = t;
             attack(target);
             return true;
         }
-        else if(towerPosition.getPosToWest().equals(t.getPosition())){
+        else if(p.getPosToWest().equals(t.getPosition())){
             this.target = t;
             attack(target);
             return true;
         }
-        else if(towerPosition.getPosToNorthWest().equals(t.getPosition())){
+        else if(p.getPosToNorthWest().equals(t.getPosition())){
             this.target = t;
             attack(target);
             return true;
         }
-        else if(towerPosition.getPosToNorth().equals(t.getPosition())){
+        else if(p.getPosToNorth().equals(t.getPosition())){
             this.target = t;
             attack(target);
             return true;
         }
-        else if(towerPosition.getPosToNorthEast().equals(t.getPosition())){
+        else if(p.getPosToNorthEast().equals(t.getPosition())){
             this.target = t;
             attack(target);
             return true;
-        }
-        else{
+        } else {
             return false;
         }
 
