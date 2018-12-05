@@ -1,8 +1,9 @@
 package sourceCode.model.Troop;
 
 import sourceCode.model.Position;
+import sourceCode.model.Tile.TyleType;
 
-public class TeleporterTroop extends Troop{
+public class TeleporterTroop extends Troop {
 
     private Position teleportEntry;
     private Position teleportExit;
@@ -12,7 +13,18 @@ public class TeleporterTroop extends Troop{
         super(p, direction);
         hp = 40;
         speed = 10;
+        isCreatingTeleport = false;
     }
 
-
+    @Override
+    public TyleType clickOn() {
+        if (!isCreatingTeleport) {
+            teleportEntry = getPosition();
+            isCreatingTeleport = true;
+            return TyleType.TELEPORTENTRY;
+        } else {
+            teleportExit = getPosition();
+            return TyleType.TELEPORTEXIT;
+        }
+    }
 }

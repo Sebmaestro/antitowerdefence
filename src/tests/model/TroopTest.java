@@ -2,11 +2,12 @@ package tests.model;
 
 import org.junit.*;
 import sourceCode.model.Position;
-import sourceCode.model.Troop.Direction;
 import sourceCode.model.Troop.RegularTroop;
+import sourceCode.model.Troop.TeleporterTroop;
 import sourceCode.model.Troop.Troop;
 
 import static org.junit.Assert.*;
+import static sourceCode.model.Tile.TyleType.*;
 import static sourceCode.model.Troop.Direction.*;
 
 public class TroopTest {
@@ -69,5 +70,25 @@ public class TroopTest {
         Troop regTroop = new RegularTroop(new Position(1,1), EAST);
         regTroop.setDirection(WEST);
         assertEquals(WEST, regTroop.getDirection());
+    }
+
+    @Test
+    public void shouldBeInGoalWhenReachedGoal() {
+        Troop regTroop = new RegularTroop(new Position(1,1), EAST);
+        regTroop.setGoalReached();
+        assertTrue(regTroop.isGoalReached());
+    }
+
+    @Test
+    public void teleporterShouldReturnCorrectTeleTile() {
+        Troop tp = new TeleporterTroop(new Position(1,1), WEST);
+        assertEquals(TELEPORTENTRY, tp.clickOn());
+    }
+
+    @Test
+    public void teleporterShouldReturnExitAfterSecondClick() {
+        Troop tp = new TeleporterTroop(new Position(1,1), WEST);
+        tp.clickOn();
+        assertEquals(TELEPORTEXIT, tp.clickOn());
     }
 }
