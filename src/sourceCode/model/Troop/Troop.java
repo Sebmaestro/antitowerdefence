@@ -1,6 +1,7 @@
 package sourceCode.model.Troop;
 
 import sourceCode.model.Position;
+import sourceCode.model.Tile.TyleType;
 import sourceCode.model.Unit;
 
 public abstract class Troop implements Unit {
@@ -74,8 +75,7 @@ public abstract class Troop implements Unit {
         return graphic;
     }
 
-    public void clickOn() {
-        //Fixa detta senare
-    }
+    //For Teleporter troop only
+    public abstract TyleType clickOn();
 
 }
