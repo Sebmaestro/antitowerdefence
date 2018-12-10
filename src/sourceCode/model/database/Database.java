@@ -1,7 +1,7 @@
 package sourceCode.model.database;
 
-import javax.xml.transform.Result;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 
@@ -37,56 +37,39 @@ public class Database {
         }
     }
 
-
-    public void createDatabaseTable() {
-        try {
-            s.execute("CREATE TABLE IF NOT EXISTS highscore" +
-                    "( HighScoreId int not null" +
-                    "  PlayerName varchar(80) not null," +
-                    "  Map varchar(80) not null," +
-                    "  FinishTime int not null,"
-            );
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void insertData(int HighscoreId, String PlayerName, String Map, int FinishTime) {
-        /*
-        String sql = "INSERT INTO highscore(HighscoreId, PlayerName, Map, FinishTime) " +
-                "VALUES" + "("HighscoreId"+ , " + '"+PlayerName+"', '"+level+"', "+finish+")";
-                */
-
-
-        //String sql = "INSERT INTO highscore(HighscoreId, PlayerName, Map, FinishTime) " +
-        //             "VALUES(" +HighscoreId + ", '" + PlayerName + "', '" + Map + "', " + FinishTime + ")";
-
-        String sql = "INSERT INTO highscore(HighscoreId, PlayerName, Map, FinishTime) VALUES(?, ?, ?, ?)";
-
+    public void saveHighscores(ArrayList<HighscoreInfo> highscores) {
+        String sqlDelete = "DELETE FROM highscore";
+        String sqlInsert = "INSERT INTO highscore(HighscoreId, " +
+                "PlayerName, Map, FinishTime) VALUES(?, ?, ?, ?)";
         try {
             con.setAutoCommit(false);
-            PreparedStatement p = con.prepareStatement(sql);
-            p.setInt(1, HighscoreId);
-            p.setString(2, PlayerName);
-            p.setString(3, Map);
-            p.setInt(4, FinishTime);
-            p.executeUpdate();
+            con.createStatement().execute(sqlDelete);
+            for (int i = 0; i < highscores.size(); i++) {
+                PreparedStatement p = con.prepareStatement(sqlInsert);
+                p.setInt(1, i);
+                p.setString(2, highscores.get(i).getPlayer());
+                p.setString(3, highscores.get(i).getMap());
+                p.setInt(4, highscores.get(i).getFinishTime());
+                p.executeUpdate();
+            }
             con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public ResultSet getData() {
-        String sql = "SELECT PlayerName, FinishTime, Map FROM highscore";
-
+    public ArrayList<HighscoreInfo> getHighscores() {
+        String sql = "SELECT PlayerName, Map, FinishTime FROM highscore";
+        ArrayList<HighscoreInfo> highscores = new ArrayList<HighscoreInfo>();
         try {
             rs = s.executeQuery(sql);
-            return rs;
+            while(rs.next()) {
+                highscores.add(new HighscoreInfo(rs.getString(1),
+                        rs.getString(2), rs.getInt(3)));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return highscores;
     }
 }

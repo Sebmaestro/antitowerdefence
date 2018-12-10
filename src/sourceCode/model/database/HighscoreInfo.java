@@ -2,23 +2,24 @@ package sourceCode.model.database;
 
 public class HighscoreInfo {
     private String player;
-    private int score;
-    private int time;
+    private int finishTime;
     private String map;
 
-    public void setPlayer(String player) {
+    public HighscoreInfo(String player, String map, int finishTime) {
         this.player = player;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+        this.finishTime = finishTime;
+        this.map = map;
     }
 
     public String getPlayer() {
         return player;
     }
 
-    public int getScore() {
-        return score;
+    public int getFinishTime() {
+        return finishTime;
+    }
+
+    public String getMap() {
+        return map;
     }
 }
