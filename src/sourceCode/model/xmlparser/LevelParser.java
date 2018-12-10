@@ -1,5 +1,5 @@
-package sourceCode.model.Xmlparser;
-import sourceCode.model.Tile.*;
+package sourceCode.model.xmlparser;
+import sourceCode.model.tile.*;
 import sourceCode.model.Position;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,24 +47,24 @@ public class LevelParser {
                             Element tile = (Element) t;
                             Position position = new Position(tileNr, (i));
 
-                            if (tile.getAttribute("type").equals("model.Tile.Grass")) {
+                            if (tile.getAttribute("type").equals("model.tile.Grass")) {
                                 Grass grass = new Grass(position);
                                 allTiles[i][tileNr] = grass;
-                            } else if (tile.getAttribute("type").equals("model.Tile.Path")) {
+                            } else if (tile.getAttribute("type").equals("model.tile.Path")) {
                                 Path path = new Path(position);
                                 allTiles[i][tileNr] = path;
-                            } else if (tile.getAttribute("type").equals("model.Tile.Start")) {
+                            } else if (tile.getAttribute("type").equals("model.tile.Start")) {
                                 Start start = new Start(position);
                                 allTiles[i][tileNr] = start;
-                            } else if (tile.getAttribute("type").equals("model.Tile.Goal")) {
+                            } else if (tile.getAttribute("type").equals("model.tile.Goal")) {
                                 Goal goal = new Goal(position);
                                 allTiles[i][tileNr] = goal;
-                            } else if (tile.getAttribute("type").equals("model.Tile.Towerzone")) {
+                            } else if (tile.getAttribute("type").equals("model.tile.Towerzone")) {
                                 Towerzone towerzone = new Towerzone(position);
                                 allTiles[i][tileNr] = towerzone;
                             }
 
-                            System.out.println("Rad " + (i) + " Tile " + tileNr + " är type " +
+                            System.out.println("Rad " + (i) + " tile " + tileNr + " är type " +
                                     tile.getAttribute("type"));
 
                             System.out.println(allTiles[i][tileNr].toString());

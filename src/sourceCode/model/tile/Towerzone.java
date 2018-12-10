@@ -1,21 +1,20 @@
-package sourceCode.model.Tile;
+package sourceCode.model.tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.GRASS;
+import static sourceCode.model.tile.TyleType.TOWERZONE;
 
-public class Grass extends Tile {
+public class Towerzone extends Tile {
 
-    public Grass(Position p) {
+    public Towerzone(Position p) {
         super(p);
-        graphic = "grass";
+        graphic = "path";
     }
 
     @Override
     public boolean canWalk() {
         return false;
     }
-
 
     @Override
     public String graphicChange() {
@@ -24,11 +23,11 @@ public class Grass extends Tile {
 
     @Override
     public boolean canBuildTower() {
-        return false;
+        return true;
     }
 
     @Override
     public TyleType landOn() {
-        return GRASS;
+        return TOWERZONE;
     }
 }

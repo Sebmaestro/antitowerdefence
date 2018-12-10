@@ -1,10 +1,10 @@
-package sourceCode.model.Tile;
+package sourceCode.model.tile;
 
 import sourceCode.model.Position;
-import sourceCode.model.Troop.Direction;
+import sourceCode.model.troop.Direction;
 
-import static sourceCode.model.Tile.TyleType.PATHSWITCH;
-import static sourceCode.model.Troop.Direction.*;
+import static sourceCode.model.tile.TyleType.PATHSWITCH;
+import static sourceCode.model.troop.Direction.*;
 
 public class PathSwitch extends Tile {
 

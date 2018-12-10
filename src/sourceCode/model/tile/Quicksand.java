@@ -1,21 +1,19 @@
-package sourceCode.model.Tile;
-
+package sourceCode.model.tile;
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.GOAL;
+import static sourceCode.model.tile.TyleType.QUICKSAND;
 
-public class Goal extends Tile {
+public class Quicksand extends Tile {
 
-    public Goal(Position p) {
+    public Quicksand(Position p) {
         super(p);
-        graphic = "goal";
+        graphic = "quicksand";
     }
 
     @Override
     public boolean canWalk() {
         return true;
     }
-
 
     @Override
     public boolean canBuildTower() {
@@ -24,7 +22,7 @@ public class Goal extends Tile {
 
     @Override
     public TyleType landOn() {
-        return GOAL;
+        return QUICKSAND;
     }
 
     @Override

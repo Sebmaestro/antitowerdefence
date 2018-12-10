@@ -2,11 +2,11 @@ package tests.model;
 
 import org.junit.Test;
 import sourceCode.model.Position;
-import sourceCode.model.Tile.*;
+import sourceCode.model.tile.*;
 
 import static org.junit.Assert.*;
-import static sourceCode.model.Tile.TyleType.PATH;
-import static sourceCode.model.Troop.Direction.NORTH;
+import static sourceCode.model.tile.TyleType.PATH;
+import static sourceCode.model.troop.Direction.NORTH;
 
 public class TileTest {
     @Test

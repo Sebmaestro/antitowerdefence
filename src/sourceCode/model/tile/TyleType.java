@@ -1,4 +1,4 @@
-package sourceCode.model.Tile;
+package sourceCode.model.tile;
 
 public enum TyleType {
     GOAL, START, GRASS, PATH, QUICKSAND, PATHSWITCH,

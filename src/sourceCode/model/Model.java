@@ -1,9 +1,8 @@
 package sourceCode.model;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.*;
-import sourceCode.model.Tile.*;
-import sourceCode.model.Xmlparser.LevelParser;
+
+import sourceCode.model.tile.*;
+import sourceCode.model.xmlparser.LevelParser;
 
 /**
  * Created by denni on 2018-12-05.

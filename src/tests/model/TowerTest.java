@@ -2,12 +2,12 @@ package tests.model;
 
 
 import static org.junit.Assert.*;
-import static sourceCode.model.Troop.Direction.*;
+import static sourceCode.model.troop.Direction.*;
 
 import org.junit.*;
 import sourceCode.model.Position;
-import sourceCode.model.Tower.*;
-import sourceCode.model.Troop.*;
+import sourceCode.model.tower.*;
+import sourceCode.model.troop.*;
 
 public class TowerTest {
 

@@ -1,4 +1,4 @@
-package sourceCode.model.Tower;
+package sourceCode.model.tower;
 
 import sourceCode.model.Position;
 

@@ -1,7 +1,7 @@
-package sourceCode.model.Troop;
+package sourceCode.model.troop;
 
 import sourceCode.model.Position;
-import sourceCode.model.Tile.TyleType;
+import sourceCode.model.tile.TyleType;
 
 public class TeleporterTroop extends Troop {
 

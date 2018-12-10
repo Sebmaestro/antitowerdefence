@@ -1,7 +1,7 @@
-package sourceCode.model.Tower;
+package sourceCode.model.tower;
 
 import sourceCode.model.Position;
-import sourceCode.model.Troop.Troop;
+import sourceCode.model.troop.Troop;
 import sourceCode.model.Unit;
 
 public abstract class Tower implements Unit {

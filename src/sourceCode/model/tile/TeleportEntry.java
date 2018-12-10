@@ -1,19 +1,19 @@
-package sourceCode.model.Tile;
+package sourceCode.model.tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.TOWERZONE;
+import static sourceCode.model.tile.TyleType.TELEPORTENTRY;
 
-public class Towerzone extends Tile {
+public class TeleportEntry extends Tile {
 
-    public Towerzone(Position p) {
+    public TeleportEntry(Position p) {
         super(p);
-        graphic = "path";
+        graphic = "teleportentry";
     }
 
     @Override
     public boolean canWalk() {
-        return false;
+        return true;
     }
 
     @Override
@@ -23,11 +23,11 @@ public class Towerzone extends Tile {
 
     @Override
     public boolean canBuildTower() {
-        return true;
+        return false;
     }
 
     @Override
     public TyleType landOn() {
-        return TOWERZONE;
+        return TELEPORTENTRY;
     }
 }

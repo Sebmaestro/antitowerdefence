@@ -1,5 +1,6 @@
 package sourceCode.model.database;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 
 public class Database {
@@ -11,13 +12,6 @@ public class Database {
     private Connection con;
     private ResultSet rs;
     private Statement s;
-
-    /*
-    private String player;
-    private int score;
-    private int FinishTime;
-    private String map;
-    */
 
     public Database() {
         getDriver();
@@ -37,7 +31,7 @@ public class Database {
 
     public void getDriver() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -58,22 +52,41 @@ public class Database {
         }
     }
 
-    public void insertData(String PlayerName, double FinishTime, String Map) {
-        String sql = "INSERT INTO highscore(PlayerName, FinishTime, Map) VALUES" + "('"+PlayerName+"', "+FinishTime+", '"+Map+"');";
+    public void insertData(int HighscoreId, String PlayerName, String Map, int FinishTime) {
+        /*
+        String sql = "INSERT INTO highscore(HighscoreId, PlayerName, Map, FinishTime) " +
+                "VALUES" + "("HighscoreId"+ , " + '"+PlayerName+"', '"+level+"', "+finish+")";
+                */
+
+
+        //String sql = "INSERT INTO highscore(HighscoreId, PlayerName, Map, FinishTime) " +
+        //             "VALUES(" +HighscoreId + ", '" + PlayerName + "', '" + Map + "', " + FinishTime + ")";
+
+        String sql = "INSERT INTO highscore(HighscoreId, PlayerName, Map, FinishTime) VALUES(?, ?, ?, ?)";
+
         try {
-            s.executeUpdate(sql);
+            con.setAutoCommit(false);
+            PreparedStatement p = con.prepareStatement(sql);
+            p.setInt(1, HighscoreId);
+            p.setString(2, PlayerName);
+            p.setString(3, Map);
+            p.setInt(4, FinishTime);
+            p.executeUpdate();
+            con.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void getData() {
+    public ResultSet getData() {
         String sql = "SELECT PlayerName, FinishTime, Map FROM highscore";
 
         try {
             rs = s.executeQuery(sql);
+            return rs;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }

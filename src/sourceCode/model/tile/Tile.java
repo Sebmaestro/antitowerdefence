@@ -1,10 +1,10 @@
-package sourceCode.model.Tile;
+package sourceCode.model.tile;
 
 import sourceCode.model.Position;
-import sourceCode.model.Troop.Direction;
+import sourceCode.model.troop.Direction;
 import sourceCode.model.Unit;
 
-import static sourceCode.model.Troop.Direction.*;
+import static sourceCode.model.troop.Direction.*;
 
 public abstract class Tile implements Unit, LandOn {
 

@@ -1,18 +1,14 @@
-package sourceCode.model.Tile;
+package sourceCode.model.tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.BOOSTER;
+import static sourceCode.model.tile.TyleType.GOAL;
 
-public class Booster extends Tile {
+public class Goal extends Tile {
 
-    public Booster(Position p) {
+    public Goal(Position p) {
         super(p);
-        graphic = "booster";
-    }
-    @Override
-    public TyleType landOn() {
-        return BOOSTER;
+        graphic = "goal";
     }
 
     @Override
@@ -20,9 +16,15 @@ public class Booster extends Tile {
         return true;
     }
 
+
     @Override
     public boolean canBuildTower() {
         return false;
+    }
+
+    @Override
+    public TyleType landOn() {
+        return GOAL;
     }
 
     @Override

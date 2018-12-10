@@ -2,13 +2,13 @@ package tests.model;
 
 import org.junit.*;
 import sourceCode.model.Position;
-import sourceCode.model.Troop.RegularTroop;
-import sourceCode.model.Troop.TeleporterTroop;
-import sourceCode.model.Troop.Troop;
+import sourceCode.model.troop.RegularTroop;
+import sourceCode.model.troop.TeleporterTroop;
+import sourceCode.model.troop.Troop;
 
 import static org.junit.Assert.*;
-import static sourceCode.model.Tile.TyleType.*;
-import static sourceCode.model.Troop.Direction.*;
+import static sourceCode.model.tile.TyleType.*;
+import static sourceCode.model.troop.Direction.*;
 
 public class TroopTest {
 

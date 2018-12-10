@@ -35,6 +35,12 @@ public class View extends JFrame{
         gameFrame.setVisible(true);
 
         canvas.createBufferStrategy(3);
+
+
+
+
+
+
     }
 
     private void setTheSize(Component component, Dimension dimension){

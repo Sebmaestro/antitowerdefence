@@ -1,4 +1,4 @@
-package sourceCode.model.Troop;
+package sourceCode.model.troop;
 
 public enum Direction {
     NORTH, EAST, SOUTH, WEST

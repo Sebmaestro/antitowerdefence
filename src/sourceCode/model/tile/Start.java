@@ -1,14 +1,14 @@
-package sourceCode.model.Tile;
+package sourceCode.model.tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.TELEPORTENTRY;
+import static sourceCode.model.tile.TyleType.START;
 
-public class TeleportEntry extends Tile {
+public class Start extends Tile {
 
-    public TeleportEntry(Position p) {
+    public Start(Position p) {
         super(p);
-        graphic = "teleportentry";
+        graphic = "start";
     }
 
     @Override
@@ -28,6 +28,6 @@ public class TeleportEntry extends Tile {
 
     @Override
     public TyleType landOn() {
-        return TELEPORTENTRY;
+        return START;
     }
 }

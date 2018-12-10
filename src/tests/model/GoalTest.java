@@ -3,11 +3,11 @@ package tests.model;
 
 import org.junit.Test;
 import sourceCode.model.Position;
-import sourceCode.model.Tile.Goal;
-import sourceCode.model.Tile.Tile;
+import sourceCode.model.tile.Goal;
+import sourceCode.model.tile.tile;
 
 import static org.junit.Assert.*;
-import static sourceCode.model.Tile.TyleType.PATH;
+import static sourceCode.model.tile.TyleType.PATH;
 
 public class GoalTest {
 
@@ -37,7 +37,7 @@ public class GoalTest {
 
     @Test
     public void shouldBeCorrectGraphicString() {
-        Tile g = new Goal(new Position(1,1));
+        tile g = new Goal(new Position(1,1));
         assertEquals("goal", g.getGraphic());
     }
 

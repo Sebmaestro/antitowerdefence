@@ -1,8 +1,8 @@
-package sourceCode.model.Tile;
+package sourceCode.model.tile;
 
 import sourceCode.model.Position;
 
-import static sourceCode.model.Tile.TyleType.TELEPORTEXIT;
+import static sourceCode.model.tile.TyleType.TELEPORTEXIT;
 
 public class TeleportExit extends Tile {
 
