@@ -1,5 +1,4 @@
 package sourceCode.model.Xmlparser;
-import sourceCode.model.Tile.*;
 import sourceCode.model.Position;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -7,6 +6,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import sourceCode.model.Tile.*;
+
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

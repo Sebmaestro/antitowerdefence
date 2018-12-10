@@ -4,6 +4,7 @@ import org.junit.Test;
 import sourceCode.model.Position;
 import sourceCode.model.Tile.*;
 
+
 import static org.junit.Assert.*;
 import static sourceCode.model.Tile.TyleType.PATH;
 import static sourceCode.model.Troop.Direction.NORTH;

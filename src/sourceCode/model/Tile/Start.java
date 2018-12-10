@@ -9,6 +9,7 @@ public class Start extends Tile {
     public Start(Position p) {
         super(p);
         graphic = "start";
+        groundId = 3;
     }
 
     @Override

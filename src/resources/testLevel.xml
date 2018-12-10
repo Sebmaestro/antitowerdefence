@@ -1,5 +1,5 @@
 <levels>
-  <level name="Level1">
+  <level name="Level 1">
     <map>
       <row>
         <tile type="model.Tile.Grass"/>

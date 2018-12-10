@@ -9,6 +9,7 @@ public class Goal extends Tile {
     public Goal(Position p) {
         super(p);
         graphic = "goal";
+        groundId = 4;
     }
 
     @Override

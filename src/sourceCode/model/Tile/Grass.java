@@ -9,6 +9,7 @@ public class Grass extends Tile {
     public Grass(Position p) {
         super(p);
         graphic = "grass";
+        groundId = 0;
     }
 
     @Override

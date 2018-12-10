@@ -9,6 +9,7 @@ public class Path extends Tile {
     public Path(Position p) {
         super(p);
         graphic = "path";
+        groundId = 1;
     }
 
     @Override

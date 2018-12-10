@@ -9,6 +9,7 @@ public class Towerzone extends Tile {
     public Towerzone(Position p) {
         super(p);
         graphic = "path";
+        groundId = 2;
     }
 
     @Override
