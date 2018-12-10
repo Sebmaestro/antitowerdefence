@@ -19,10 +19,12 @@ import java.io.IOException;
  * Created by denni on 2018-12-05.
  */
 public class LevelParser {
+    public static Position startPos;
+    public static Tile[][] allTiles = new Tile[10][10];
 
     public static Tile[][] xmlparser(String input){
 
-        Tile[][] allTiles = new Tile[10][10];
+        //Tile[][] allTiles = new Tile[10][10];
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
@@ -56,6 +58,7 @@ public class LevelParser {
                                 allTiles[i][tileNr] = path;
                             } else if (tile.getAttribute("type").equals("model.Tile.Start")) {
                                 Start start = new Start(position);
+                                startPos = start.getPosition();
                                 allTiles[i][tileNr] = start;
                             } else if (tile.getAttribute("type").equals("model.Tile.Goal")) {
                                 Goal goal = new Goal(position);

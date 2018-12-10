@@ -33,6 +33,10 @@ public abstract class Troop extends Rectangle implements Unit{
         return currentPosition;
     }
 
+    public void setPosition(Position p){
+        currentPosition = p;
+    }
+
     /**
      * Set the goal boolean to true meaning that the troop has reached the goal
      */
