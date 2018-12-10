@@ -1,6 +1,5 @@
 package sourceCode.model;
 import sourceCode.model.Tile.Tile;
-import sourceCode.model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +12,7 @@ public class Screen extends JLayeredPane implements Runnable{
 
     public static Image[] tileset_ground = new Image[6];
     public static Image[] tileset_res = new Image[5];
+    public static Image[] tileset_troop = new Image[2];
     public static Tile[][] tiles;
     public static boolean isFirst = true;
     public static int myWidth, myHeight;
@@ -46,6 +46,8 @@ public class Screen extends JLayeredPane implements Runnable{
         tileset_ground[4] = new ImageIcon("src/Resources/goal.png").getImage();
         tileset_ground[5] = new ImageIcon("src/Resources/regular.png").getImage();
         //tileset_ground[i] = createImage(new FilteredImageSource(tileset_ground[i].getSource(), new CropImageFilter(0,26 * i,26,26)));
+
+        tileset_troop[0] = new ImageIcon("src/Resources/regular.png").getImage();
 
         tileset_res[0] = new ImageIcon("src/Resources/cell.png").getImage();
 

@@ -1,14 +1,18 @@
 package sourceCode.model.Troop;
 
 import sourceCode.model.Position;
+import sourceCode.model.Screen;
 import sourceCode.model.Tile.TyleType;
 import sourceCode.model.Unit;
 
-public abstract class Troop implements Unit {
+import java.awt.*;
+
+public abstract class Troop extends Rectangle implements Unit{
 
     protected String graphic;
     protected Position currentPosition;
     protected Position nextPosition;
+    protected int troopID;
     protected int hp;
     protected int speed;
     protected boolean alive;
@@ -18,6 +22,11 @@ public abstract class Troop implements Unit {
     public Troop(Position p, Direction direction) {
         this.currentPosition = p;
         this.direction = direction;
+    }
+
+    public void draw(Graphics g){
+        g.drawImage(Screen.tileset_troop[getTroopID()],x,y,width,height, null);
+
     }
 
     public Position getPosition() {
@@ -62,6 +71,8 @@ public abstract class Troop implements Unit {
     public int getHp() {
         return hp;
     }
+
+    public int getTroopID(){return troopID;}
 
     public void setSpeed(int speed) {
         this.speed = speed;

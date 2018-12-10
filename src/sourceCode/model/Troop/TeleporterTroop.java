@@ -14,6 +14,7 @@ public class TeleporterTroop extends Troop {
         hp = 40;
         speed = 10;
         isCreatingTeleport = false;
+        troopID = 1;
     }
 
     @Override

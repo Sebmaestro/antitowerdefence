@@ -9,6 +9,7 @@ public class RegularTroop extends Troop {
         super(p, direction);
         hp = 100;
         speed = 10;
+        troopID = 0;
     }
 
     @Override
