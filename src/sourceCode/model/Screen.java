@@ -13,6 +13,7 @@ public class Screen extends JLayeredPane implements Runnable{
     public static Image[] tileset_ground = new Image[6];
     public static Image[] tileset_res = new Image[5];
     public static Image[] tileset_troop = new Image[2];
+    public static Image[] tileset_tower = new Image[2];
     public static Tile[][] tiles;
     public static boolean isFirst = true;
     public static int myWidth, myHeight;
@@ -50,6 +51,7 @@ public class Screen extends JLayeredPane implements Runnable{
         tileset_troop[0] = new ImageIcon("src/Resources/regular.png").getImage();
 
         tileset_res[0] = new ImageIcon("src/Resources/cell.png").getImage();
+        tileset_tower[0] = new ImageIcon("src/Resources/tower_2.png").getImage();
 
     }
 
@@ -81,6 +83,7 @@ public class Screen extends JLayeredPane implements Runnable{
 
             if(!isFirst) {
                 room.physic();
+                layer.physic();
             }
 
             repaint();
