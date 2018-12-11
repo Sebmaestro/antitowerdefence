@@ -8,6 +8,7 @@ import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -21,28 +22,38 @@ public class DatabaseTest {
 
     @Test
     public void shouldBeAbleToInsertToDatabase() {
+        //Kanske inte behövs (ej färdig)
         Database db = new Database();
-        //db.insertData(10, "Dennis", "Map1", 60);
+        ArrayList l = new ArrayList<>();
+        l.add(new HighscoreInfo("Person", "Map", 30));
     }
 
     @Test
-    public void shouldBeAbleToRetrieveData() {
+    public void shouldBeAbleToGetTime() {
         Database db = new Database();
-        ArrayList list = new ArrayList();
-        db.saveHighscores(list);
-        list = db.getHighscores();
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
+        ArrayList l = new ArrayList<>();
+        HighscoreInfo info = new HighscoreInfo("Person1", "Map1", 60);
+        l.add(info);
+        db.saveHighscores(l);
+        assertEquals(60, db.getHighscores().get(0).getFinishTime());
     }
 
     @Test
-    public void shouldBeAbleTo() {
+    public void shouldBeAbleToGetPlayer() {
         Database db = new Database();
-
-        ArrayList list = db.getHighscores();
-        list.add(new HighscoreInfo("sebbe", "map5", 300000));
-        db.saveHighscores(list);
-
+        ArrayList l = new ArrayList<>();
+        l.add(new HighscoreInfo("Person1", "Map1", 40));
+        db.saveHighscores(l);
+        assertEquals("Person1", db.getHighscores().get(0).getPlayer());
     }
+
+    @Test
+    public void shouldBeAbleToGetMap() {
+        Database db = new Database();
+        ArrayList l = new ArrayList<>();
+        l.add(new HighscoreInfo("Person1", "Map1", 60));
+        db.saveHighscores(l);
+        assertEquals("Map1", db.getHighscores().get(0).getMap());
+    }
+
 }

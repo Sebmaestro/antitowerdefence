@@ -1,3 +1,7 @@
+/**
+ * Author: Sebastian Arledal c17sal
+ */
+
 package sourceCode.model.database;
 
 import java.sql.*;
