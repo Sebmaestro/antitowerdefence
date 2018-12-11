@@ -21,6 +21,10 @@ import java.util.ArrayList;
  */
 public class LevelParser {
     public static Position startPos;
+    public static Position goalPos;
+    public static ArrayList<Position> switchPositions = new ArrayList<>();
+    public static ArrayList<Position> pathPositions = new ArrayList<>();
+    public static ArrayList<Position> grassPositions = new ArrayList<>();
     public static ArrayList<Position> towerZonePositions = new ArrayList<>();
     public static Tile[][] allTiles = new Tile[10][10];
 
@@ -54,9 +58,11 @@ public class LevelParser {
 
                             if (tile.getAttribute("type").equals("model.Tile.Grass")) {
                                 Grass grass = new Grass(position);
+                                grassPositions.add(position);
                                 allTiles[i][tileNr] = grass;
                             } else if (tile.getAttribute("type").equals("model.Tile.Path")) {
                                 Path path = new Path(position);
+                                pathPositions.add(position);
                                 allTiles[i][tileNr] = path;
                             } else if (tile.getAttribute("type").equals("model.Tile.Start")) {
                                 Start start = new Start(position);
@@ -69,6 +75,11 @@ public class LevelParser {
                                 Towerzone towerzone = new Towerzone(position);
                                 towerZonePositions.add(position);
                                 allTiles[i][tileNr] = towerzone;
+                            }
+                            else if (tile.getAttribute("type").equals("model.Tile.Pathswitch")) {
+                                PathSwitch switcha = new PathSwitch(position);
+                                switchPositions.add(position);
+                                allTiles[i][tileNr] = switcha;
                             }
 
                             System.out.println("Rad " + (i) + " Tile " + tileNr + " är type " +
