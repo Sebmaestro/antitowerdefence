@@ -1,13 +1,17 @@
 package sourceCode.model.Tower;
 
 import sourceCode.model.Position;
+import sourceCode.model.Screen;
 import sourceCode.model.Troop.Troop;
 import sourceCode.model.Unit;
 
-public abstract class Tower implements Unit {
+import java.awt.*;
+
+public abstract class Tower extends Rectangle implements Unit {
 
     public String Graphic;
     protected int damage;
+    protected int towerID;
     protected double range;
     protected double attackPeriod;
     protected Troop target;
@@ -16,6 +20,13 @@ public abstract class Tower implements Unit {
     public Tower(Position p) {
         this.p = p;
     }
+
+    public void draw(Graphics g){
+        g.drawImage(Screen.tileset_tower[getTowerID()],x,y,width,height, null);
+
+    }
+
+    public int getTowerID(){return towerID;}
 
     public void attack(Troop t) {
         t.receiveDamage(damage);

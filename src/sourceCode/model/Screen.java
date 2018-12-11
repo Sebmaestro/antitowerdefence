@@ -20,6 +20,7 @@ public class Screen extends JLayeredPane implements Runnable{
     public static Room room;
     public static Store store;
     public static Lagertest layer;
+    public static TowerMofo torn;
 
     public static Point msc = new Point(0,0);
 
@@ -36,9 +37,7 @@ public class Screen extends JLayeredPane implements Runnable{
         setSize(new Dimension(1080,700));
         store = new Store();
         layer = new Lagertest();
-
-
-
+        torn = new TowerMofo();
 
         tileset_ground[0] = new ImageIcon("src/Resources/grass.png").getImage();
         tileset_ground[1] = new ImageIcon("src/Resources/path.png").getImage();
@@ -71,9 +70,12 @@ public class Screen extends JLayeredPane implements Runnable{
         g.fillRect(0,0, getWidth(), getHeight());
         g.setColor(new Color(0,0,0));
         setLayer(room, DEFAULT_LAYER);
-        setLayer(layer, PALETTE_LAYER);
+        setLayer(torn, PALETTE_LAYER);
+        setLayer(layer, DEFAULT_LAYER);
+
         room.draw(g); //Drawing the room
         store.draw(g); // drawing the store
+        torn.draw(g);
         layer.draw(g);
     }
 
@@ -84,6 +86,7 @@ public class Screen extends JLayeredPane implements Runnable{
             if(!isFirst) {
                 room.physic();
                 layer.physic();
+                torn.physics(layer.rTroop);
             }
 
             repaint();

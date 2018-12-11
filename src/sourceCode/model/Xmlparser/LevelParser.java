@@ -14,12 +14,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by denni on 2018-12-05.
  */
 public class LevelParser {
     public static Position startPos;
+    public static ArrayList<Position> towerZonePositions = new ArrayList<>();
     public static Tile[][] allTiles = new Tile[10][10];
 
     public static Tile[][] xmlparser(String input){
@@ -65,6 +67,7 @@ public class LevelParser {
                                 allTiles[i][tileNr] = goal;
                             } else if (tile.getAttribute("type").equals("model.Tile.Towerzone")) {
                                 Towerzone towerzone = new Towerzone(position);
+                                towerZonePositions.add(position);
                                 allTiles[i][tileNr] = towerzone;
                             }
 

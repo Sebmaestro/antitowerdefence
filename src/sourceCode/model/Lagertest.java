@@ -41,6 +41,8 @@ public class Lagertest extends JPanel {
        tileMap = LevelParser.allTiles;
 
 
+
+
         rTroop = new RegularTroop(startPos, Direction.EAST);
 
 
@@ -50,7 +52,7 @@ public class Lagertest extends JPanel {
        // gubbe.setBounds(235 + gubbe.getPosition().getX()*55,gubbe.getPosition().getY()*55,55,55);
     }
 
-    int walkFrame = 0, walkSpeed = 150;
+    int walkFrame = 0, walkSpeed = 200;
     public void physic(){
 
         if(walkFrame >= walkSpeed && (!rTroop.isGoalReached())) {
@@ -122,7 +124,6 @@ public class Lagertest extends JPanel {
                     rTroop.setPosition(north);
                     rTroop.setDirection(Direction.NORTH);
                 } else if (tileMap[south.getY()][south.getX()].landOn().equals(TyleType.PATH)) {
-                    System.out.println("mamma");
                     rTroop.setPosition(south);
                     rTroop.setDirection(Direction.SOUTH);
                 }

@@ -12,6 +12,7 @@ public class RegularTower extends Tower{
         damage = 1;
         range = 1;
         attackPeriod = 1;
+        towerID = 0;
     }
 
     @Override
