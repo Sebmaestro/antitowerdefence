@@ -8,7 +8,7 @@ public class Start extends Tile {
 
     public Start(Position p) {
         super(p);
-        graphic = "start";
+        graphic = "src/Resources/start.png";
         groundId = 3;
     }
 

@@ -1,4 +1,5 @@
 package sourceCode.model;
+import sourceCode.model.Game.Game;
 import sourceCode.model.Tile.*;
 import java.io.IOException;
 
@@ -10,11 +11,13 @@ import sourceCode.model.Xmlparser.LevelParser;
 public class Model {
     private int width;
     private int height;
+    private Tile[][] tiles;
+    private Game game;
 
-    public Model(int height, int width) throws IOException{
-        Tile[][] tiles;
+    public Model() throws IOException{
 
         tiles = LevelParser.xmlparser("./src/resources/testLevel.xml");
+        game = new Game(tiles);
 
     }
 

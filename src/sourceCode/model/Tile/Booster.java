@@ -8,7 +8,7 @@ public class Booster extends Tile {
 
     public Booster(Position p) {
         super(p);
-        graphic = "booster";
+        graphic = "src/Resources/booster.png";
     }
     @Override
     public TyleType landOn() {

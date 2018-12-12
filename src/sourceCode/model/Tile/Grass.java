@@ -8,7 +8,7 @@ public class Grass extends Tile {
 
     public Grass(Position p) {
         super(p);
-        graphic = "grass";
+        graphic = "src/Resources/grass.png";
         groundId = 0;
     }
 

@@ -10,7 +10,7 @@ public class PathSwitch extends Tile {
 
     public PathSwitch(Position p) {
         super(p);
-        graphic = "pathswitch";
+        graphic = "src/Resources/switch-down.png";
         dir = SOUTH;
     }
 

@@ -91,4 +91,9 @@ public class GameScreen {
 
         return img;
     }
+
+    public void setAllBufferImg(BufferedImage[][] bfg){
+
+        allBufferImg = bfg;
+    }
 }
