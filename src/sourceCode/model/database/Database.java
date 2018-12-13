@@ -41,10 +41,19 @@ public class Database {
         }
     }
 
-    public void saveHighscores(ArrayList<HighscoreInfo> highscores) {
-        String sqlDelete = "DELETE FROM highscore";
-        String sqlInsert = "INSERT INTO highscore(HighscoreId, " +
-                "PlayerName, Map, FinishTime) VALUES(?, ?, ?, ?)";
+    //TABLE ÄR VILKEN MAP DET ÄR
+    public void saveHighscores(ArrayList<HighscoreInfo> highscores, String table) {
+        String sqlDelete = null;
+        String sqlInsert = null;
+        if (table.equals("Map1")){
+            sqlDelete = "DELETE FROM Map1";
+            sqlInsert = "INSERT INTO Map1(HighscoreId, " +
+                    "PlayerName, FinishTime) VALUES(?, ?, ?)";
+        } else {
+            sqlDelete = "DELETE FROM Map2";
+            sqlInsert = "INSERT INTO Map2(HighscoreId, " +
+            "PlayerName, FinishTime) VALUES(?, ?, ?)";
+        }
         try {
             con.setAutoCommit(false);
             con.createStatement().execute(sqlDelete);
@@ -52,8 +61,8 @@ public class Database {
                 PreparedStatement p = con.prepareStatement(sqlInsert);
                 p.setInt(1, i);
                 p.setString(2, highscores.get(i).getPlayer());
-                p.setString(3, highscores.get(i).getMap());
-                p.setInt(4, highscores.get(i).getFinishTime());
+                //p.setString(3, highscores.get(i).getMap());
+                p.setInt(3, highscores.get(i).getFinishTime());
                 p.executeUpdate();
             }
             con.commit();
@@ -62,14 +71,20 @@ public class Database {
         }
     }
 
-    public ArrayList<HighscoreInfo> getHighscores() {
-        String sql = "SELECT PlayerName, Map, FinishTime FROM highscore";
+    public ArrayList<HighscoreInfo> getHighscores(String table) {
+        String sql = null;
+
+        if (table.equals("Map1")) {
+            sql = "SELECT PlayerName, FinishTime FROM Map1";
+        } else {
+            sql = "SELECT PlayerName, FinishTime FROM Map2";
+        }
         ArrayList<HighscoreInfo> highscores = new ArrayList<HighscoreInfo>();
         try {
             rs = s.executeQuery(sql);
             while(rs.next()) {
                 highscores.add(new HighscoreInfo(rs.getString(1),
-                        rs.getString(2), rs.getInt(3)));
+                        rs.getInt(2)));
             }
         } catch (SQLException e) {
             e.printStackTrace();

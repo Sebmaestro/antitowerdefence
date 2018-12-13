@@ -5,10 +5,10 @@ public class HighscoreInfo {
     private int finishTime;
     private String map;
 
-    public HighscoreInfo(String player, String map, int finishTime) {
+    public HighscoreInfo(String player, int finishTime) {
         this.player = player;
         this.finishTime = finishTime;
-        this.map = map;
+        //this.map = map;
     }
 
     public String getPlayer() {
