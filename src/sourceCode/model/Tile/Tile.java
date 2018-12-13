@@ -3,9 +3,7 @@ package sourceCode.model.Tile;
 import sourceCode.model.Position;
 import sourceCode.model.Troop.Direction;
 import sourceCode.model.Unit;
-import sourceCode.model.*;
-
-import static sourceCode.model.Troop.Direction.*;
+import sourceCode.view.Screen;
 
 import java.awt.*;
 

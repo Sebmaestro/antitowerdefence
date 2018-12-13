@@ -1,5 +1,8 @@
-package sourceCode.model;
+package sourceCode.view;
+import sourceCode.model.KeyHandel;
+import sourceCode.model.Store;
 import sourceCode.model.Tile.Tile;
+import sourceCode.view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +27,7 @@ public class Screen extends JLayeredPane implements Runnable{
 
     public static Point msc = new Point(0,0);
 
-    public Screen(Frame frame) {
+    public Screen(sourceCode.view.Frame frame) {
         frame.addMouseListener(new KeyHandel());
         frame.addMouseMotionListener(new KeyHandel());
 
@@ -34,23 +37,16 @@ public class Screen extends JLayeredPane implements Runnable{
     public void define(){
 
         room = new Room();
-        setSize(new Dimension(1080,700));
+        setSize(new Dimension(550,550));
         store = new Store();
         layer = new Lagertest();
         torn = new TowerMofo();
 
-        tileset_ground[0] = new ImageIcon("src/Resources/grass.png").getImage();
-        tileset_ground[1] = new ImageIcon("src/Resources/path.png").getImage();
-        tileset_ground[2] = new ImageIcon("src/Resources/towerzone.png").getImage();
-        tileset_ground[3] = new ImageIcon("src/Resources/start.png").getImage();
-        tileset_ground[4] = new ImageIcon("src/Resources/goal.png").getImage();
-        tileset_ground[5] = new ImageIcon("src/Resources/regular.png").getImage();
-        //tileset_ground[i] = createImage(new FilteredImageSource(tileset_ground[i].getSource(), new CropImageFilter(0,26 * i,26,26)));
 
-        tileset_troop[0] = new ImageIcon("src/Resources/regular.png").getImage();
+        tileset_troop[0] = new ImageIcon("src/resources/regular.png").getImage();
 
-        tileset_res[0] = new ImageIcon("src/Resources/cell.png").getImage();
-        tileset_tower[0] = new ImageIcon("src/Resources/tower_2.png").getImage();
+        tileset_res[0] = new ImageIcon("src/resources/cell.png").getImage();
+        tileset_tower[0] = new ImageIcon("src/resources/tower_2.png").getImage();
 
     }
 

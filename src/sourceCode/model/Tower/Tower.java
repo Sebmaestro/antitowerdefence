@@ -1,7 +1,7 @@
 package sourceCode.model.Tower;
 
 import sourceCode.model.Position;
-import sourceCode.model.Screen;
+import sourceCode.view.Screen;
 import sourceCode.model.Troop.Troop;
 import sourceCode.model.Unit;
 

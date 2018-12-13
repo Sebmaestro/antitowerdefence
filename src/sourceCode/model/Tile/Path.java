@@ -8,7 +8,7 @@ public class Path extends Tile {
 
     public Path(Position p) {
         super(p);
-        graphic = "src/Resources/path.png";
+        graphic = "src/resources/path.png";
         groundId = 1;
     }
 

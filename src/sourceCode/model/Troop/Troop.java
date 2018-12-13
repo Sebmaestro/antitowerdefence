@@ -1,7 +1,7 @@
 package sourceCode.model.Troop;
 
 import sourceCode.model.Position;
-import sourceCode.model.Screen;
+import sourceCode.view.Screen;
 import sourceCode.model.Tile.TyleType;
 import sourceCode.model.Unit;
 

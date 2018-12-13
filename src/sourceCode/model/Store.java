@@ -1,6 +1,7 @@
 package sourceCode.model;
 import java.awt.*;
-import sourceCode.model.*;
+
+import sourceCode.view.Screen;
 
 /**
  * Created by denni on 2018-12-10.

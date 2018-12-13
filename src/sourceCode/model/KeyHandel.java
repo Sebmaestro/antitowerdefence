@@ -1,4 +1,7 @@
 package sourceCode.model;
+
+import sourceCode.view.Screen;
+
 import java.awt.event.*;
 import java.awt.*;
 
@@ -35,7 +38,7 @@ public class KeyHandel implements MouseMotionListener, MouseListener{
     }
 
     public void mouseMoved(MouseEvent e) {
-        Screen.msc = new Point((e.getX()) + ((Frame.size.width - Screen.myWidth/2) - (Screen.myWidth/2)),
-                (e.getY()) - ((Frame.size.height - (Screen.myHeight)) - (Frame.size.width - Screen.myWidth)/2));
+        Screen.msc = new Point((e.getX()) + ((sourceCode.view.Frame.size.width - Screen.myWidth/2) - (Screen.myWidth/2)),
+                (e.getY()) - ((sourceCode.view.Frame.size.height - (Screen.myHeight)) - (sourceCode.view.Frame.size.width - Screen.myWidth)/2));
     }
 }

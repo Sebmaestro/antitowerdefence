@@ -8,7 +8,7 @@ public class Towerzone extends Tile {
 
     public Towerzone(Position p) {
         super(p);
-        graphic = "src/Resources/towerzone.png";
+        graphic = "src/resources/towerzone.png";
         groundId = 2;
     }
 

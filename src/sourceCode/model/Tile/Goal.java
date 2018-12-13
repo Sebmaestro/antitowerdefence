@@ -8,7 +8,7 @@ public class Goal extends Tile {
 
     public Goal(Position p) {
         super(p);
-        graphic = "src/Resources/goal.png";
+        graphic = "src/resources/goal.png";
         groundId = 4;
     }
 
