@@ -1,0 +1,126 @@
+<levels>
+  <level name="Level 1">
+    <map>
+      <row>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+      <row>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+      <row>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+      <row>
+        <tile type="model.Tile.Start"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+      <row>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+      <row>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+      <row>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+      <row>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+      <row>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Path"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+      <row>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Grass"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Goal"/>
+        <tile type="model.Tile.Towerzone"/>
+        <tile type="model.Tile.Grass"/>
+      </row>
+    </map>
+  </level>
+</levels>
