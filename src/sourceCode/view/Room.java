@@ -33,7 +33,6 @@ public class Room extends JLayeredPane {
         //setMaximumSize(new Dimension(550,550));
        // setPreferredSize(new Dimension(550,550));
         bufferi = new ImageArray().getTheWholeShit();
-        imgArr = new ImageArray();
         //block = new Block[worldWidth][worldHeight];
         tileMap = new Tile[worldHeight][worldWidth];
         tileMap = LevelParser.xmlparser("src/Resources/testLevel.xml");
@@ -50,8 +49,8 @@ public class Room extends JLayeredPane {
        // rTroop.setBounds(235 + rTroop.getPosition().getX() * 55, rTroop.getPosition().getY() * 55, 55, 55);
 
 
-       for(int i=0; i<imgArr.getTheWholeShit().length; i++ ){
-            for( int j=0; j<imgArr.getTheWholeShit().length; j++){
+       for(int i=0; i<bufferi.length; i++ ){
+            for( int j=0; j<bufferi.length; j++){
                 graphics2D.drawImage(bufferi[j][i],235 + i*55,j*55,null);
             }
         }

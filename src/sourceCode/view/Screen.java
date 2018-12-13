@@ -24,6 +24,7 @@ public class Screen extends JLayeredPane implements Runnable{
     public static Store store;
     public static Lagertest layer;
     public static TowerMofo torn;
+    public static Overlay overlay;
 
     public static Point msc = new Point(0,0);
 
@@ -37,7 +38,9 @@ public class Screen extends JLayeredPane implements Runnable{
     public void define(){
 
         room = new Room();
-        setSize(new Dimension(550,550));
+        overlay = new Overlay();
+
+        setSize(new Dimension(1080,700));
         store = new Store();
         layer = new Lagertest();
         torn = new TowerMofo();
@@ -68,11 +71,13 @@ public class Screen extends JLayeredPane implements Runnable{
         setLayer(room, DEFAULT_LAYER);
         setLayer(torn, PALETTE_LAYER);
         setLayer(layer, DEFAULT_LAYER);
+        setLayer(overlay, PALETTE_LAYER);
 
         room.draw(g); //Drawing the room
-        store.draw(g); // drawing the store
-        torn.draw(g);
-        layer.draw(g);
+        overlay.draw(g);
+        //store.draw(g); // drawing the store
+        //torn.draw(g);
+        //layer.draw(g);
     }
 
 
