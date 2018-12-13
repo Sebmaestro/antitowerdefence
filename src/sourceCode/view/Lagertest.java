@@ -1,6 +1,6 @@
 package sourceCode.view;
 
-import javafx.geometry.Pos;
+
 import sourceCode.model.Position;
 import sourceCode.model.Tile.*;
 import sourceCode.model.Tile.Path;

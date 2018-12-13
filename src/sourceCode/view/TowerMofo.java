@@ -1,13 +1,9 @@
 package sourceCode.view;
 
-import javafx.geometry.Pos;
+
 import sourceCode.model.Position;
-import sourceCode.model.Tile.*;
-import sourceCode.model.Tile.Path;
 import sourceCode.model.Tile.Tile;
 import sourceCode.model.Tower.RegularTower;
-import sourceCode.model.Troop.Direction;
-import sourceCode.model.Troop.RegularTroop;
 import sourceCode.model.Troop.Troop;
 import sourceCode.model.Xmlparser.LevelParser;
 
