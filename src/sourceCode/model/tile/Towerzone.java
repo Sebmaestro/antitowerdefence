@@ -4,6 +4,9 @@ import sourceCode.model.Position;
 
 import static sourceCode.model.tile.TyleType.TOWERZONE;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class Towerzone extends Tile {
 
     public Towerzone(Position p) {

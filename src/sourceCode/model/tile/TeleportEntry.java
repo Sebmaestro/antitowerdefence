@@ -4,6 +4,9 @@ import sourceCode.model.Position;
 
 import static sourceCode.model.tile.TyleType.TELEPORTENTRY;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class TeleportEntry extends Tile {
 
     public TeleportEntry(Position p) {

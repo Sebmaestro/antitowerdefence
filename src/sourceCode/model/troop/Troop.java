@@ -4,18 +4,21 @@ import sourceCode.model.Position;
 import sourceCode.model.tile.TyleType;
 import sourceCode.model.Unit;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public abstract class Troop implements Unit {
 
     protected String graphic;
-    protected Position currentPosition;
+    private Position currentPosition;
     protected Position nextPosition;
-    protected int hp;
-    protected int speed;
+    int hp;
+    int speed;
     protected boolean alive;
-    protected boolean hasReachedGoal = false;
-    protected Direction direction;
+    private boolean hasReachedGoal = false;
+    private Direction direction;
 
-    public Troop(Position p, Direction direction) {
+    Troop(Position p, Direction direction) {
         this.currentPosition = p;
         this.direction = direction;
     }

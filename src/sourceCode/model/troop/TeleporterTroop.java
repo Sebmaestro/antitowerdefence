@@ -3,6 +3,9 @@ package sourceCode.model.troop;
 import sourceCode.model.Position;
 import sourceCode.model.tile.TyleType;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class TeleporterTroop extends Troop {
 
     private Position teleportEntry;
@@ -27,4 +30,8 @@ public class TeleporterTroop extends Troop {
             return TyleType.TELEPORTEXIT;
         }
     }
+
+    //public Troop getTroop() {
+    //    return TeleporterTroop.this;
+    //}
 }

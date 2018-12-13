@@ -4,6 +4,9 @@ import sourceCode.model.Position;
 
 import static sourceCode.model.tile.TyleType.GOAL;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class Goal extends Tile {
 
     public Goal(Position p) {

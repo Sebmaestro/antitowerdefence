@@ -3,6 +3,9 @@ import sourceCode.model.Position;
 
 import static sourceCode.model.tile.TyleType.QUICKSAND;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class Quicksand extends Tile {
 
     public Quicksand(Position p) {

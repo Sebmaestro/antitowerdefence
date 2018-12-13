@@ -4,6 +4,9 @@ import sourceCode.model.Position;
 
 import static sourceCode.model.tile.TyleType.START;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class Start extends Tile {
 
     public Start(Position p) {

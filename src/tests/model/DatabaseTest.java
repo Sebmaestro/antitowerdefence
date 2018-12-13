@@ -51,7 +51,7 @@ public class DatabaseTest {
     public void shouldBeAbleToTakeNewHighscoreAndUpdateTable() {
         Database db = new Database();
         HighscoreHandler h = new HighscoreHandler();
-        for (int i = 0; i < 11; i++) {
+        for (int i = 0; i < 15; i++) {
             if (h.addHighscoreToList(new HighscoreInfo
                     ("Sebbe", (i * 20) + 10 ))) {
                 break;

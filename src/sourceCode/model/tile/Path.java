@@ -4,6 +4,9 @@ import sourceCode.model.Position;
 
 import static sourceCode.model.tile.TyleType.*;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class Path extends Tile {
 
     public Path(Position p) {

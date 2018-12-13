@@ -6,6 +6,9 @@ import sourceCode.model.troop.Direction;
 import static sourceCode.model.tile.TyleType.PATHSWITCH;
 import static sourceCode.model.troop.Direction.*;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class PathSwitch extends Tile {
 
     public PathSwitch(Position p) {

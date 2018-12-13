@@ -6,9 +6,12 @@ import sourceCode.model.Unit;
 
 import static sourceCode.model.troop.Direction.*;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public abstract class Tile implements Unit, LandOn {
 
-    protected Direction dir;
+    Direction dir;
     protected Position p;
     protected String graphic;
 

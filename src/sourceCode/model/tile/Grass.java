@@ -4,6 +4,9 @@ import sourceCode.model.Position;
 
 import static sourceCode.model.tile.TyleType.GRASS;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class Grass extends Tile {
 
     public Grass(Position p) {

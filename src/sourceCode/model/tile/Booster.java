@@ -4,6 +4,9 @@ import sourceCode.model.Position;
 
 import static sourceCode.model.tile.TyleType.BOOSTER;
 
+/**
+ * Author: Sebastian Arledal c17sal
+ */
 public class Booster extends Tile {
 
     public Booster(Position p) {
