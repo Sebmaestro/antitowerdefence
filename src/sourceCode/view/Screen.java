@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage;
  */
 
 public class Screen extends JLayeredPane implements Runnable{
-    public Thread thread = new Thread(this);
+    //public Thread thread = new Thread(this);
 
     public static Image[] tileset_ground = new Image[6];
     public static Image[] tileset_res = new Image[5];
@@ -31,36 +31,41 @@ public class Screen extends JLayeredPane implements Runnable{
 
     public static Point msc = new Point(0,0);
 
-    public Screen(sourceCode.view.Frame frame, BufferedImage[][] underLay, BufferedImage[][] overLay) {
-        frame.addMouseListener(new KeyHandel());
-        frame.addMouseMotionListener(new KeyHandel());
+    public Screen() {
+        //frame.addMouseListener(new KeyHandel());
+        //frame.addMouseMotionListener(new KeyHandel());
+        setSize(new Dimension(1080,700));
+
+
+    }
+
+    public void setImages(BufferedImage[][] underLay, BufferedImage[][] overLay){
         this.underLay = underLay;
         this.overLay = overLay;
-
-        thread.start();
+        define();
     }
+
 
     public void define(){
 
         room = new Room(underLay);
         overlay = new Overlay(overLay);
 
-        setSize(new Dimension(1080,700));
-        store = new Store();
+
+        //store = new Store();
         //layer = new Lagertest();
-        torn = new TowerMofo();
-
-
-        tileset_troop[0] = new ImageIcon("src/resources/regular.png").getImage();
-
-        tileset_res[0] = new ImageIcon("src/resources/cell.png").getImage();
-        tileset_tower[0] = new ImageIcon("src/resources/tower_2.png").getImage();
+       // torn = new TowerMofo();
+        //tileset_troop[0] = new ImageIcon("src/resources/regular.png").getImage();
+        //tileset_res[0] = new ImageIcon("src/resources/cell.png").getImage();
+        //tileset_tower[0] = new ImageIcon("src/resources/tower_2.png").getImage();
 
     }
 
-    public void updateOverlay(BufferedImage[][] overLayImgarr){
-        overLay = overLayImgarr;
-        repaint();
+
+    public void updateOverlay(){
+        //overLay = overLayImgarr;
+
+        //repaint();
     }
 
 
@@ -71,7 +76,7 @@ public class Screen extends JLayeredPane implements Runnable{
             myWidth = getWidth();
             myHeight = getHeight();
 
-            define();
+            //define();
 
             isFirst = false;
         }
@@ -80,8 +85,8 @@ public class Screen extends JLayeredPane implements Runnable{
         g.fillRect(0,0, getWidth(), getHeight());
         g.setColor(new Color(0,0,0));
         setLayer(room, DEFAULT_LAYER);
-        setLayer(torn, PALETTE_LAYER);
-//        setLayer(layer, DEFAULT_LAYER);
+        //setLayer(torn, PALETTE_LAYER);
+        //setLayer(layer, DEFAULT_LAYER);
         setLayer(overlay, PALETTE_LAYER);
 
         room.draw(g); //Drawing the room
@@ -101,6 +106,8 @@ public class Screen extends JLayeredPane implements Runnable{
 
 
     public void run(){
+
+
 /*
 
         while(true){

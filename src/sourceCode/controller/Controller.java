@@ -1,9 +1,13 @@
 package sourceCode.controller;
+import java.util.concurrent.TimeUnit;
 import sourceCode.model.*;
 
 
 import sourceCode.model.Model;
 import sourceCode.model.tile.Tile;
+import sourceCode.model.troop.Direction;
+import sourceCode.model.troop.RegularTroop;
+import sourceCode.model.troop.Troop;
 import sourceCode.model.xmlparser.LevelParser;
 import sourceCode.view.Frame;
 import sourceCode.view.Overlay;
@@ -26,6 +30,8 @@ public class Controller {
     private OverlayImageArray overlayimgArr;
     private ArrayList<Position> pathPosition;
     private Position startPos, goalPos;
+    private ArrayList<Position> troopPosition;
+    private ArrayList<RegularTroop> regularTroops;
 
 
     public Controller() throws IOException {
@@ -34,28 +40,76 @@ public class Controller {
 
         //startGame("src/Resources/testLevel.xml");
        // imgArr = new ImageArray();
+
+        //Inläsning
         levelP = new LevelParser();
         tiles = levelP.xmlparser("src/Resources/testlevel.xml");
         pathPosition = levelP.getPathPositions();
-        imgArr = new ImageArray(tiles);
-        overlayimgArr = new OverlayImageArray(tiles.length);
-        frame = new Frame(imgArr.getTheWholeShit(), overlayimgArr.getTheWholeShit());
-
-
         startPos = levelP.getStartPos();
         goalPos = levelP.getGoalPos();
-        overlayimgArr.clearThePath(pathPosition,startPos, goalPos);
-        overlayimgArr.changeImage();
+
+        //Skapar BufferedImageArrays
+        imgArr = new ImageArray(tiles);
+        overlayimgArr = new OverlayImageArray(tiles.length);
+        overlayimgArr.addPaths(pathPosition, startPos, goalPos);
+
+        //Skapar en frame med BufferedImageArrays
+        frame = new Frame();
+        System.out.println("mammi");
+        frame.getScreen().setImages(imgArr.getTheWholeShit(), overlayimgArr.getTheWholeShit());
+
+
+        //Skapar en trupp och lägger in den i listan
+        regularTroops = new ArrayList<>();
+        RegularTroop reg = new RegularTroop(startPos, Direction.EAST);
+        regularTroops.add(reg);
+
+        //Lägger till truppen i listan hos overlayImage-klassen
+        overlayimgArr.addRegularTroopList(regularTroops);
+
+
+        //frame.getScreen().repaint();
+
+        //Loopar spelet
+        gameLoop();
+    }
+
+    public void gameLoop(){
+
+        RegularTroop reg = regularTroops.get(0);
+        frame.getScreen().repaint();
+
+        overlayimgArr.updateImage();
+        frame.getScreen().repaint();
+
+        reg.move(tiles);
+
+        overlayimgArr.updateImage();
 
 
 
+/*
+        int j =0;
+
+        while(j < 100000000 && !reg.isGoalReached()) {
+
+            if (j > 100000) {
+                reg.move(tiles);
+                overlayimgArr.updateImage();
+                j = 0;
 
 
+                //frame.getScreen().updateOverlay(overlayimgArr.getTheWholeShit());
+            }
+            System.out.println("mammaGame");
+            j++;
+        }
 
-
-
+*/
 
     }
+
+
 
     //Calls all methods to start the gameScreen
     public void startGame(String xmlLevel){

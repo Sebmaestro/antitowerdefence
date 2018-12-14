@@ -2,6 +2,7 @@ package sourceCode.model;
 
 import sourceCode.model.tile.Path;
 import sourceCode.model.tile.Tile;
+import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.xmlparser.LevelParser;
 
 import javax.imageio.ImageIO;
@@ -17,14 +18,17 @@ public class OverlayImageArray {
     private BufferedImage allPics;
     Tile[][] allTiles;
     private BufferedImage[][] theWholeShit;
-    private ArrayList<Position> pathPositions;
+    private ArrayList<Position> pathPositions, regTroopPosition, telepTroopPosition;
     private BufferedImage path, regular, invisible, start, goal;
     private int worldSize;
+    private Position startPos, goalPos;
+    private ArrayList<RegularTroop> regTroopList;
 
     public OverlayImageArray(int worldSize) {
         this.worldSize = worldSize;
         readImages();
         theWholeShit = new BufferedImage[10][10];
+        regTroopPosition = new ArrayList<>();
 
 
 
@@ -34,7 +38,7 @@ public class OverlayImageArray {
             }
         }
 
-            theWholeShit[3][0] = regular;
+
 
     }
 
@@ -52,30 +56,45 @@ public class OverlayImageArray {
 
     }
 
-    public void changeImage(){
-        theWholeShit[3][1] = regular;
+
+
+
+    public void addRegularTroopList(ArrayList<RegularTroop> regTroopList){
+        this.regTroopList = regTroopList;
     }
 
-
-    public void drawRegularTroops(ArrayList<Position> troopPositions){
-
-    }
-
-    public void drawTeleporterTroops(ArrayList<Position> troopPositions){
+    public void addTeleportTroopList(ArrayList<Position> troopPositions){
 
     }
 
-    public void clearThePath(ArrayList<Position> pathPositions, Position startPos, Position goalPos){
-        this.pathPositions = pathPositions;
-
+    public void clearThePath(){
         for(Position p :pathPositions){
             theWholeShit[p.getY()][p.getX()] = path;
         }
 
-        theWholeShit[goalPos.getY()][goalPos.getX()] = this.goal;
-        theWholeShit[startPos.getY()][startPos.getX()] = this.start;
+        theWholeShit[goalPos.getY()][goalPos.getX()] = goal;
+        theWholeShit[startPos.getY()][startPos.getX()] = start;
 
     }
+
+    public void addPaths(ArrayList<Position> pathPositions, Position startPos, Position goalPos){
+        this.pathPositions = pathPositions;
+        this.startPos = startPos;
+        this.goalPos = goalPos;
+
+    }
+
+    public void updateImage(){
+        clearThePath();
+
+        try {
+            for (RegularTroop reg : regTroopList) {
+                theWholeShit[reg.getPosition().getY()][reg.getPosition().getX()] = regular;
+            }
+        }catch (NullPointerException e){}
+    }
+
+
 
 
     public BufferedImage[][] getTheWholeShit(){
