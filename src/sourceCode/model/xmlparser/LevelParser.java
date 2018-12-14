@@ -1,4 +1,9 @@
 package sourceCode.model.xmlparser;
+
+import sourceCode.model.Position;
+
+import java.util.ArrayList;
+
 import sourceCode.model.tile.*;
 import sourceCode.model.Position;
 import org.w3c.dom.Document;
@@ -8,20 +13,31 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+
+
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by denni on 2018-12-05.
  */
 public class LevelParser {
+    public static Position startPos;
+    public static Position goalPos;
+    public static ArrayList<Position> switchPositions = new ArrayList<>();
+    public static ArrayList<Position> pathPositions = new ArrayList<>();
+    public static ArrayList<Position> grassPositions = new ArrayList<>();
+    public static ArrayList<Position> towerZonePositions = new ArrayList<>();
+    public static Tile[][] allTiles = new Tile[10][10];
 
     public static Tile[][] xmlparser(String input){
 
-        Tile[][] allTiles = new Tile[10][10];
+        //Tile[][] allTiles = new Tile[10][10];
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
@@ -49,25 +65,38 @@ public class LevelParser {
 
                             if (tile.getAttribute("type").equals("model.tile.Grass")) {
                                 Grass grass = new Grass(position);
+                                grassPositions.add(position);
                                 allTiles[i][tileNr] = grass;
                             } else if (tile.getAttribute("type").equals("model.tile.Path")) {
                                 Path path = new Path(position);
+                                pathPositions.add(position);
                                 allTiles[i][tileNr] = path;
                             } else if (tile.getAttribute("type").equals("model.tile.Start")) {
                                 Start start = new Start(position);
+                                startPos = start.getPosition();
                                 allTiles[i][tileNr] = start;
                             } else if (tile.getAttribute("type").equals("model.tile.Goal")) {
                                 Goal goal = new Goal(position);
+                                goalPos = goal.getPosition();
                                 allTiles[i][tileNr] = goal;
                             } else if (tile.getAttribute("type").equals("model.tile.Towerzone")) {
                                 Towerzone towerzone = new Towerzone(position);
+                                towerZonePositions.add(position);
                                 allTiles[i][tileNr] = towerzone;
+                            }
+                            else if (tile.getAttribute("type").equals("model.Tile.Pathswitch")) {
+                                PathSwitch switcha = new PathSwitch(position);
+                                switchPositions.add(position);
+                                allTiles[i][tileNr] = switcha;
                             }
 
                             System.out.println("Rad " + (i) + " tile " + tileNr + " är type " +
                                     tile.getAttribute("type"));
 
-                            System.out.println(allTiles[i][tileNr].toString());
+                            //System.out.println("Rad " + (i) + " Tile " + tileNr + " är type " +
+                                   // tile.getAttribute("type"));
+
+                            //System.out.println(allTiles[i][tileNr].toString());
                             tileNr++;
                         }
                     }
@@ -85,5 +114,24 @@ public class LevelParser {
 
         return allTiles;
 
+    }
+
+    public ArrayList<Position> getPathPositions(){
+        return pathPositions;
+    }
+
+    public ArrayList<Position> getSwitchPositions(){
+        return switchPositions;
+    }
+
+    public ArrayList<Position> getTowerZonePositions(){
+        return towerZonePositions;
+    }
+    public Position getStartPos(){
+        return startPos;
+    }
+
+    public Position getGoalPos(){
+        return goalPos;
     }
 }

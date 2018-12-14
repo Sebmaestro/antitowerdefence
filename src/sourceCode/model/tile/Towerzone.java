@@ -11,7 +11,8 @@ public class Towerzone extends Tile {
 
     public Towerzone(Position p) {
         super(p);
-        graphic = "path";
+        graphic = "src/resources/towerzone.png";
+        groundId = 2;
     }
 
     @Override

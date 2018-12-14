@@ -11,7 +11,8 @@ public class Path extends Tile {
 
     public Path(Position p) {
         super(p);
-        graphic = "path";
+        graphic = "src/resources/path.png";
+        groundId = 1;
     }
 
     @Override

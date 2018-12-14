@@ -11,7 +11,8 @@ public class Grass extends Tile {
 
     public Grass(Position p) {
         super(p);
-        graphic = "grass";
+        graphic = "src/resources/grass.png";
+        groundId = 0;
     }
 
     @Override

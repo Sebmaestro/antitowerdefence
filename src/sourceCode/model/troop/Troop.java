@@ -3,15 +3,18 @@ package sourceCode.model.troop;
 import sourceCode.model.Position;
 import sourceCode.model.tile.TyleType;
 import sourceCode.model.Unit;
+import sourceCode.view.Screen;
 
-/**
- * Author: Sebastian Arledal c17sal
- */
-public abstract class Troop implements Unit {
+import java.awt.*;
+
+
+public abstract class Troop extends Rectangle implements Unit{
+
 
     protected String graphic;
     private Position currentPosition;
     protected Position nextPosition;
+    protected int troopID;
     int hp;
     int speed;
     protected boolean alive;
@@ -23,8 +26,17 @@ public abstract class Troop implements Unit {
         this.direction = direction;
     }
 
+    public void draw(Graphics g){
+        g.drawImage(Screen.tileset_troop[getTroopID()],x,y,width,height, null);
+
+    }
+
     public Position getPosition() {
         return currentPosition;
+    }
+
+    public void setPosition(Position p){
+        currentPosition = p;
     }
 
     /**
@@ -65,6 +77,8 @@ public abstract class Troop implements Unit {
     public int getHp() {
         return hp;
     }
+
+    public int getTroopID(){return troopID;}
 
     public void setSpeed(int speed) {
         this.speed = speed;

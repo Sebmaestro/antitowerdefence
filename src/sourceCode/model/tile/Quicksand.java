@@ -10,7 +10,7 @@ public class Quicksand extends Tile {
 
     public Quicksand(Position p) {
         super(p);
-        graphic = "quicksand";
+        graphic = "src/Resources/quicksand.png";
     }
 
     @Override
