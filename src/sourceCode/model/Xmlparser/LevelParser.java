@@ -70,6 +70,7 @@ public class LevelParser {
                                 allTiles[i][tileNr] = start;
                             } else if (tile.getAttribute("type").equals("model.Tile.Goal")) {
                                 Goal goal = new Goal(position);
+                                goalPos = goal.getPosition();
                                 allTiles[i][tileNr] = goal;
                             } else if (tile.getAttribute("type").equals("model.Tile.Towerzone")) {
                                 Towerzone towerzone = new Towerzone(position);
@@ -82,10 +83,10 @@ public class LevelParser {
                                 allTiles[i][tileNr] = switcha;
                             }
 
-                            System.out.println("Rad " + (i) + " Tile " + tileNr + " är type " +
-                                    tile.getAttribute("type"));
+                            //System.out.println("Rad " + (i) + " Tile " + tileNr + " är type " +
+                                   // tile.getAttribute("type"));
 
-                            System.out.println(allTiles[i][tileNr].toString());
+                            //System.out.println(allTiles[i][tileNr].toString());
                             tileNr++;
                         }
                     }
@@ -103,5 +104,24 @@ public class LevelParser {
 
         return allTiles;
 
+    }
+
+    public ArrayList<Position> getPathPositions(){
+        return pathPositions;
+    }
+
+    public ArrayList<Position> getSwitchPositions(){
+        return switchPositions;
+    }
+
+    public ArrayList<Position> getTowerZonePositions(){
+        return towerZonePositions;
+    }
+    public Position getStartPos(){
+        return startPos;
+    }
+
+    public Position getGoalPos(){
+        return goalPos;
     }
 }

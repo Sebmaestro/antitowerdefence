@@ -17,12 +17,13 @@ public class ImageArray {
     Tile[][] allTiles;
     private BufferedImage[][] theWholeShit;
 
-    public ImageArray() {
+    public ImageArray(Tile[][] allTiles) {
 
         theWholeShit = new BufferedImage[10][10];
 
         allPics = new BufferedImage(55, 55, BufferedImage.TYPE_INT_RGB);
-        allTiles = LevelParser.xmlparser("src/Resources/testlevel.xml");
+        this.allTiles = allTiles;
+
 
 
         for(int i=0; i<allTiles.length; i++){
@@ -36,9 +37,6 @@ public class ImageArray {
 
             }
         }
-
-
-
 
 
     }

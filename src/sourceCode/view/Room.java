@@ -16,30 +16,24 @@ public class Room extends JLayeredPane {
     public int worldHeight = 10;
     int blockSize = 32;
     BufferedImage[][] bufferi;
+    private BufferedImage[][] underLay;
 
     ImageArray imgArr;
 
     public Tile[][] tileMap;
 
-    public Room(){
+    public Room(BufferedImage[][] underLay){
+        this.underLay = underLay;
+
         define();
 
 
     }
 
     public void define(){
-
-       // setSize(new Dimension(550,550));
-        //setMaximumSize(new Dimension(550,550));
-       // setPreferredSize(new Dimension(550,550));
-        bufferi = new ImageArray().getTheWholeShit();
-        //block = new Block[worldWidth][worldHeight];
-        tileMap = new Tile[worldHeight][worldWidth];
-        tileMap = LevelParser.xmlparser("src/Resources/testLevel.xml");
     }
 
     public void physic(){
-
     }
 
 
@@ -48,10 +42,9 @@ public class Room extends JLayeredPane {
 
        // rTroop.setBounds(235 + rTroop.getPosition().getX() * 55, rTroop.getPosition().getY() * 55, 55, 55);
 
-
-       for(int i=0; i<bufferi.length; i++ ){
-            for( int j=0; j<bufferi.length; j++){
-                graphics2D.drawImage(bufferi[j][i],235 + i*55,j*55,null);
+       for(int i=0; i<underLay.length; i++ ){
+            for( int j=0; j<underLay.length; j++){
+                graphics2D.drawImage(underLay[j][i],235 + i*55,j*55,null);
             }
         }
 

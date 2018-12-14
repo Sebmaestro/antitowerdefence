@@ -14,35 +14,27 @@ import java.awt.image.BufferedImage;
  */
 
 public class Overlay extends JLayeredPane {
-    public int worldWidth = 10;
-    public int worldHeight = 10;
-    int blockSize = 32;
-    BufferedImage[][] bufferi;
-    OverlayImageArray overimgArr;
+    BufferedImage[][] overlayImg;
 
-    public Overlay() {
+    public Overlay(BufferedImage[][] overlayImg) {
+        this.overlayImg = overlayImg;
         define();
-
-
     }
 
     public void define() {
-        bufferi = new OverlayImageArray().getTheWholeShit();
-
-
     }
 
-    public void physic() {
-
+    public void updateOverlay(BufferedImage[][] overlayImg) {
+        this.overlayImg = overlayImg;
 
     }
 
 
     public void draw(Graphics g) {
         Graphics2D graphics2D = (Graphics2D) g;
-        for(int i=0; i<bufferi.length; i++ ){
-            for( int j=0; j<bufferi.length; j++){
-                graphics2D.drawImage(bufferi[j][i],235 + i*55,j*55,null);
+        for(int i=0; i<overlayImg.length; i++ ){
+            for( int j=0; j<overlayImg.length; j++){
+                graphics2D.drawImage(overlayImg[j][i],235 + i*55,j*55,null);
             }
         }
     }

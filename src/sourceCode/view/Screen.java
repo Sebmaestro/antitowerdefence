@@ -6,6 +6,8 @@ import sourceCode.model.Tile.Tile;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
 /**
  * Created by denni on 2018-12-10.
  */
@@ -25,24 +27,27 @@ public class Screen extends JLayeredPane implements Runnable{
     public static Lagertest layer;
     public static TowerMofo torn;
     public static Overlay overlay;
+    private BufferedImage[][] underLay, overLay;
 
     public static Point msc = new Point(0,0);
 
-    public Screen(sourceCode.view.Frame frame) {
+    public Screen(sourceCode.view.Frame frame, BufferedImage[][] underLay, BufferedImage[][] overLay) {
         frame.addMouseListener(new KeyHandel());
         frame.addMouseMotionListener(new KeyHandel());
+        this.underLay = underLay;
+        this.overLay = overLay;
 
         thread.start();
     }
 
     public void define(){
 
-        room = new Room();
-        overlay = new Overlay();
+        room = new Room(underLay);
+        overlay = new Overlay(overLay);
 
         setSize(new Dimension(1080,700));
         store = new Store();
-        layer = new Lagertest();
+        //layer = new Lagertest();
         torn = new TowerMofo();
 
 
@@ -52,6 +57,12 @@ public class Screen extends JLayeredPane implements Runnable{
         tileset_tower[0] = new ImageIcon("src/resources/tower_2.png").getImage();
 
     }
+
+    public void updateOverlay(BufferedImage[][] overLayImgarr){
+        overLay = overLayImgarr;
+        repaint();
+    }
+
 
     public void paintComponent(Graphics g){
 
@@ -70,7 +81,7 @@ public class Screen extends JLayeredPane implements Runnable{
         g.setColor(new Color(0,0,0));
         setLayer(room, DEFAULT_LAYER);
         setLayer(torn, PALETTE_LAYER);
-        setLayer(layer, DEFAULT_LAYER);
+//        setLayer(layer, DEFAULT_LAYER);
         setLayer(overlay, PALETTE_LAYER);
 
         room.draw(g); //Drawing the room
@@ -80,13 +91,23 @@ public class Screen extends JLayeredPane implements Runnable{
         //layer.draw(g);
     }
 
+    public Overlay getOverlay(){
+        return overlay;
+    }
+
+
+
+
+
 
     public void run(){
+/*
+
         while(true){
 
             if(!isFirst) {
                 room.physic();
-                layer.physic();
+                //layer.physic();
                 torn.physics(layer.rTroop);
             }
 
@@ -95,7 +116,9 @@ public class Screen extends JLayeredPane implements Runnable{
                 thread.sleep(1);
             }catch(Exception e){}
         }
+        */
     }
+
 
 }
 
