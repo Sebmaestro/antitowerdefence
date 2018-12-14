@@ -1,3 +1,4 @@
+/*
 package sourceCode.view;
 
 
@@ -12,9 +13,7 @@ import sourceCode.model.xmlparser.LevelParser;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by denni on 2018-12-04.
- */
+
 public class Lagertest extends JPanel {
     public Path gubbe;
     public int worldWidth = 10;
@@ -147,3 +146,4 @@ public class Lagertest extends JPanel {
         }
     }
 }
+*/
