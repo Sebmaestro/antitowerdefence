@@ -1,9 +1,11 @@
 package sourceCode.model.tile;
 
+import sourceCode.model.troop.Troop;
+
 /**
  * Author: Sebastian Arledal c17sal
  */
 public interface LandOn {
 
-    TyleType landOn();
+    void landOn(Troop t);
 }

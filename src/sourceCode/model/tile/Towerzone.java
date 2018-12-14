@@ -1,6 +1,7 @@
 package sourceCode.model.tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.TOWERZONE;
 
@@ -31,7 +32,5 @@ public class Towerzone extends Tile {
     }
 
     @Override
-    public TyleType landOn() {
-        return TOWERZONE;
-    }
+    public void landOn(Troop t) {}
 }

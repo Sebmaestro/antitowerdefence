@@ -2,6 +2,7 @@ package sourceCode.model.tile;
 
 import sourceCode.model.Position;
 import sourceCode.model.troop.Direction;
+import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.PATHSWITCH;
 import static sourceCode.model.troop.Direction.*;
@@ -33,8 +34,17 @@ public class PathSwitch extends Tile {
     }
 
     @Override
-    public TyleType landOn() {
-        return PATHSWITCH;
+    public void landOn(Troop t) {
+        t.setDirection(getDirection());
+    }
+
+    public void setDirection() {
+        if (dir == NORTH) {
+            dir = SOUTH;
+            graphic = "src/Resources/switch-down.png";
+        } else
+            dir = NORTH;
+        graphic = "src/Resources/switch-up.png";
     }
 
     public Direction getDirection() {

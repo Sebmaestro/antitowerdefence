@@ -1,11 +1,14 @@
 package sourceCode.model.tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.TELEPORTEXIT;
 
 /**
  * Author: Sebastian Arledal c17sal
+ *
+ * Kanske inte behövs
  */
 public class TeleportExit extends Tile {
 
@@ -30,7 +33,5 @@ public class TeleportExit extends Tile {
     }
 
     @Override
-    public TyleType landOn() {
-        return TELEPORTEXIT;
-    }
+    public void landOn(Troop t) {}
 }

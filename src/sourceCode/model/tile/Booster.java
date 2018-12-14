@@ -1,6 +1,7 @@
 package sourceCode.model.tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.BOOSTER;
 
@@ -14,8 +15,8 @@ public class Booster extends Tile {
         graphic = "src/Resources/booster.png";
     }
     @Override
-    public TyleType landOn() {
-        return BOOSTER;
+    public void landOn(Troop t) {
+        t.setSpeed(20);
     }
 
     @Override

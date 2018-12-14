@@ -1,6 +1,7 @@
 package sourceCode.model.tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.*;
 
@@ -21,8 +22,8 @@ public class Path extends Tile {
     }
 
     @Override
-    public TyleType landOn() {
-        return PATH;
+    public void landOn(Troop t) {
+        t.setSpeed(10);
     }
 
     @Override
