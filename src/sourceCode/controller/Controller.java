@@ -3,8 +3,8 @@ import sourceCode.model.*;
 
 
 import sourceCode.model.Model;
-import sourceCode.model.Tile.Tile;
-import sourceCode.model.Xmlparser.LevelParser;
+import sourceCode.model.tile.Tile;
+import sourceCode.model.xmlparser.LevelParser;
 import sourceCode.view.Frame;
 import sourceCode.view.Overlay;
 

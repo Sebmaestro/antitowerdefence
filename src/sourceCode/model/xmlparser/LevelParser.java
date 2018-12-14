@@ -1,19 +1,13 @@
 package sourceCode.model.xmlparser;
 
 import sourceCode.model.Position;
-
-import java.util.ArrayList;
-
-import sourceCode.model.tile.*;
-import sourceCode.model.Position;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-
+import sourceCode.model.tile.*;
 
 
 import javax.xml.parsers.DocumentBuilder;
@@ -63,23 +57,23 @@ public class LevelParser {
                             Element tile = (Element) t;
                             Position position = new Position(tileNr, (i));
 
-                            if (tile.getAttribute("type").equals("model.tile.Grass")) {
+                            if (tile.getAttribute("type").equals("model.Tile.Grass")) {
                                 Grass grass = new Grass(position);
                                 grassPositions.add(position);
                                 allTiles[i][tileNr] = grass;
-                            } else if (tile.getAttribute("type").equals("model.tile.Path")) {
+                            } else if (tile.getAttribute("type").equals("model.Tile.Path")) {
                                 Path path = new Path(position);
                                 pathPositions.add(position);
                                 allTiles[i][tileNr] = path;
-                            } else if (tile.getAttribute("type").equals("model.tile.Start")) {
+                            } else if (tile.getAttribute("type").equals("model.Tile.Start")) {
                                 Start start = new Start(position);
                                 startPos = start.getPosition();
                                 allTiles[i][tileNr] = start;
-                            } else if (tile.getAttribute("type").equals("model.tile.Goal")) {
+                            } else if (tile.getAttribute("type").equals("model.Tile.Goal")) {
                                 Goal goal = new Goal(position);
                                 goalPos = goal.getPosition();
                                 allTiles[i][tileNr] = goal;
-                            } else if (tile.getAttribute("type").equals("model.tile.Towerzone")) {
+                            } else if (tile.getAttribute("type").equals("model.Tile.Towerzone")) {
                                 Towerzone towerzone = new Towerzone(position);
                                 towerZonePositions.add(position);
                                 allTiles[i][tileNr] = towerzone;
@@ -89,9 +83,6 @@ public class LevelParser {
                                 switchPositions.add(position);
                                 allTiles[i][tileNr] = switcha;
                             }
-
-                            System.out.println("Rad " + (i) + " tile " + tileNr + " är type " +
-                                    tile.getAttribute("type"));
 
                             //System.out.println("Rad " + (i) + " Tile " + tileNr + " är type " +
                                    // tile.getAttribute("type"));

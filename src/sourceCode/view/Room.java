@@ -1,7 +1,7 @@
 package sourceCode.view;
 import sourceCode.model.ImageArray;
-import sourceCode.model.Tile.*;
-import sourceCode.model.Xmlparser.*;
+import sourceCode.model.tile.*;
+import sourceCode.model.xmlparser.*;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="UTF-8"?>
-<levels xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="schema.xsd">
-  <level>
-=======
 <levels>
   <level name="Level 1">
->>>>>>> mammabranch
     <map>
       <row>
         <tile type="model.Tile.Grass"/>

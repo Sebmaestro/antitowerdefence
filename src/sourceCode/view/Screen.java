@@ -1,7 +1,7 @@
 package sourceCode.view;
 import sourceCode.model.KeyHandel;
 import sourceCode.model.Store;
-import sourceCode.model.Tile.Tile;
+import sourceCode.model.tile.Tile;
 
 
 import javax.swing.*;

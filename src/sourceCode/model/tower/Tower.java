@@ -1,12 +1,9 @@
 package sourceCode.model.tower;
-
 import sourceCode.model.Position;
-<<<<<<< HEAD:src/sourceCode/model/tower/Tower.java
 import sourceCode.model.troop.Troop;
-=======
 import sourceCode.view.Screen;
-import sourceCode.model.Troop.Troop;
->>>>>>> mammabranch:src/sourceCode/model/Tower/Tower.java
+import sourceCode.model.troop.Troop;
+
 import sourceCode.model.Unit;
 
 import java.awt.*;

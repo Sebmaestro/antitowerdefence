@@ -2,10 +2,10 @@ package sourceCode.view;
 
 
 import sourceCode.model.Position;
-import sourceCode.model.Tile.Tile;
-import sourceCode.model.Tower.RegularTower;
-import sourceCode.model.Troop.Troop;
-import sourceCode.model.Xmlparser.LevelParser;
+import sourceCode.model.tile.Tile;
+import sourceCode.model.tower.RegularTower;
+import sourceCode.model.troop.Troop;
+import sourceCode.model.xmlparser.LevelParser;
 
 import javax.swing.*;
 import java.awt.*;
