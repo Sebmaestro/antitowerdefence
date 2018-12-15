@@ -62,21 +62,9 @@ public class TileTest {
     }
 
     @Test
-    public void shouldBeCorrectLandOn() {
-        Tile tile = new Path(new Position(1, 1));
-        assertEquals(PATH, tile.landOn());
-    }
-
-    @Test
-    public void shouldBeFalseLandOn() {
-        Tile tile = new Goal(new Position(1,1));
-        assertNotEquals(PATH, tile.landOn());
-    }
-
-    @Test
     public void shouldChangeDirCorrectly() {
-        Tile ps = new PathSwitch(new Position(1, 1 ));
-        ps.clickOn();
-        assertEquals(NORTH, ((PathSwitch) ps).getDirection());
+        PathSwitch ps = new PathSwitch(new Position(1, 1 ));
+        ps.setDirection();
+        assertEquals(NORTH, ps.getDirection());
     }
 }

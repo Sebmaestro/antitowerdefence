@@ -1,6 +1,7 @@
 package sourceCode.model.tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.TELEPORTENTRY;
 
@@ -8,6 +9,8 @@ import static sourceCode.model.tile.TyleType.TELEPORTENTRY;
  * Author: Sebastian Arledal c17sal
  */
 public class TeleportEntry extends Tile {
+
+    private Position exitPosition;
 
     public TeleportEntry(Position p) {
         super(p);
@@ -30,7 +33,11 @@ public class TeleportEntry extends Tile {
     }
 
     @Override
-    public TyleType landOn() {
-        return TELEPORTENTRY;
+    public void landOn(Troop t) {
+        t.setPosition(exitPosition);
+    }
+
+    public void setExitTpPosition(Position p) {
+        exitPosition = p;
     }
 }

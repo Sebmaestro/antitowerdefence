@@ -1,6 +1,7 @@
 package sourceCode.model.tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.GOAL;
 
@@ -27,8 +28,8 @@ public class Goal extends Tile {
     }
 
     @Override
-    public TyleType landOn() {
-        return GOAL;
+    public void landOn(Troop t) {
+        t.setGoalReached();
     }
 
     @Override

@@ -24,8 +24,8 @@ public class Screen extends JLayeredPane implements Runnable{
     public static int myWidth, myHeight;
     public static Room room;
     public static Store store;
-    public static Lagertest layer;
-    public static TowerMofo torn;
+    //public static Lagertest layer;
+    //public static TowerMofo torn;
     public static Overlay overlay;
     private BufferedImage[][] underLay, overLay;
 
@@ -48,7 +48,7 @@ public class Screen extends JLayeredPane implements Runnable{
         setSize(new Dimension(1080,700));
         store = new Store();
         //layer = new Lagertest();
-        torn = new TowerMofo();
+        //torn = new TowerMofo();
 
 
         tileset_troop[0] = new ImageIcon("src/resources/regular.png").getImage();
@@ -80,7 +80,7 @@ public class Screen extends JLayeredPane implements Runnable{
         g.fillRect(0,0, getWidth(), getHeight());
         g.setColor(new Color(0,0,0));
         setLayer(room, DEFAULT_LAYER);
-        setLayer(torn, PALETTE_LAYER);
+        //setLayer(torn, PALETTE_LAYER);
 //        setLayer(layer, DEFAULT_LAYER);
         setLayer(overlay, PALETTE_LAYER);
 
