@@ -1,13 +1,11 @@
-package sourceCode.view;
+/*package sourceCode.view;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 
-/**
- * Created by denni on 2018-12-05.
- */
+
 public class View extends JFrame{
     public JFrame gameFrame;
     public Canvas canvas = new Canvas();
@@ -50,3 +48,4 @@ public class View extends JFrame{
     }
 
 }
+*/

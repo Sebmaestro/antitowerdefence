@@ -1,6 +1,7 @@
 package sourceCode.view;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel {
     JButton troop1, troop2, troop3;
@@ -14,6 +15,15 @@ public class ButtonPanel extends JPanel {
         add(troop1);
         add(troop2);
         add(troop3);
+    }
 
+    public void addActionListener(ActionListener e, String troop) {
+        if (troop.equals("Regular")) {
+            troop1.addActionListener(e);
+        } else if (troop.equals("Teleport")) {
+            troop2.addActionListener(e);
+        } else {
+            troop3.addActionListener(e);
+        }
     }
 }
