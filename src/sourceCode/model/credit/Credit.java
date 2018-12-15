@@ -24,7 +24,7 @@ public class Credit {
     }
 
     public void getGoalCredits() {
-        credits = credits + 100;
+        credits = credits + 200;
     }
 
     public int getCredits() {
