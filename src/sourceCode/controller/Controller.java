@@ -41,7 +41,7 @@ public class Controller {
 
     private ArrayList<Position> troopPosition;
     private ArrayList<Troop> regularTroops;
-    private ArrayList<RegularTroop> troopsToKill;
+    private ArrayList<Troop> troopsToKill;
 
     private BufferedImage[][] underlay, overlay;
 
@@ -135,7 +135,7 @@ public class Controller {
 
                   
 
-
+                    frame.getButtonPanel().setMoneyField(money.getCredits());
                     overlayimgArr.updateImage();
                     frame.getScreen().updateOverlay(copyOff(overlayimgArr.getTheWholeShit()));
                     frame.getScreen().repaint();
@@ -169,6 +169,7 @@ public class Controller {
                 Troop reg = iter.next();
                 if(reg.isGoalReached()){
                     iter.remove();
+                    money.getGoalCredits();
                 }
             }
 

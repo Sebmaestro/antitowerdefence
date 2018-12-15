@@ -1,10 +1,12 @@
 package sourceCode.view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel {
-    JButton troop1, troop2, troop3;
+    private JButton troop1, troop2, troop3;
+    private JTextField moneyField;
     public ButtonPanel() {
         define();
     }
@@ -12,6 +14,10 @@ public class ButtonPanel extends JPanel {
         troop1 = new JButton("Regular - $100");
         troop2 = new JButton("Teleport - $700");
         troop3 = new JButton("Mamma - Free");
+        moneyField = new JTextField();
+        moneyField.setPreferredSize(new Dimension(120,30));
+        moneyField.setEditable(false);
+        add(moneyField);
         add(troop1);
         add(troop2);
         add(troop3);
@@ -25,5 +31,8 @@ public class ButtonPanel extends JPanel {
         } else {
             troop3.addActionListener(e);
         }
+    }
+    public void setMoneyField(int money) {
+        moneyField.setText("Credits: $"+money);
     }
 }
