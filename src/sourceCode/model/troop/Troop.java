@@ -97,10 +97,16 @@ public abstract class Troop extends Rectangle implements Unit{
 
     public void move(Tile[][] tileMap){
 
+        if(isGoalReached()){
+            return;
+        }
+
         east = currentPosition.getPosToEast();
         south = currentPosition.getPosToSouth();
         west = currentPosition.getPosToWest();
         north = currentPosition.getPosToNorth();
+
+
 
         if(direction == Direction.EAST){
             System.out.println("öster");

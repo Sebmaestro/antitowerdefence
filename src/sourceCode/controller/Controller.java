@@ -1,6 +1,8 @@
 package sourceCode.controller;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import sourceCode.model.*;
 
@@ -34,10 +36,17 @@ public class Controller {
     private OverlayImageArray overlayimgArr;
     private ArrayList<Position> pathPosition;
     private Position startPos, goalPos;
+
     private ArrayList<Position> troopPosition;
     private ArrayList<RegularTroop> regularTroops;
+    private ArrayList<RegularTroop> troopsToKill;
 
     private BufferedImage[][] underlay, overlay;
+
+    private final Object troopListLock = new Object();
+
+
+
 
 
 
@@ -77,6 +86,7 @@ public class Controller {
 
         RegularTroop reg = new RegularTroop(startPos, Direction.EAST);
         regularTroops.add(reg);
+
 
         /*
         RegularTroop reg2 = new RegularTroop(startPos, Direction.EAST);
@@ -122,21 +132,31 @@ public class Controller {
             try {
                 SwingUtilities.invokeAndWait(() -> {
 
+                  
+
+
                     overlayimgArr.updateImage();
                     frame.getScreen().updateOverlay(copyOff(overlayimgArr.getTheWholeShit()));
                     frame.getScreen().repaint();
 
                     try {
-                        Thread.sleep(700);
+                        Thread.sleep(300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
 
 
-                    for (RegularTroop reg : regularTroops) {
-                        reg.move(tiles);
-                    }
+                    removeTroops();
+
+                    moveTroops();
+
+
+
+
+
+
+
 
 
 
@@ -148,6 +168,29 @@ public class Controller {
             }
         }
 
+    }
+
+    public void removeTroops(){
+        Iterator<RegularTroop> iter = regularTroops.iterator();
+        synchronized (troopListLock) {
+            while(iter.hasNext()){
+                RegularTroop reg = iter.next();
+                if(reg.isGoalReached()){
+                    iter.remove();
+                }
+            }
+
+        }
+    }
+
+    public void moveTroops(){
+        synchronized (troopListLock) {
+            if(regularTroops.size() > 0) {
+                for (RegularTroop reg : regularTroops) {
+                    reg.move(tiles);
+                }
+            }
+        }
     }
 
 
