@@ -1,4 +1,6 @@
 package sourceCode.controller;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.ConcurrentModificationException;
@@ -78,6 +80,7 @@ public class Controller {
         frame.addScreen();
         frame.addButtonPanel();
         frame.getScreen().setImages(underlay, overlay);
+        setRegularTroopListener();
 
         frame.getScreen().createGameScreen();
 
@@ -152,15 +155,6 @@ public class Controller {
 
                     moveTroops();
 
-
-
-
-
-
-
-
-
-
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -214,6 +208,15 @@ public class Controller {
     }
 
     private void getXMLLevels(String xmlLevel){
+    }
+
+    public void setRegularTroopListener(){
+        frame.getButtonPanel().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                regularTroops.add(new RegularTroop(startPos,Direction.EAST));
+            }
+        }, "Regular");
     }
 
     private BufferedImage getImage(String imagePath){

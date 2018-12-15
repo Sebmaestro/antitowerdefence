@@ -24,6 +24,10 @@ public class Frame extends JFrame{
         //init();
     }
 
+    public ButtonPanel getButtonPanel(){
+        return this.buttonPanel;
+    }
+
     public void addScreen(){
         add(screen, BorderLayout.CENTER);
     }
