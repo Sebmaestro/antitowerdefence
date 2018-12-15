@@ -76,6 +76,7 @@ public class Controller {
         //Skapar en frame med BufferedImageArrays
         frame = new Frame();
         frame.addScreen();
+        frame.addButtonPanel();
         frame.getScreen().setImages(underlay, overlay);
 
         frame.getScreen().createGameScreen();

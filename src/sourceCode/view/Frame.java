@@ -9,6 +9,7 @@ public class Frame extends JFrame{
     public static Dimension size = new Dimension(1080,700);
     private BufferedImage[][] underLay, overLay;
     private Screen screen;
+    private ButtonPanel buttonPanel;
 
     public Frame(){
         setTitle(title);
@@ -19,11 +20,15 @@ public class Frame extends JFrame{
         setVisible(true);
         setLayout(new BorderLayout());
         screen = new Screen();
+        buttonPanel = new ButtonPanel();
         //init();
     }
 
     public void addScreen(){
         add(screen, BorderLayout.CENTER);
+    }
+    public void addButtonPanel() {
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
     private void init(){
