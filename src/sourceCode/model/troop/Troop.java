@@ -30,10 +30,6 @@ public abstract class Troop extends Rectangle implements Unit{
         this.direction = direction;
     }
 
-    public void draw(Graphics g){
-        g.drawImage(Screen.tileset_troop[getTroopID()],x,y,width,height, null);
-
-    }
 
     public Position getPosition() {
         return currentPosition;

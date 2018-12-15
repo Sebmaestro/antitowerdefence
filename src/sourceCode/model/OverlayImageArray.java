@@ -30,15 +30,11 @@ public class OverlayImageArray {
         theWholeShit = new BufferedImage[10][10];
         regTroopPosition = new ArrayList<>();
 
-
-
         for(int i=0; i<worldSize; i++){
             for(int j=0; j<worldSize;j++){
                     theWholeShit[i][j] = invisible;
             }
         }
-
-
 
     }
 

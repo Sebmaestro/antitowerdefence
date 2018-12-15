@@ -16,15 +16,22 @@ public class Frame extends JFrame{
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        init();
+        setVisible(true);
+        setLayout(new BorderLayout());
+        screen = new Screen();
+        //init();
+    }
+
+    public void addScreen(){
+        add(screen, BorderLayout.CENTER);
     }
 
     private void init(){
-        setLayout(new BorderLayout());
-        screen = new Screen();
 
-        add(screen, BorderLayout.CENTER);
-        setVisible(true);
+        //screen = new Screen();
+
+        //add(screen, BorderLayout.CENTER);
+
     }
 
     public Screen getScreen(){

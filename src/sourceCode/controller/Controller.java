@@ -1,4 +1,6 @@
 package sourceCode.controller;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import sourceCode.model.*;
 
@@ -11,8 +13,10 @@ import sourceCode.model.troop.Troop;
 import sourceCode.model.xmlparser.LevelParser;
 import sourceCode.view.Frame;
 import sourceCode.view.Overlay;
+import sourceCode.view.Screen;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +36,9 @@ public class Controller {
     private Position startPos, goalPos;
     private ArrayList<Position> troopPosition;
     private ArrayList<RegularTroop> regularTroops;
+
+    private BufferedImage[][] underlay, overlay;
+
 
 
     public Controller() throws IOException {
@@ -53,63 +60,109 @@ public class Controller {
         overlayimgArr = new OverlayImageArray(tiles.length);
         overlayimgArr.addPaths(pathPosition, startPos, goalPos);
 
+        //sätter dessa bilder
+        underlay = copyOff(imgArr.getTheWholeShit());
+        overlay = copyOff(overlayimgArr.getTheWholeShit());
+
         //Skapar en frame med BufferedImageArrays
         frame = new Frame();
-        System.out.println("mammi");
-        frame.getScreen().setImages(imgArr.getTheWholeShit(), overlayimgArr.getTheWholeShit());
+        frame.addScreen();
+        frame.getScreen().setImages(underlay, overlay);
+
+        frame.getScreen().createGameScreen();
 
 
         //Skapar en trupp och lägger in den i listan
         regularTroops = new ArrayList<>();
+
         RegularTroop reg = new RegularTroop(startPos, Direction.EAST);
         regularTroops.add(reg);
+
+        /*
+        RegularTroop reg2 = new RegularTroop(startPos, Direction.EAST);
+        reg2.setPosition(new Position(2,3));
+        regularTroops.add(reg2);
+        */
+
+
 
         //Lägger till truppen i listan hos overlayImage-klassen
         overlayimgArr.addRegularTroopList(regularTroops);
 
 
-        //frame.getScreen().repaint();
+
+
 
         //Loopar spelet
-        gameLoop();
+        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+
+
+                gameLoop();
+
+                return null;
+            }
+
+
+        };
+
+        worker.execute();
+
     }
 
-    public void gameLoop(){
-
-        RegularTroop reg = regularTroops.get(0);
-        frame.getScreen().repaint();
-
-        overlayimgArr.updateImage();
-        frame.getScreen().repaint();
-
-        reg.move(tiles);
-
-        overlayimgArr.updateImage();
+    public void gameLoop() {
 
 
+        double time = System.nanoTime();
 
-/*
-        int j =0;
-
-        while(j < 100000000 && !reg.isGoalReached()) {
-
-            if (j > 100000) {
-                reg.move(tiles);
-                overlayimgArr.updateImage();
-                j = 0;
+        while(true) {
 
 
-                //frame.getScreen().updateOverlay(overlayimgArr.getTheWholeShit());
+            try {
+                SwingUtilities.invokeAndWait(() -> {
+
+                    overlayimgArr.updateImage();
+                    frame.getScreen().updateOverlay(copyOff(overlayimgArr.getTheWholeShit()));
+                    frame.getScreen().repaint();
+
+                    try {
+                        Thread.sleep(700);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                    for (RegularTroop reg : regularTroops) {
+                        reg.move(tiles);
+                    }
+
+
+
+                });
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
             }
-            System.out.println("mammaGame");
-            j++;
         }
 
-*/
-
     }
 
 
+    public static BufferedImage[][] copyOff(BufferedImage[][] original){
+
+        BufferedImage[][] copy = new BufferedImage[original.length][original.length];
+
+        for(int i=0; i<original.length; i++){
+            for(int j=0; j<original.length; j++){
+                copy[i][j] = original[i][j];
+            }
+        }
+
+        return copy;
+    }
 
     //Calls all methods to start the gameScreen
     public void startGame(String xmlLevel){
