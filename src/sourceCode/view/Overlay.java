@@ -14,7 +14,12 @@ import java.awt.image.BufferedImage;
  */
 
 public class Overlay extends JLayeredPane {
-    BufferedImage[][] overlayImg;
+    private BufferedImage[][] overlayImg;
+
+
+    public Overlay(){
+
+    }
 
     public Overlay(BufferedImage[][] overlayImg) {
         this.overlayImg = overlayImg;
@@ -28,6 +33,7 @@ public class Overlay extends JLayeredPane {
         this.overlayImg = overlayImg;
 
     }
+
 
 
     public void draw(Graphics g) {

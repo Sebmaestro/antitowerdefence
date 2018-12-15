@@ -30,7 +30,7 @@ public class Store {
                 g.setColor(new Color(255,255,255, 150));
                 g.fillRect(button[i].x, button[i].y, button[i].width, button[i].height);
             }
-            g.drawImage(Screen.tileset_res[0],button[i].x, button[i].y, button[i].width, button[i].height, null);
+            //g.drawImage(Screen.tileset_res[0],button[i].x, button[i].y, button[i].width, button[i].height, null);
             //g.fillRect(button[i].x, button[i].y, button[i].width, button[i].height);
         }
     }
