@@ -2,14 +2,13 @@ package sourceCode.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import sourceCode.model.*;
 
 
 import sourceCode.model.Model;
+import sourceCode.model.credit.Credit;
 import sourceCode.model.tile.Tile;
 import sourceCode.model.troop.Direction;
 import sourceCode.model.troop.RegularTroop;
@@ -24,8 +23,9 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import static sourceCode.model.troop.Direction.EAST;
 
 public class Controller {
     private Frame frame;
@@ -40,17 +40,14 @@ public class Controller {
     private Position startPos, goalPos;
 
     private ArrayList<Position> troopPosition;
-    private ArrayList<RegularTroop> regularTroops;
+    private ArrayList<Troop> regularTroops;
     private ArrayList<RegularTroop> troopsToKill;
 
     private BufferedImage[][] underlay, overlay;
 
     private final Object troopListLock = new Object();
 
-
-
-
-
+    Credit money = new Credit();
 
     public Controller() throws IOException {
         int height = 700;
@@ -88,7 +85,7 @@ public class Controller {
         //Skapar en trupp och lägger in den i listan
         regularTroops = new ArrayList<>();
 
-        RegularTroop reg = new RegularTroop(startPos, Direction.EAST);
+        RegularTroop reg = new RegularTroop(startPos, EAST);
         regularTroops.add(reg);
 
 
@@ -166,10 +163,10 @@ public class Controller {
     }
 
     public void removeTroops(){
-        Iterator<RegularTroop> iter = regularTroops.iterator();
+        Iterator<Troop> iter = regularTroops.iterator();
         synchronized (troopListLock) {
             while(iter.hasNext()){
-                RegularTroop reg = iter.next();
+                Troop reg = iter.next();
                 if(reg.isGoalReached()){
                     iter.remove();
                 }
@@ -181,7 +178,7 @@ public class Controller {
     public void moveTroops(){
         synchronized (troopListLock) {
             if(regularTroops.size() > 0) {
-                for (RegularTroop reg : regularTroops) {
+                for (Troop reg : regularTroops) {
                     reg.move(tiles);
                 }
             }
@@ -214,7 +211,12 @@ public class Controller {
         frame.getButtonPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                regularTroops.add(new RegularTroop(startPos,Direction.EAST));
+                if (money.getCredits() >= 100) {
+                    Troop reg = new RegularTroop(startPos, EAST);
+                    regularTroops.add(reg);
+                    money.buyNewTroop(reg);
+                }
+
             }
         }, "Regular");
     }
