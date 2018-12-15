@@ -13,75 +13,51 @@ import java.awt.image.BufferedImage;
  */
 
 public class Screen extends JLayeredPane implements Runnable{
-    public Thread thread = new Thread(this);
+    //public Thread thread = new Thread(this);
 
-    public static Image[] tileset_ground = new Image[6];
-    public static Image[] tileset_res = new Image[5];
-    public static Image[] tileset_troop = new Image[2];
-    public static Image[] tileset_tower = new Image[2];
     public static Tile[][] tiles;
     public static boolean isFirst = true;
     public static int myWidth, myHeight;
     public static Room room;
     public static Store store;
-    //public static Lagertest layer;
-    //public static TowerMofo torn;
     public static Overlay overlay;
-    private BufferedImage[][] underLay, overLay;
+    private BufferedImage[][] underlayimg, overlayimg;
+
 
     public static Point msc = new Point(0,0);
 
-    public Screen(sourceCode.view.Frame frame, BufferedImage[][] underLay, BufferedImage[][] overLay) {
-        frame.addMouseListener(new KeyHandel());
-        frame.addMouseMotionListener(new KeyHandel());
-        this.underLay = underLay;
-        this.overLay = overLay;
-
-        thread.start();
-    }
-
-    public void define(){
-
-        room = new Room(underLay);
-        overlay = new Overlay(overLay);
-
+    public Screen() {
+        //frame.addMouseListener(new KeyHandel());
+        //frame.addMouseMotionListener(new KeyHandel());
         setSize(new Dimension(1080,700));
-        store = new Store();
-        //layer = new Lagertest();
-        //torn = new TowerMofo();
-
-
-        tileset_troop[0] = new ImageIcon("src/resources/regular.png").getImage();
-
-        tileset_res[0] = new ImageIcon("src/resources/cell.png").getImage();
-        tileset_tower[0] = new ImageIcon("src/resources/tower_2.png").getImage();
-
     }
 
-    public void updateOverlay(BufferedImage[][] overLayImgarr){
-        overLay = overLayImgarr;
-        repaint();
+
+    public void setImages(BufferedImage[][] underLay, BufferedImage[][] overLay) {
+        underlayimg = underLay;
+        overlayimg = overLay;
+    }
+
+    public void createGameScreen(){
+        room = new Room(underlayimg);
+        overlay = new Overlay(overlayimg);
+    }
+
+    public void updateOverlay(BufferedImage[][] overLay){
+        overlay.updateOverlay(overLay);
     }
 
 
     public void paintComponent(Graphics g){
 
 
-        if(isFirst){
-            myWidth = getWidth();
-            myHeight = getHeight();
-
-            define();
-
-            isFirst = false;
-        }
-
+        myWidth = getWidth();
+        myHeight = getHeight();
         g.setColor(new Color(70,70,70));
         g.fillRect(0,0, getWidth(), getHeight());
         g.setColor(new Color(0,0,0));
         setLayer(room, DEFAULT_LAYER);
         //setLayer(torn, PALETTE_LAYER);
-//        setLayer(layer, DEFAULT_LAYER);
         setLayer(overlay, PALETTE_LAYER);
 
         room.draw(g); //Drawing the room
@@ -90,6 +66,8 @@ public class Screen extends JLayeredPane implements Runnable{
         //torn.draw(g);
         //layer.draw(g);
     }
+
+
 
     public Overlay getOverlay(){
         return overlay;
@@ -101,6 +79,8 @@ public class Screen extends JLayeredPane implements Runnable{
 
 
     public void run(){
+
+
 /*
 
         while(true){

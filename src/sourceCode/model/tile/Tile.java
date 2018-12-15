@@ -29,10 +29,7 @@ public abstract class Tile extends Rectangle implements Unit, LandOn {
         this.p = p;
     }
 
-    public void draw(Graphics g){
-        g.drawImage(Screen.tileset_ground[getGroundId()],x,y,width,height, null);
 
-    }
     //Methods
     public int getGroundId() {
         return groundId;

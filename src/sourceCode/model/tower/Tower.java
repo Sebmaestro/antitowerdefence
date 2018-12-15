@@ -23,7 +23,7 @@ public abstract class Tower extends Rectangle implements Unit {
     }
 
     public void draw(Graphics g){
-        g.drawImage(Screen.tileset_tower[getTowerID()],x,y,width,height, null);
+       // g.drawImage(Screen.tileset_tower[getTowerID()],x,y,width,height, null);
 
     }
 
