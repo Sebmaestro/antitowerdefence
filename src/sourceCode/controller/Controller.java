@@ -89,7 +89,7 @@ public class Controller {
         frame.getButtonPanel().setGoalCounter(goalCounter);
         frame.getScreen().setImages(underlay, overlay);
         setRegularTroopListener();
-
+        frame.addMenuBar();
         frame.getScreen().createGameScreen();
 
 

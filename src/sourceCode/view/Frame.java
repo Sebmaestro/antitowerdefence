@@ -10,7 +10,7 @@ public class Frame extends JFrame{
     private BufferedImage[][] underLay, overLay;
     private Screen screen;
     private ButtonPanel buttonPanel;
-
+    private GameMenu menuBar;
     public Frame(){
         setTitle(title);
         setSize(size);
@@ -21,6 +21,7 @@ public class Frame extends JFrame{
         setLayout(new BorderLayout());
         screen = new Screen();
         buttonPanel = new ButtonPanel();
+        menuBar = new GameMenu();
         //init();
     }
 
@@ -34,7 +35,9 @@ public class Frame extends JFrame{
     public void addButtonPanel() {
         add(buttonPanel, BorderLayout.SOUTH);
     }
-
+    public void addMenuBar() {
+        setJMenuBar(menuBar.createMenuBar());
+    }
     private void init(){
 
         //screen = new Screen();
