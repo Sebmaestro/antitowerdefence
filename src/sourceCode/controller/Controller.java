@@ -45,6 +45,7 @@ public class Controller {
     private ArrayList<Troop> regularTroops;
     private ArrayList<Troop> troopsToKill;
     private ArrayList<Tower> towers;
+    private ArrayList<LaserPositions> laserPositionList;
     private int goalCounter = 0;
 
 
@@ -86,7 +87,7 @@ public class Controller {
         frame = new Frame();
         frame.addScreen();
         frame.addButtonPanel();
-        frame.getButtonPanel().setGoalCounter(goalCounter);
+        //frame.getButtonPanel().setGoalCounter(goalCounter);
         frame.getScreen().setImages(underlay, overlay);
         setRegularTroopListener();
 
@@ -99,7 +100,7 @@ public class Controller {
         setUpTowers(towerPosition);
         
 
-
+        laserPositionList = new ArrayList<>();
 
         /*
         RegularTroop reg2 = new RegularTroop(startPos, Direction.EAST);
@@ -109,8 +110,9 @@ public class Controller {
 
 
 
-        //Lägger till truppen i listan hos overlayImage-klassen
+        //Lägger till truppen och tornen i listan hos overlayImage-klassen
         overlayimgArr.addRegularTroopList(regularTroops);
+
 
 
 
@@ -144,9 +146,6 @@ public class Controller {
 
             try {
                 SwingUtilities.invokeAndWait(() -> {
-
-                  
-
 
                     frame.getButtonPanel().setMoneyField(money.getCredits());
                     overlayimgArr.updateImage();
@@ -188,7 +187,7 @@ public class Controller {
                     if(reg.isGoalReached()) {
                         money.getGoalCredits();
                         goalCounter++;
-                        frame.getButtonPanel().setGoalCounter(goalCounter);
+                       // frame.getButtonPanel().setGoalCounter(goalCounter);
                     }
                 }
             }
@@ -219,13 +218,56 @@ public class Controller {
                 for (Tower tower : towers) {
                     if(regularTroops.size() > 0) {
                         if (tower.canReachTroop(regularTroops.get(0))) {
+                            frame.getScreen().getLaser().setLaserPosition(
+                                    tower.getPosition(), regularTroops.get(0).getPosition());
+                            frame.getScreen().drawLaser();
+
+
                             tower.attack(regularTroops.get(0));
+                            LaserPositions laserpos = new LaserPositions(tower.getPosition(),regularTroops.get(0).getPosition());
+                            laserPositionList.add(laserpos);
+                        }
+                    }
+                    if(regularTroops.size() > 1) {
+                        if(!tower.canReachTroop(regularTroops.get(0))) {
+                            if (tower.canReachTroop(regularTroops.get(1))) {
+                                frame.getScreen().getLaser().setLaserPosition(
+                                        tower.getPosition(), regularTroops.get(1).getPosition());
+                                frame.getScreen().drawLaser();
+
+
+                                tower.attack(regularTroops.get(1));
+                                LaserPositions laserpos = new LaserPositions(tower.getPosition(), regularTroops.get(1).getPosition());
+                                laserPositionList.add(laserpos);
+                            }
                         }
                     }
 
+                    if(regularTroops.size() > 2) {
+                        if((!tower.canReachTroop(regularTroops.get(0)) && !tower.canReachTroop(regularTroops.get(1)))) {
+                            if (tower.canReachTroop(regularTroops.get(2))) {
+                                frame.getScreen().getLaser().setLaserPosition(
+                                        tower.getPosition(), regularTroops.get(2).getPosition());
+                                frame.getScreen().drawLaser();
+
+
+                                tower.attack(regularTroops.get(2));
+                                LaserPositions laserpos = new LaserPositions(tower.getPosition(), regularTroops.get(2).getPosition());
+                                laserPositionList.add(laserpos);
+                            }
+                        }
+                    }
+
+
                 }
+                frame.getScreen().getLaser().setPositons(laserPositionList);
+                frame.getScreen().getLaser().setLasers();
+
+
             }
         }
+
+        laserPositionList.clear();
 
     }
 

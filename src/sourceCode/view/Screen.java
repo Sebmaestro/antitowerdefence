@@ -24,12 +24,12 @@ public class Screen extends JLayeredPane implements Runnable{
     public static int myWidth, myHeight;
     public static Room room;
     public static Store store;
+    public static Laser laser;
     public static Overlay overlay;
     private BufferedImage[][] underlayimg, overlayimg;
-    private Line2D laser;
     Position laserStartPos, laserEndPos;
 
-    private boolean laserIsOK;
+    private boolean laserBoolean;
 
 
     public static Point msc = new Point(0,0);
@@ -37,50 +37,9 @@ public class Screen extends JLayeredPane implements Runnable{
     public Screen() {
         //frame.addMouseListener(new KeyHandel());
         //frame.addMouseMotionListener(new KeyHandel());
-        setSize(new Dimension(1080,700));
+        setSize(new Dimension(1080, 700));
 
-        laserIsOK = false;
-        laser = new Line2D() {
-            @Override
-            public double getX1() {
-                return 0;
-            }
-
-            @Override
-            public double getY1() {
-                return 0;
-            }
-
-            @Override
-            public Point2D getP1() {
-                return null;
-            }
-
-            @Override
-            public double getX2() {
-                return 0;
-            }
-
-            @Override
-            public double getY2() {
-                return 0;
-            }
-
-            @Override
-            public Point2D getP2() {
-                return null;
-            }
-
-            @Override
-            public void setLine(double x1, double y1, double x2, double y2) {
-
-            }
-
-            @Override
-            public Rectangle2D getBounds2D() {
-                return null;
-            }
-        };
+        laserBoolean = false;
 
     }
 
@@ -93,12 +52,13 @@ public class Screen extends JLayeredPane implements Runnable{
     public void createGameScreen(){
         room = new Room(underlayimg);
         overlay = new Overlay(overlayimg);
+        laser = new Laser();
     }
 
-    public void drawLaser(Position laserStartPos, Position laserEndPos) {
-        this.laserStartPos = laserStartPos;
-        this.laserEndPos = laserEndPos;
-        laserIsOK = true;
+    public void drawLaser() {
+
+        laserBoolean = true;
+
     }
 
     public void updateOverlay(BufferedImage[][] overLay){
@@ -115,17 +75,26 @@ public class Screen extends JLayeredPane implements Runnable{
         g.fillRect(0,0, getWidth(), getHeight());
         g.setColor(new Color(0,0,0));
 
-        if(laserIsOK){
-            g.drawLine(laserStartPos.getX(), laserStartPos.getY(), laserEndPos.getX(), laserEndPos.getY());
-        }
-
-
         setLayer(room, DEFAULT_LAYER);
         //setLayer(torn, PALETTE_LAYER);
         setLayer(overlay, PALETTE_LAYER);
 
+
+
         room.draw(g); //Drawing the room
         overlay.draw(g);
+
+
+        if(laserBoolean) {
+            setLayer(laser, PALETTE_LAYER);
+            laser.draw(g);
+            laserBoolean = false;
+        }
+
+
+
+
+
         //store.draw(g); // drawing the store
         //torn.draw(g);
         //layer.draw(g);
@@ -135,6 +104,10 @@ public class Screen extends JLayeredPane implements Runnable{
 
     public Overlay getOverlay(){
         return overlay;
+    }
+
+    public Laser getLaser(){
+        return laser;
     }
 
 

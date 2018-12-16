@@ -2,6 +2,7 @@ package sourceCode.model;
 
 import sourceCode.model.tile.Path;
 import sourceCode.model.tile.Tile;
+import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.Troop;
 import sourceCode.model.xmlparser.LevelParser;
@@ -19,7 +20,7 @@ public class OverlayImageArray {
     private BufferedImage allPics;
     Tile[][] allTiles;
     private BufferedImage[][] theWholeShit;
-    private ArrayList<Position> pathPositions, regTroopPosition, telepTroopPosition;
+    private ArrayList<Position> pathPositions, regTroopPosition, telepTroopPosition, towerPositions;
     private BufferedImage path, regular, invisible, start, goal, tower;
     private int worldSize;
     private Position startPos, goalPos;
@@ -65,10 +66,15 @@ public class OverlayImageArray {
 
     }
 
+    public void addTowerZones(ArrayList<Position> towerListPositions){
+        towerPositions = towerListPositions;
+    }
+
     public void clearThePath(){
         for(Position p :pathPositions){
             theWholeShit[p.getY()][p.getX()] = path;
         }
+
 
         theWholeShit[goalPos.getY()][goalPos.getX()] = goal;
         theWholeShit[startPos.getY()][startPos.getX()] = start;
