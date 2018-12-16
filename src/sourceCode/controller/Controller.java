@@ -10,6 +10,8 @@ import sourceCode.model.*;
 import sourceCode.model.Model;
 import sourceCode.model.credit.Credit;
 import sourceCode.model.tile.Tile;
+import sourceCode.model.tower.RegularTower;
+import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.Direction;
 import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.Troop;
@@ -36,16 +38,21 @@ public class Controller {
     private String[][] stringPaths;
     private ImageArray imgArr;
     private OverlayImageArray overlayimgArr;
-    private ArrayList<Position> pathPosition;
+    private ArrayList<Position> pathPosition, towerPosition;
     private Position startPos, goalPos;
 
     private ArrayList<Position> troopPosition;
     private ArrayList<Troop> regularTroops;
     private ArrayList<Troop> troopsToKill;
+    private ArrayList<Tower> towers;
+
+
 
     private BufferedImage[][] underlay, overlay;
 
     private final Object troopListLock = new Object();
+    private final Object towerListLock = new Object();
+
 
     Credit money = new Credit();
 
@@ -60,11 +67,14 @@ public class Controller {
         levelP = new LevelParser();
         tiles = levelP.xmlparser("src/Resources/testlevel.xml");
         pathPosition = levelP.getPathPositions();
+        towerPosition = levelP.getTowerZonePositions();
+
         startPos = levelP.getStartPos();
         goalPos = levelP.getGoalPos();
 
         //Skapar BufferedImageArrays
         imgArr = new ImageArray(tiles);
+        imgArr.setTowerPics(towerPosition);
         overlayimgArr = new OverlayImageArray(tiles.length);
         overlayimgArr.addPaths(pathPosition, startPos, goalPos);
 
@@ -84,9 +94,10 @@ public class Controller {
 
         //Skapar en trupp och lägger in den i listan
         regularTroops = new ArrayList<>();
+        towers = new ArrayList<>();
+        setUpTowers(towerPosition);
+        
 
-        RegularTroop reg = new RegularTroop(startPos, EAST);
-        regularTroops.add(reg);
 
 
         /*
@@ -135,20 +146,23 @@ public class Controller {
 
                   
 
+
                     frame.getButtonPanel().setMoneyField(money.getCredits());
                     overlayimgArr.updateImage();
                     frame.getScreen().updateOverlay(copyOff(overlayimgArr.getTheWholeShit()));
                     frame.getScreen().repaint();
 
                     try {
-                        Thread.sleep(300);
+
+                        Thread.sleep(100);
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
-
-
+                    shootTroops();
                     removeTroops();
+
 
                     moveTroops();
 
@@ -167,9 +181,11 @@ public class Controller {
         synchronized (troopListLock) {
             while(iter.hasNext()){
                 Troop reg = iter.next();
-                if(reg.isGoalReached()){
+
+                if(reg.isGoalReached() || !reg.isAlive()){
                     iter.remove();
                     money.getGoalCredits();
+
                 }
             }
 
@@ -181,10 +197,34 @@ public class Controller {
             if(regularTroops.size() > 0) {
                 for (Troop reg : regularTroops) {
                     reg.move(tiles);
+
+                    System.out.println(reg.getHp());
+
                 }
             }
         }
     }
+
+
+
+
+    public void shootTroops(){
+
+        synchronized (towerListLock) {
+            if(towers.size() > 0) {
+                for (Tower tower : towers) {
+                    if(regularTroops.size() > 0) {
+                        if (tower.canReachTroop(regularTroops.get(0))) {
+                            tower.attack(regularTroops.get(0));
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+
 
 
     public static BufferedImage[][] copyOff(BufferedImage[][] original){
@@ -222,6 +262,12 @@ public class Controller {
         }, "Regular");
     }
 
+
+    public void setUpTowers(ArrayList<Position> towerPosition){
+        for(Position p: towerPosition){
+            towers.add(new RegularTower(p));
+        }
+    }
     private BufferedImage getImage(String imagePath){
         System.out.println(imagePath);
         BufferedImage img;

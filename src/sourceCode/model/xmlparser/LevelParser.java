@@ -9,6 +9,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import sourceCode.model.reflection.Reflection;
 import sourceCode.model.tile.*;
+import sourceCode.model.tower.Tower;
 
 
 import javax.xml.parsers.DocumentBuilder;
@@ -72,6 +73,9 @@ public class LevelParser {
                                 goalPos = ((Goal) gg).getPosition();
                             } else if (gg instanceof Start){
                                 startPos = ((Start) gg).getPosition();
+
+                            } else if (gg instanceof Towerzone){
+                                towerZonePositions.add(((Towerzone) gg).getPosition());
                             }
                             allTiles[i][tileNr] = (Tile) gg;
 

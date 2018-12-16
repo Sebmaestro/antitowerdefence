@@ -20,7 +20,7 @@ public class OverlayImageArray {
     Tile[][] allTiles;
     private BufferedImage[][] theWholeShit;
     private ArrayList<Position> pathPositions, regTroopPosition, telepTroopPosition;
-    private BufferedImage path, regular, invisible, start, goal;
+    private BufferedImage path, regular, invisible, start, goal, tower;
     private int worldSize;
     private Position startPos, goalPos;
     private ArrayList<Troop> regTroopList;
@@ -47,6 +47,7 @@ public class OverlayImageArray {
             invisible = ImageIO.read(new File("src/Resources/invisible.png"));
             start = ImageIO.read(new File("src/Resources/start.png"));
             goal = ImageIO.read(new File("src/Resources/goal.png"));
+            tower = ImageIO.read(new File("src/Resources/tower.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,6 +79,10 @@ public class OverlayImageArray {
         this.pathPositions = pathPositions;
         this.startPos = startPos;
         this.goalPos = goalPos;
+
+    }
+
+    public void laser(){
 
     }
 

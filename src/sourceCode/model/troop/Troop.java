@@ -109,7 +109,6 @@ public abstract class Troop extends Rectangle implements Unit{
 
 
         if(direction == Direction.EAST){
-            System.out.println("öster");
 
             if(tileMap[east.getY()][east.getX()].canWalk()){
                 setPosition(east);
@@ -130,7 +129,6 @@ public abstract class Troop extends Rectangle implements Unit{
 
 
         if(direction == Direction.SOUTH){
-            System.out.println("söder");
 
             if(tileMap[south.getY()][south.getX()].canWalk()){
                 setPosition(south);
@@ -154,7 +152,6 @@ public abstract class Troop extends Rectangle implements Unit{
         }
 
         if(direction == Direction.WEST){
-            System.out.println("väst");
 
             if(tileMap[west.getY()][west.getX()].canWalk()){
                 setPosition(west);
@@ -174,7 +171,6 @@ public abstract class Troop extends Rectangle implements Unit{
         }
 
         if(direction == Direction.NORTH){
-            System.out.println("norr");
 
             if(tileMap[north.getY()][north.getX()].canWalk()){
                 setPosition(north);

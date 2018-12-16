@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by denni on 2018-12-13.
@@ -38,6 +39,19 @@ public class ImageArray {
             }
         }
 
+
+    }
+
+    public void setTowerPics(ArrayList<Position> towerpositions){
+
+
+        for(Position p: towerpositions){
+            try {
+                theWholeShit[p.getY()][p.getX()] = ImageIO.read(new File("src/Resources/tower.png"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
