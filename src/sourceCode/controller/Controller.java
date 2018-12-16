@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+
 import sourceCode.model.*;
 
 
@@ -90,6 +91,9 @@ public class Controller {
         frame.getScreen().setImages(underlay, overlay);
         setRegularTroopListener();
         frame.addMenuBar();
+        setAboutListener();
+        setHelpListener();
+        setQuitListener();
         frame.getScreen().createGameScreen();
 
 
@@ -264,6 +268,46 @@ public class Controller {
 
             }
         }, "Regular");
+    }
+
+    public void setAboutListener() {
+        frame.getGameMenu().setAboutListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "Created by Mammagame Productions");
+            }
+        });
+    }
+
+    public void setHelpListener() {
+        frame.getGameMenu().setHelpListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame,"The goal is to get 50 troops to reach the goal.\n" +
+                        "You can send troops by clicking the buttons on the bottom of the screen.\n" +
+                        "Sending a troop costs credits, the price is specified on the button.\n" +
+                        "You start off with 500$ and earn 200$ for each troop that reaches the goal.\n" +
+                        "Your available credits are displayed to the left of the troop buttons.");
+            }
+        });
+    }
+
+    public void setQuitListener() {
+        frame.getGameMenu().setQuitListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int confirmed = 0;
+                confirmed = JOptionPane.showConfirmDialog(frame,
+                        "Are ye sure sir",
+                        "Quit game",
+                        JOptionPane.YES_NO_OPTION);
+                if(confirmed == 1) {
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                } else {
+                    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+            }
+        });
     }
 
 
