@@ -185,8 +185,10 @@ public class Controller {
                     iter.remove();
                     if(reg.isGoalReached()) {
                         money.getGoalCredits();
-                        goalCounter++;
-                        frame.getButtonPanel().setGoalCounter(goalCounter);
+                        if(goalCounter<50) {
+                            goalCounter++;
+                            frame.getButtonPanel().setGoalCounter(goalCounter);
+                        }
                     }
                 }
             }
