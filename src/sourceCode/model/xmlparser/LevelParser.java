@@ -7,7 +7,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import sourceCode.model.reflection.Reflection;
 import sourceCode.model.tile.*;
+import sourceCode.model.tower.Tower;
 
 
 import javax.xml.parsers.DocumentBuilder;
@@ -35,6 +37,7 @@ public class LevelParser {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
+            int big = 0;
             DocumentBuilder builder = factory.newDocumentBuilder();
             FileInputStream fis = new FileInputStream(input);
             InputSource is = new InputSource(fis);
@@ -57,6 +60,26 @@ public class LevelParser {
                             Element tile = (Element) t;
                             Position position = new Position(tileNr, (i));
 
+
+                            big++;
+
+                            Reflection xd = new Reflection(tile.getAttribute("type"), position);
+                            Object gg = xd.getTile();
+
+                            if (gg instanceof Path) {
+                                    pathPositions.add(((Path) gg).getPosition());
+                            } else if (gg instanceof Goal) {
+
+                                goalPos = ((Goal) gg).getPosition();
+                            } else if (gg instanceof Start){
+                                startPos = ((Start) gg).getPosition();
+
+                            } else if (gg instanceof Towerzone){
+                                towerZonePositions.add(((Towerzone) gg).getPosition());
+                            }
+                            allTiles[i][tileNr] = (Tile) gg;
+
+                            /*
                             if (tile.getAttribute("type").equals("model.Tile.Grass")) {
                                 Grass grass = new Grass(position);
                                 grassPositions.add(position);
@@ -83,7 +106,7 @@ public class LevelParser {
                                 switchPositions.add(position);
                                 allTiles[i][tileNr] = switcha;
                             }
-
+                            */
                             //System.out.println("Rad " + (i) + " Tile " + tileNr + " är type " +
                                    // tile.getAttribute("type"));
 
@@ -94,11 +117,7 @@ public class LevelParser {
                 }
             }
 
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
         }
 

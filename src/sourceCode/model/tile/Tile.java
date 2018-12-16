@@ -49,15 +49,17 @@ public abstract class Tile extends Rectangle implements Unit, LandOn {
 
     public Position getStart(){ return startp;}
 
+    /*
     public void clickOn() {
-        /*//opposite direction of startvalue
+        opposite direction of startvalue
         if (dir == NORTH) {
             dir = SOUTH;
             graphic = "pathswitch south";
         } else
             dir = NORTH;
             graphic = "pathswitch north";
-            */
+
     }
+    */
 
 }

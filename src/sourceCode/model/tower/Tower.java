@@ -38,7 +38,6 @@ public abstract class Tower extends Rectangle implements Unit {
     }
 
     public boolean canReachTroop(Troop t) {
-
         if(p.getPosToEast().equals(t.getPosition())){
             this.target = t;
             attack(target);

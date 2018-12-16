@@ -1,5 +1,6 @@
 package sourceCode.model.tile;
 import sourceCode.model.Position;
+import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.QUICKSAND;
 
@@ -24,8 +25,8 @@ public class Quicksand extends Tile {
     }
 
     @Override
-    public TyleType landOn() {
-        return QUICKSAND;
+    public void landOn(Troop t) {
+        t.setSpeed(5);
     }
 
     @Override

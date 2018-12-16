@@ -3,6 +3,7 @@ package sourceCode.model;
 import sourceCode.model.tile.Path;
 import sourceCode.model.tile.Tile;
 import sourceCode.model.troop.RegularTroop;
+import sourceCode.model.troop.Troop;
 import sourceCode.model.xmlparser.LevelParser;
 
 import javax.imageio.ImageIO;
@@ -19,10 +20,10 @@ public class OverlayImageArray {
     Tile[][] allTiles;
     private BufferedImage[][] theWholeShit;
     private ArrayList<Position> pathPositions, regTroopPosition, telepTroopPosition;
-    private BufferedImage path, regular, invisible, start, goal;
+    private BufferedImage path, regular, invisible, start, goal, tower;
     private int worldSize;
     private Position startPos, goalPos;
-    private ArrayList<RegularTroop> regTroopList;
+    private ArrayList<Troop> regTroopList;
 
     public OverlayImageArray(int worldSize) {
         this.worldSize = worldSize;
@@ -46,6 +47,7 @@ public class OverlayImageArray {
             invisible = ImageIO.read(new File("src/Resources/invisible.png"));
             start = ImageIO.read(new File("src/Resources/start.png"));
             goal = ImageIO.read(new File("src/Resources/goal.png"));
+            tower = ImageIO.read(new File("src/Resources/tower_2.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,7 +57,7 @@ public class OverlayImageArray {
 
 
 
-    public void addRegularTroopList(ArrayList<RegularTroop> regTroopList){
+    public void addRegularTroopList(ArrayList<Troop> regTroopList){
         this.regTroopList = regTroopList;
     }
 
@@ -80,11 +82,15 @@ public class OverlayImageArray {
 
     }
 
+    public void laser(){
+
+    }
+
     public void updateImage(){
         clearThePath();
 
         try {
-            for (RegularTroop reg : regTroopList) {
+            for (Troop reg : regTroopList) {
                 theWholeShit[reg.getPosition().getY()][reg.getPosition().getX()] = regular;
             }
         }catch (NullPointerException e){}

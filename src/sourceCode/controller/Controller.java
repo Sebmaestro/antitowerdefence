@@ -1,12 +1,17 @@
 package sourceCode.controller;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import sourceCode.model.*;
 
 
 import sourceCode.model.Model;
+import sourceCode.model.credit.Credit;
 import sourceCode.model.tile.Tile;
+import sourceCode.model.tower.RegularTower;
+import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.Direction;
 import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.Troop;
@@ -20,8 +25,9 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import static sourceCode.model.troop.Direction.EAST;
 
 public class Controller {
     private Frame frame;
@@ -32,14 +38,20 @@ public class Controller {
     private String[][] stringPaths;
     private ImageArray imgArr;
     private OverlayImageArray overlayimgArr;
-    private ArrayList<Position> pathPosition;
+    private ArrayList<Position> pathPosition, towerPosition;
     private Position startPos, goalPos;
+
     private ArrayList<Position> troopPosition;
-    private ArrayList<RegularTroop> regularTroops;
+    private ArrayList<Troop> regularTroops;
+    private ArrayList<Tower> towers;
+
 
     private BufferedImage[][] underlay, overlay;
 
+    private final Object troopListLock = new Object();
+    private final Object towerListLock = new Object();
 
+    Credit money = new Credit();
 
     public Controller() throws IOException {
         int height = 700;
@@ -52,11 +64,14 @@ public class Controller {
         levelP = new LevelParser();
         tiles = levelP.xmlparser("src/Resources/testlevel.xml");
         pathPosition = levelP.getPathPositions();
+        towerPosition = levelP.getTowerZonePositions();
+
         startPos = levelP.getStartPos();
         goalPos = levelP.getGoalPos();
 
         //Skapar BufferedImageArrays
         imgArr = new ImageArray(tiles);
+        imgArr.setTowerPics(towerPosition);
         overlayimgArr = new OverlayImageArray(tiles.length);
         overlayimgArr.addPaths(pathPosition, startPos, goalPos);
 
@@ -67,16 +82,19 @@ public class Controller {
         //Skapar en frame med BufferedImageArrays
         frame = new Frame();
         frame.addScreen();
+        frame.addButtonPanel();
         frame.getScreen().setImages(underlay, overlay);
+        setRegularTroopListener();
 
         frame.getScreen().createGameScreen();
 
 
         //Skapar en trupp och lägger in den i listan
         regularTroops = new ArrayList<>();
+        towers = new ArrayList<>();
+        setUpTowers(towerPosition);
 
-        RegularTroop reg = new RegularTroop(startPos, Direction.EAST);
-        regularTroops.add(reg);
+
 
         /*
         RegularTroop reg2 = new RegularTroop(startPos, Direction.EAST);
@@ -122,29 +140,77 @@ public class Controller {
             try {
                 SwingUtilities.invokeAndWait(() -> {
 
+                  
+
+
                     overlayimgArr.updateImage();
                     frame.getScreen().updateOverlay(copyOff(overlayimgArr.getTheWholeShit()));
                     frame.getScreen().repaint();
 
                     try {
-                        Thread.sleep(700);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
 
 
-                    for (RegularTroop reg : regularTroops) {
-                        reg.move(tiles);
-                    }
+
+                    shootTroops();
+                    removeTroops();
 
 
+
+                    moveTroops();
 
                 });
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void removeTroops(){
+        Iterator<Troop> iter = regularTroops.iterator();
+        synchronized (troopListLock) {
+            while(iter.hasNext()){
+                Troop reg = iter.next();
+                if(reg.isGoalReached() || !reg.isAlive()){
+                    iter.remove();
+                }
+            }
+
+        }
+    }
+
+    public void moveTroops(){
+        synchronized (troopListLock) {
+            if(regularTroops.size() > 0) {
+                for (Troop reg : regularTroops) {
+                    reg.move(tiles);
+                    System.out.println(reg.getHp());
+                }
+            }
+        }
+    }
+
+
+
+    public void shootTroops(){
+
+        synchronized (towerListLock) {
+            if(towers.size() > 0) {
+                for (Tower tower : towers) {
+                    if(regularTroops.size() > 0) {
+                        if (tower.canReachTroop(regularTroops.get(0))) {
+                            tower.attack(regularTroops.get(0));
+                        }
+                    }
+
+                }
             }
         }
 
@@ -170,6 +236,26 @@ public class Controller {
     }
 
     private void getXMLLevels(String xmlLevel){
+    }
+
+    public void setRegularTroopListener(){
+        frame.getButtonPanel().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (money.getCredits() >= 100) {
+                    Troop reg = new RegularTroop(startPos, EAST);
+                    regularTroops.add(reg);
+                    money.buyNewTroop(reg);
+                }
+
+            }
+        }, "Regular");
+    }
+
+    public void setUpTowers(ArrayList<Position> towerPosition){
+        for(Position p: towerPosition){
+            towers.add(new RegularTower(p));
+        }
     }
 
     private BufferedImage getImage(String imagePath){

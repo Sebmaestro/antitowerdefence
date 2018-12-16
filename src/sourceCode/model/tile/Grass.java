@@ -1,6 +1,7 @@
 package sourceCode.model.tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.GRASS;
 
@@ -31,8 +32,7 @@ public class Grass extends Tile {
         return false;
     }
 
+
     @Override
-    public TyleType landOn() {
-        return GRASS;
-    }
+    public void landOn(Troop t) {}
 }
