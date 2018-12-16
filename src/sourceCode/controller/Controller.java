@@ -45,7 +45,7 @@ public class Controller {
     private ArrayList<Troop> regularTroops;
     private ArrayList<Troop> troopsToKill;
     private ArrayList<Tower> towers;
-
+    private int goalCounter = 0;
 
 
     private BufferedImage[][] underlay, overlay;
@@ -86,6 +86,7 @@ public class Controller {
         frame = new Frame();
         frame.addScreen();
         frame.addButtonPanel();
+        frame.getButtonPanel().setGoalCounter(goalCounter);
         frame.getScreen().setImages(underlay, overlay);
         setRegularTroopListener();
 
@@ -184,8 +185,11 @@ public class Controller {
 
                 if(reg.isGoalReached() || !reg.isAlive()){
                     iter.remove();
-                    money.getGoalCredits();
-
+                    if(reg.isGoalReached()) {
+                        money.getGoalCredits();
+                        goalCounter++;
+                        frame.getButtonPanel().setGoalCounter(goalCounter);
+                    }
                 }
             }
 
