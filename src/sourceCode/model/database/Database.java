@@ -36,7 +36,7 @@ public class Database {
             s = con.createStatement();
             s.executeUpdate("USE v135h18g7");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -47,7 +47,7 @@ public class Database {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

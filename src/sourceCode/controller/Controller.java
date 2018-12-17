@@ -64,9 +64,13 @@ public class Controller {
 
     private HighscoreHandler handler;
 
+    private StartMenuFrame start;
+
     public Controller() throws IOException {
         int height = 700;
         int width = 1080;
+
+        start = new StartMenuFrame();
 
 
         //startGame("src/Resources/testLevel.xml");
@@ -324,6 +328,33 @@ public class Controller {
                 //Kör igen
             }
         }, "play");
+    }
+
+    public void setMap1Listener() {
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Välj xml för första mappen och starta spelet
+            }
+        }, "map1");
+    }
+
+    public void setMap2Listener() {
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Välj xml för andra mappen och starta spelet
+            }
+        }, "map2");
+    }
+
+    public void setHighscoreListener() {
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Visa highscore
+            }
+        }, "highscore");
     }
 
     public void setSubmitButtonListener() {

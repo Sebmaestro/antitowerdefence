@@ -63,21 +63,21 @@ public class LevelParser {
 
                             big++;
 
-                            Reflection xd = new Reflection(tile.getAttribute("type"), position);
-                            Object gg = xd.getTile();
+                            Reflection reflection = new Reflection(tile.getAttribute("type"), position);
+                            Object obj = reflection.getTile();
 
-                            if (gg instanceof Path) {
-                                    pathPositions.add(((Path) gg).getPosition());
-                            } else if (gg instanceof Goal) {
+                            if (obj instanceof Path) {
+                                    pathPositions.add(((Path) obj).getPosition());
+                            } else if (obj instanceof Goal) {
 
-                                goalPos = ((Goal) gg).getPosition();
-                            } else if (gg instanceof Start){
-                                startPos = ((Start) gg).getPosition();
+                                goalPos = ((Goal) obj).getPosition();
+                            } else if (obj instanceof Start){
+                                startPos = ((Start) obj).getPosition();
 
-                            } else if (gg instanceof Towerzone){
-                                towerZonePositions.add(((Towerzone) gg).getPosition());
+                            } else if (obj instanceof Towerzone){
+                                towerZonePositions.add(((Towerzone) obj).getPosition());
                             }
-                            allTiles[i][tileNr] = (Tile) gg;
+                            allTiles[i][tileNr] = (Tile) obj;
 
                             /*
                             if (tile.getAttribute("type").equals("model.Tile.Grass")) {
