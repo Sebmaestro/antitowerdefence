@@ -17,8 +17,9 @@ public class HighscoreHandler {
     /**
      * Constructor
      */
-    public HighscoreHandler() {
+    public HighscoreHandler(List<HighscoreInfo> list) {
             l = new ArrayList<>(10);
+            l = list;
         }
 
     /**

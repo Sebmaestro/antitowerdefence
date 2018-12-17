@@ -91,7 +91,7 @@ public class Database {
             }
             con.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

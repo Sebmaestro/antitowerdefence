@@ -3,30 +3,28 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import sourceCode.model.*;
 
 
 import sourceCode.model.Model;
 import sourceCode.model.credit.Credit;
+import sourceCode.model.database.Database;
+import sourceCode.model.database.HighscoreHandler;
+import sourceCode.model.database.HighscoreInfo;
 import sourceCode.model.tile.Tile;
 import sourceCode.model.tower.RegularTower;
 import sourceCode.model.tower.Tower;
-import sourceCode.model.troop.Direction;
 import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.Troop;
 import sourceCode.model.xmlparser.LevelParser;
-import sourceCode.view.Frame;
-import sourceCode.view.Overlay;
-import sourceCode.view.Screen;
+import sourceCode.view.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import static sourceCode.model.troop.Direction.EAST;
 
@@ -54,15 +52,24 @@ public class Controller {
     private final Object troopListLock = new Object();
     private final Object towerListLock = new Object();
 
+    private PopupFrame popupFrame;
+    private PopupHighscoreFrame newHighscore;
 
     Credit money = new Credit();
+
+    int gameWon = 0;
+
+    private Database db = new Database();
+
+    private HighscoreHandler handler;
 
     public Controller() throws IOException {
         int height = 700;
         int width = 1080;
 
+
         //startGame("src/Resources/testLevel.xml");
-       // imgArr = new ImageArray();
+        // imgArr = new ImageArray();
 
         //Inläsning
         levelP = new LevelParser();
@@ -90,10 +97,7 @@ public class Controller {
         frame.getButtonPanel().setGoalCounter(goalCounter);
         frame.getScreen().setImages(underlay, overlay);
         setRegularTroopListener();
-        frame.addMenuBar();
-        setAboutListener();
-        setHelpListener();
-        setQuitListener();
+
         frame.getScreen().createGameScreen();
 
 
@@ -101,8 +105,6 @@ public class Controller {
         regularTroops = new ArrayList<>();
         towers = new ArrayList<>();
         setUpTowers(towerPosition);
-        
-
 
 
         /*
@@ -111,13 +113,10 @@ public class Controller {
         regularTroops.add(reg2);
         */
 
-
+        //handler = new HighscoreHandler();
 
         //Lägger till truppen i listan hos overlayImage-klassen
         overlayimgArr.addRegularTroopList(regularTroops);
-
-
-
 
 
         //Loopar spelet
@@ -149,7 +148,7 @@ public class Controller {
             try {
                 SwingUtilities.invokeAndWait(() -> {
 
-                  
+
 
 
                     frame.getButtonPanel().setMoneyField(money.getCredits());
@@ -189,14 +188,29 @@ public class Controller {
                     iter.remove();
                     if(reg.isGoalReached()) {
                         money.getGoalCredits();
-                        if(goalCounter<50) {
+                        if(goalCounter<1) {
                             goalCounter++;
                             frame.getButtonPanel().setGoalCounter(goalCounter);
+                        } else if (gameWon == 0){
+                            //Game is done
+                            gameWon = 1;
+                            popupFrame = new PopupFrame("Map2");
+                            newHighscore = new PopupHighscoreFrame();
+                            Database db = new Database();
+                            handler = new HighscoreHandler(db.getHighscores("Map2"));
+                            setSubmitButtonListener();
+                            setQuitButtonListener();
+                            popupFrame.setColumns();
+
+
+                            //handler.checkAndInsertHighscore(new HighscoreInfo("Thebiggest", 45));
+                            //handler.checkAndInsertHighscore(new HighscoreInfo("xgod", 10));
+                            popupFrame.showHighscores(handler.getList());
+                            db.saveHighscores(handler.getList(), "Map2");
                         }
                     }
                 }
             }
-
         }
     }
 
@@ -256,6 +270,37 @@ public class Controller {
     private void getXMLLevels(String xmlLevel){
     }
 
+    public void setPlayagainListener() {
+        popupFrame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Kör igen
+            }
+        }, "play");
+    }
+
+    public void setSubmitButtonListener() {
+        newHighscore.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), 5));
+                popupFrame.clear();
+                popupFrame.showHighscores(handler.getList());
+                db.saveHighscores(handler.getList(), "Map2");
+                newHighscore.dispose();
+            }
+        });
+    }
+
+    public void setQuitButtonListener() {
+        popupFrame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        }, "quit");
+    }
+
     public void setRegularTroopListener(){
         frame.getButtonPanel().addActionListener(new ActionListener() {
             @Override
@@ -268,46 +313,6 @@ public class Controller {
 
             }
         }, "Regular");
-    }
-
-    public void setAboutListener() {
-        frame.getGameMenu().setAboutListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame, "Created by Mammagame Productions");
-            }
-        });
-    }
-
-    public void setHelpListener() {
-        frame.getGameMenu().setHelpListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(frame,"The goal is to get 50 troops to reach the goal.\n" +
-                        "You can send troops by clicking the buttons on the bottom of the screen.\n" +
-                        "Sending a troop costs credits, the price is specified on the button.\n" +
-                        "You start off with 500$ and earn 200$ for each troop that reaches the goal.\n" +
-                        "Your available credits are displayed to the left of the troop buttons.");
-            }
-        });
-    }
-
-    public void setQuitListener() {
-        frame.getGameMenu().setQuitListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int confirmed = 0;
-                confirmed = JOptionPane.showConfirmDialog(frame,
-                        "Are ye sure sir",
-                        "Quit game",
-                        JOptionPane.YES_NO_OPTION);
-                if(confirmed == 1) {
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                } else {
-                    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-                }
-            }
-        });
     }
 
 
@@ -329,5 +334,4 @@ public class Controller {
 
         return img;
     }
-
 }

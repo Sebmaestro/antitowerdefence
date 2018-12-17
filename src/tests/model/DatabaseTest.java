@@ -50,7 +50,7 @@ public class DatabaseTest {
     @Test
     public void shouldBeAbleToTakeNewHighscoreAndUpdateTable() {
         Database db = new Database();
-        HighscoreHandler h = new HighscoreHandler();
+        HighscoreHandler h = new HighscoreHandler(db.getHighscores("Map1"));
         for (int i = 0; i < 15; i++) {
             if (h.addHighscoreToList(new HighscoreInfo
                     ("Sebbe", (i * 20) + 10 ))) {
@@ -58,7 +58,7 @@ public class DatabaseTest {
             }
         }
         h.checkAndInsertHighscore(new HighscoreInfo("Beast", 23));
-        h.checkAndInsertHighscore(new HighscoreInfo("ezforme", 1));
+        h.checkAndInsertHighscore(new HighscoreInfo("lalalalalalalalalala", 1));
         db.saveHighscores(h.getList(), "Map2");
         List<HighscoreInfo> hslist = db.getHighscores("Map2");
         assertEquals(hslist.get(5).getFinishTime(), 70);
