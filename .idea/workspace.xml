@@ -2,41 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a69de2c9-e1eb-4c98-8a50-b422b338642e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/tile/Switchdown.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/tile/Switchup.class" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/resources/testLevel2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/resources/testLevel2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/sourceCode/model/tile/Switchdown.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/sourceCode/model/tile/Switchup.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/resources/tower_2.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/resources/tower_2.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/resources/booster.png" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/resources/booster.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/resources/quicksand.png" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/resources/quicksand.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/resources/switch-down.png" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/resources/switch-down.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/resources/switch-up.png" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/resources/switch-up.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$1.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$2.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$3.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$4.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$5.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/OverlayImageArray.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/OverlayImageArray.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/Tile/PathSwitch.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/Tile/PathSwitch.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/Troop/Troop.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/Troop/Troop.class" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$2.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$3.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$4.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$5.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$6.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$7.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller$8.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/controller/Controller.class" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/sourceCode/model/logic/Hej.java" afterPath="$PROJECT_DIR$/src/sourceCode/model/logic/Game.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/Xmlparser/LevelParser.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/Xmlparser/LevelParser.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/database/Database.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/model/database/Database.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/view/PopupHighscoreFrame.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/view/PopupHighscoreFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/view/StartMenuFrame.class" afterPath="$PROJECT_DIR$/out/production/antitowerdefence/sourceCode/view/StartMenuFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources/booster.png" afterPath="$PROJECT_DIR$/src/resources/booster.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources/quicksand.png" afterPath="$PROJECT_DIR$/src/resources/quicksand.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources/switch-down.png" afterPath="$PROJECT_DIR$/src/resources/switch-down.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/resources/switch-up.png" afterPath="$PROJECT_DIR$/src/resources/switch-up.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sourceCode/controller/Controller.java" afterPath="$PROJECT_DIR$/src/sourceCode/controller/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sourceCode/model/OverlayImageArray.java" afterPath="$PROJECT_DIR$/src/sourceCode/model/OverlayImageArray.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sourceCode/model/tile/PathSwitch.java" afterPath="$PROJECT_DIR$/src/sourceCode/model/tile/PathSwitch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sourceCode/model/troop/Troop.java" afterPath="$PROJECT_DIR$/src/sourceCode/model/troop/Troop.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sourceCode/model/xmlparser/LevelParser.java" afterPath="$PROJECT_DIR$/src/sourceCode/model/xmlparser/LevelParser.java" />
     </list>
     <ignored path="antitowerdefence.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,8 +38,34 @@
       <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sourceCode/controller/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2024">
-              <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/sourceCode/model/logic/Game.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6396">
+              <caret line="338" column="17" selection-start-line="338" selection-start-column="17" selection-end-line="338" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#12050#12051#0" expanded="true" />
+                <element signature="e#12096#12097#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sourceCode/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -83,7 +87,14 @@
             <state relative-caret-position="264">
               <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#452#453#0" expanded="false" />
+                <element signature="e#479#480#0" expanded="false" />
+                <element signature="e#530#531#0" expanded="false" />
+                <element signature="e#557#558#0" expanded="false" />
+                <element signature="e#609#610#0" expanded="false" />
+                <element signature="e#637#638#0" expanded="false" />
+                <element signature="e#763#764#0" expanded="false" />
+                <element signature="e#789#790#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -95,7 +106,16 @@
             <state relative-caret-position="198">
               <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#454#455#0" expanded="false" />
+                <element signature="e#481#482#0" expanded="false" />
+                <element signature="e#532#533#0" expanded="false" />
+                <element signature="e#559#560#0" expanded="false" />
+                <element signature="e#611#612#0" expanded="false" />
+                <element signature="e#639#640#0" expanded="false" />
+                <element signature="e#688#689#0" expanded="false" />
+                <element signature="e#734#735#0" expanded="false" />
+                <element signature="e#1010#1011#0" expanded="false" />
+                <element signature="e#1036#1037#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -104,7 +124,7 @@
       <file leaf-file-name="OverlayImageArray.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sourceCode/model/OverlayImageArray.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1012">
+            <state relative-caret-position="-16">
               <caret line="57" column="68" selection-start-line="57" selection-start-column="68" selection-end-line="57" selection-end-column="68" />
               <folding />
             </state>
@@ -115,40 +135,26 @@
         <entry file="file://$PROJECT_DIR$/src/sourceCode/model/troop/Troop.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="4268">
-              <caret line="224" column="13" selection-start-line="224" selection-start-column="13" selection-end-line="224" selection-end-column="13" />
+              <caret line="224" column="9" selection-start-line="224" selection-start-column="9" selection-end-line="224" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="switch-down.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/resources/switch-down.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="switch-up.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/resources/switch-up.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Goal.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sourceCode/model/tile/Goal.java">
+      <file leaf-file-name="ImageArray.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sourceCode/model/ImageArray.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+            <state relative-caret-position="280">
+              <caret line="47" column="40" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LevelParser.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LevelParser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sourceCode/model/xmlparser/LevelParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-522">
+            <state relative-caret-position="220">
               <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -187,18 +193,19 @@
         <option value="$PROJECT_DIR$/src/sourceCode/model/tile/PathSwitch.java" />
         <option value="$PROJECT_DIR$/src/sourceCode/model/tile/Switchdown.java" />
         <option value="$PROJECT_DIR$/src/sourceCode/model/tile/Switchup.java" />
-        <option value="$PROJECT_DIR$/src/sourceCode/controller/Controller.java" />
         <option value="$PROJECT_DIR$/src/sourceCode/model/OverlayImageArray.java" />
         <option value="$PROJECT_DIR$/src/sourceCode/model/troop/Troop.java" />
         <option value="$PROJECT_DIR$/src/sourceCode/model/xmlparser/LevelParser.java" />
+        <option value="$PROJECT_DIR$/src/sourceCode/model/logic/Game.java" />
+        <option value="$PROJECT_DIR$/src/sourceCode/controller/Controller.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
-    <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1048" />
+    <option name="x" value="51" />
+    <option name="y" value="32" />
+    <option name="width" value="1722" />
+    <option name="height" value="952" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -319,32 +326,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="xmlparser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antitowerdefence" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antitowerdefence" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sourceCode" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="troop" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -371,7 +352,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tile" />
+              <option name="myItemId" value="logic" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -397,29 +378,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antitowerdefence" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="antitowerdefence" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -716,7 +679,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="51" y="32" width="1722" height="952" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -726,12 +689,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40894568" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.455516" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22535211" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -769,14 +732,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/sourceCode/model/tower/RegularTower.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sourceCode/model/tower/Tower.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
@@ -788,7 +743,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -937,14 +894,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sourceCode/model/ImageArray.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="47" column="40" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sourceCode/view/Overlay.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="770">
@@ -1042,14 +991,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sourceCode/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/resources/testLevel2.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
@@ -1065,19 +1006,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/sourceCode/model/OverlayImageArray.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1012">
-          <caret line="57" column="68" selection-start-line="57" selection-start-column="68" selection-end-line="57" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/sourceCode/model/tile/Goal.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="154">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#398#399#0" expanded="false" />
+            <element signature="e#425#426#0" expanded="false" />
+            <element signature="e#478#479#0" expanded="false" />
+            <element signature="e#506#507#0" expanded="false" />
+            <element signature="e#555#556#0" expanded="false" />
+            <element signature="e#589#590#0" expanded="false" />
+            <element signature="e#640#641#0" expanded="false" />
+            <element signature="e#667#668#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1096,7 +1039,7 @@
         <state relative-caret-position="31">
           <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1106,7 +1049,14 @@
         <state relative-caret-position="264">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#452#453#0" expanded="false" />
+            <element signature="e#479#480#0" expanded="false" />
+            <element signature="e#530#531#0" expanded="false" />
+            <element signature="e#557#558#0" expanded="false" />
+            <element signature="e#609#610#0" expanded="false" />
+            <element signature="e#637#638#0" expanded="false" />
+            <element signature="e#763#764#0" expanded="false" />
+            <element signature="e#789#790#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1116,7 +1066,16 @@
         <state relative-caret-position="198">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#454#455#0" expanded="false" />
+            <element signature="e#481#482#0" expanded="false" />
+            <element signature="e#532#533#0" expanded="false" />
+            <element signature="e#559#560#0" expanded="false" />
+            <element signature="e#611#612#0" expanded="false" />
+            <element signature="e#639#640#0" expanded="false" />
+            <element signature="e#688#689#0" expanded="false" />
+            <element signature="e#734#735#0" expanded="false" />
+            <element signature="e#1010#1011#0" expanded="false" />
+            <element signature="e#1036#1037#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1132,25 +1091,63 @@
     <entry file="file://$PROJECT_DIR$/src/sourceCode/model/troop/Troop.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4268">
-          <caret line="224" column="13" selection-start-line="224" selection-start-column="13" selection-end-line="224" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sourceCode/controller/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2024">
-          <caret line="119" column="0" selection-start-line="119" selection-start-column="0" selection-end-line="119" selection-end-column="0" />
+          <caret line="224" column="9" selection-start-line="224" selection-start-column="9" selection-end-line="224" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sourceCode/model/xmlparser/LevelParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-522">
+        <state relative-caret-position="220">
           <caret line="37" column="51" selection-start-line="37" selection-start-column="51" selection-end-line="37" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sourceCode/model/OverlayImageArray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-16">
+          <caret line="57" column="68" selection-start-line="57" selection-start-column="68" selection-end-line="57" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sourceCode/model/ImageArray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="47" column="40" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sourceCode/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sourceCode/controller/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sourceCode/model/logic/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6396">
+          <caret line="338" column="17" selection-start-line="338" selection-start-column="17" selection-end-line="338" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#12050#12051#0" expanded="true" />
+            <element signature="e#12096#12097#0" expanded="true" />
           </folding>
         </state>
       </provider>
