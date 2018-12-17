@@ -18,6 +18,8 @@ public class PopupHighscoreFrame extends JFrame {
         write.add(submit);
         add(write);
 
+        getRootPane().setDefaultButton(submit);
+
         setVisible(true);
     }
 
