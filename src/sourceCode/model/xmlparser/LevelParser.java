@@ -29,6 +29,10 @@ public class LevelParser {
     public static ArrayList<Position> pathPositions = new ArrayList<>();
     public static ArrayList<Position> grassPositions = new ArrayList<>();
     public static ArrayList<Position> towerZonePositions = new ArrayList<>();
+    public static ArrayList<Position> boosterPositions = new ArrayList<>();
+    public static ArrayList<Position> quicksandPositions = new ArrayList<>();
+    public static ArrayList<Position> switchUpPositions = new ArrayList<>();
+    public static ArrayList<Position> switchDownPositions = new ArrayList<>();
     public static Tile[][] allTiles = new Tile[10][10];
 
     public static Tile[][] xmlparser(String input){
@@ -67,57 +71,38 @@ public class LevelParser {
                             Object obj = reflection.getTile();
 
                             if (obj instanceof Path) {
-                                    pathPositions.add(((Path) obj).getPosition());
+                                pathPositions.add(((Path) obj).getPosition());
                             } else if (obj instanceof Goal) {
 
                                 goalPos = ((Goal) obj).getPosition();
-                            } else if (obj instanceof Start){
+                            } else if (obj instanceof Start) {
                                 startPos = ((Start) obj).getPosition();
 
-                            } else if (obj instanceof Towerzone){
-                                towerZonePositions.add(((Towerzone) obj).getPosition());
+                            } else if (obj instanceof Booster) {
+                                boosterPositions.add(((Booster) obj).getPosition());
+
+                            } else if (obj instanceof Quicksand) {
+                                quicksandPositions.add(((Quicksand) obj).getPosition());
+
+                            } else if (obj instanceof Switchdown) {
+                                switchDownPositions.add(((Switchdown) obj).getPosition());
+
+                            } else if (obj instanceof Switchup) {
+                                switchUpPositions.add(((Switchup) obj).getPosition());
                             }
+
+
                             allTiles[i][tileNr] = (Tile) obj;
 
-                            /*
-                            if (tile.getAttribute("type").equals("model.Tile.Grass")) {
-                                Grass grass = new Grass(position);
-                                grassPositions.add(position);
-                                allTiles[i][tileNr] = grass;
-                            } else if (tile.getAttribute("type").equals("model.Tile.Path")) {
-                                Path path = new Path(position);
-                                pathPositions.add(position);
-                                allTiles[i][tileNr] = path;
-                            } else if (tile.getAttribute("type").equals("model.Tile.Start")) {
-                                Start start = new Start(position);
-                                startPos = start.getPosition();
-                                allTiles[i][tileNr] = start;
-                            } else if (tile.getAttribute("type").equals("model.Tile.Goal")) {
-                                Goal goal = new Goal(position);
-                                goalPos = goal.getPosition();
-                                allTiles[i][tileNr] = goal;
-                            } else if (tile.getAttribute("type").equals("model.Tile.Towerzone")) {
-                                Towerzone towerzone = new Towerzone(position);
-                                towerZonePositions.add(position);
-                                allTiles[i][tileNr] = towerzone;
-                            }
-                            else if (tile.getAttribute("type").equals("model.Tile.Pathswitch")) {
-                                PathSwitch switcha = new PathSwitch(position);
-                                switchPositions.add(position);
-                                allTiles[i][tileNr] = switcha;
-                            }
-                            */
-                            //System.out.println("Rad " + (i) + " Tile " + tileNr + " är type " +
-                                   // tile.getAttribute("type"));
 
-                            //System.out.println(allTiles[i][tileNr].toString());
                             tileNr++;
                         }
                     }
                 }
             }
+        }
 
-        } catch (ParserConfigurationException | IOException | SAXException e) {
+        catch (ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
         }
 
@@ -130,8 +115,20 @@ public class LevelParser {
         return pathPositions;
     }
 
-    public ArrayList<Position> getSwitchPositions(){
-        return switchPositions;
+    public ArrayList<Position> getSwitchUpPositions(){
+        return switchUpPositions;
+    }
+
+    public ArrayList<Position> getSwitchDownPositions(){
+        return switchDownPositions;
+    }
+
+    public ArrayList<Position> getQuicksandPositions(){
+        return quicksandPositions;
+    }
+
+    public ArrayList<Position> getBoosterPositions(){
+        return boosterPositions;
     }
 
     public ArrayList<Position> getTowerZonePositions(){

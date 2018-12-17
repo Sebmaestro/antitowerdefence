@@ -37,7 +37,8 @@ public class Controller {
     private String[][] stringPaths;
     private ImageArray imgArr;
     private OverlayImageArray overlayimgArr;
-    private ArrayList<Position> pathPosition, towerPosition;
+    private ArrayList<Position> pathPosition, towerPosition, quicksandPositions,
+    boosterPositions, switchUpPositions, switchDownPositions;
     private Position startPos, goalPos;
 
     private ArrayList<Position> troopPosition;
@@ -78,9 +79,13 @@ public class Controller {
 
         //Inläsning
         levelP = new LevelParser();
-        tiles = levelP.xmlparser("src/Resources/testlevel.xml");
+        tiles = levelP.xmlparser("src/Resources/testlevel2.xml");
         pathPosition = levelP.getPathPositions();
         towerPosition = levelP.getTowerZonePositions();
+        quicksandPositions = levelP.getQuicksandPositions();
+        boosterPositions = levelP.getBoosterPositions();
+        switchUpPositions = levelP.getSwitchUpPositions();
+        switchDownPositions = levelP.getSwitchDownPositions();
 
         startPos = levelP.getStartPos();
         goalPos = levelP.getGoalPos();
@@ -89,7 +94,8 @@ public class Controller {
         imgArr = new ImageArray(tiles);
         imgArr.setTowerPics(towerPosition);
         overlayimgArr = new OverlayImageArray(tiles.length);
-        overlayimgArr.addPaths(pathPosition, startPos, goalPos);
+        overlayimgArr.addPaths(pathPosition, quicksandPositions, boosterPositions,
+                switchDownPositions, switchUpPositions, startPos, goalPos);
 
         //sätter dessa bilder
         underlay = copyOff(imgArr.getTheWholeShit());
@@ -109,9 +115,10 @@ public class Controller {
         //Skapar en trupp och lägger in den i listan
         regularTroops = new ArrayList<>();
         towers = new ArrayList<>();
+        laserPositionList = new ArrayList<>();
         setUpTowers(towerPosition);
 
-        laserPositionList = new ArrayList<>();
+
 
 
         /*

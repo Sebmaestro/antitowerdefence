@@ -95,6 +95,27 @@ public abstract class Troop extends Rectangle implements Unit{
     //For Teleporter troop only
     public abstract TyleType clickOn();
 
+    private void checkIfGoal(Tile[][] tileMap){
+
+        if(tileMap[east.getY()][east.getX()].getGraphic().equals("src/resources/goal.png")){
+            setPosition(east);
+            setGoalReached();
+        }
+        else if(tileMap[south.getY()][south.getX()].getGraphic().equals("src/resources/goal.png")){
+            setPosition(south);
+            setGoalReached();
+        }
+        else if(tileMap[west.getY()][west.getX()].getGraphic().equals("src/resources/goal.png")){
+            setPosition(west);
+            setGoalReached();
+        }
+        else if(tileMap[north.getY()][north.getX()].getGraphic().equals("src/resources/goal.png")){
+            setPosition(north);
+            setGoalReached();
+        }
+
+    }
+
     public void move(Tile[][] tileMap){
 
         if(isGoalReached()){
@@ -110,83 +131,99 @@ public abstract class Troop extends Rectangle implements Unit{
 
         if(direction == Direction.EAST){
 
-            if(tileMap[east.getY()][east.getX()].canWalk()){
-                setPosition(east);
+            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("src/resources/start.png")) {
+                    checkIfGoal(tileMap);
             }
-            else if(tileMap[south.getY()][south.getX()].canWalk()){
-                setPosition(south);
-                setDirection(Direction.SOUTH);
+
+            if(!isGoalReached()) {
+                if (tileMap[east.getY()][east.getX()].canWalk()) {
+                    System.out.println("öster");
+                    setPosition(east);
+                } else if (tileMap[south.getY()][south.getX()].canWalk()) {
+                    System.out.println("söder");
+                    setPosition(south);
+                    setDirection(Direction.SOUTH);
+                } else if (tileMap[north.getY()][north.getX()].canWalk()) {
+                    setPosition(north);
+                    setDirection(Direction.NORTH);
+                } else if (tileMap[west.getY()][west.getX()].canWalk()) {
+                    setPosition(west);
+                    setDirection(Direction.WEST);
+                }
             }
-            else if(tileMap[west.getY()][west.getX()].canWalk()){
-                setPosition(west);
-                setDirection(Direction.WEST);
-            }
-            else if(tileMap[north.getY()][north.getX()].canWalk()){
-                setPosition(north);
-                setDirection(Direction.NORTH);
-            }
+
         }
 
 
         if(direction == Direction.SOUTH){
 
-            if(tileMap[south.getY()][south.getX()].canWalk()){
-                setPosition(south);
-                if(tileMap[south.getY()][south.getX()].getGraphic().equals("src/resources/goal.png")){
-                    setGoalReached();
+            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("src/resources/start.png")) {
+                checkIfGoal(tileMap);
+            }
+
+            if(!isGoalReached()) {
+
+                if (tileMap[south.getY()][south.getX()].canWalk()) {
+                    setPosition(south);
+                } else if (tileMap[west.getY()][west.getX()].canWalk()) {
+                    setPosition(west);
+                    setDirection(Direction.WEST);
+                } else if (tileMap[east.getY()][east.getX()].canWalk()) {
+                    setPosition(east);
+                    setDirection(Direction.EAST);
+                } else if (tileMap[north.getY()][north.getX()].canWalk()) {
+                    setPosition(north);
+                    setDirection(Direction.NORTH);
                 }
-            }
-            else if(tileMap[west.getY()][west.getX()].canWalk()){
-                setPosition(west);
-                setDirection(Direction.WEST);
-            }
-            else if(tileMap[east.getY()][east.getX()].canWalk()){
-                setPosition(east);
-                setDirection(Direction.EAST);
-            }
-            else if(tileMap[north.getY()][north.getX()].canWalk()){
-                setPosition(north);
-                setDirection(Direction.NORTH);
             }
 
         }
 
         if(direction == Direction.WEST){
 
-            if(tileMap[west.getY()][west.getX()].canWalk()){
-                setPosition(west);
+            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("src/resources/start.png")) {
+                checkIfGoal(tileMap);
             }
-            else if(tileMap[north.getY()][north.getX()].canWalk()){
-                setPosition(north);
-                setDirection(Direction.NORTH);
+
+            if(!isGoalReached()) {
+
+                if (tileMap[west.getY()][west.getX()].canWalk()) {
+                    setPosition(west);
+                } else if (tileMap[south.getY()][south.getX()].canWalk()) {
+                    setPosition(south);
+                    setDirection(Direction.SOUTH);
+                } else if (tileMap[north.getY()][north.getX()].canWalk()) {
+                    setPosition(north);
+                    setDirection(Direction.NORTH);
+                } else if (tileMap[east.getY()][east.getX()].canWalk()) {
+                    setPosition(east);
+                    setDirection(Direction.EAST);
+                }
             }
-            else if(tileMap[east.getY()][east.getX()].canWalk()){
-                setPosition(east);
-                setDirection(Direction.EAST);
-            }
-            else if(tileMap[south.getY()][south.getX()].canWalk()){
-                setPosition(south);
-                setDirection(Direction.SOUTH);
-            }
+
         }
 
         if(direction == Direction.NORTH){
 
-            if(tileMap[north.getY()][north.getX()].canWalk()){
-                setPosition(north);
+            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("src/resources/start.png")) {
+                checkIfGoal(tileMap);
             }
-            else if(tileMap[east.getY()][east.getX()].canWalk()){
-                setPosition(east);
-                setDirection(Direction.EAST);
+
+            if(!isGoalReached()) {
+                if (tileMap[north.getY()][north.getX()].canWalk()) {
+                    setPosition(north);
+                } else if (tileMap[east.getY()][east.getX()].canWalk()) {
+                    setPosition(east);
+                    setDirection(Direction.EAST);
+                } else if (tileMap[west.getY()][west.getX()].canWalk()) {
+                    setPosition(west);
+                    setDirection(Direction.WEST);
+                } else if (tileMap[south.getY()][south.getX()].canWalk()) {
+                    setPosition(south);
+                    setDirection(Direction.SOUTH);
+                }
             }
-            else if(tileMap[south.getY()][south.getX()].canWalk()){
-                setPosition(south);
-                setDirection(Direction.SOUTH);
-            }
-            else if(tileMap[west.getY()][west.getX()].canWalk()){
-                setPosition(west);
-                setDirection(Direction.WEST);
-            }
+
         }
 
     }

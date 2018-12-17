@@ -20,8 +20,11 @@ public class OverlayImageArray {
     private BufferedImage allPics;
     Tile[][] allTiles;
     private BufferedImage[][] theWholeShit;
-    private ArrayList<Position> pathPositions, regTroopPosition, telepTroopPosition, towerPositions;
-    private BufferedImage path, regular, invisible, start, goal, tower;
+    private ArrayList<Position> pathPositions, quicksandPosition, boosterPosition,
+            regTroopPosition, telepTroopPosition, towerPositions, switchDownPosition,
+            switchUpPosition;
+    private BufferedImage path, regular, invisible, start, goal, tower, quicksand, booster,
+                            switchDown, switchUp;
     private int worldSize;
     private Position startPos, goalPos;
     private ArrayList<Troop> regTroopList;
@@ -49,6 +52,10 @@ public class OverlayImageArray {
             start = ImageIO.read(new File("src/Resources/start.png"));
             goal = ImageIO.read(new File("src/Resources/goal.png"));
             tower = ImageIO.read(new File("src/Resources/tower.png"));
+            quicksand = ImageIO.read(new File("src/Resources/quicksand.png"));
+            booster = ImageIO.read(new File("src/Resources/booster.png"));
+            switchDown = ImageIO.read(new File("src/Resources/switch-down.png"));
+            switchUp = ImageIO.read(new File("src/Resources/switch-up.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,6 +81,24 @@ public class OverlayImageArray {
         for(Position p :pathPositions){
             theWholeShit[p.getY()][p.getX()] = path;
         }
+        for(Position p : quicksandPosition){
+            theWholeShit[p.getY()][p.getX()] = quicksand;
+        }
+
+        for(Position p :boosterPosition){
+            theWholeShit[p.getY()][p.getX()] = booster;
+        }
+
+        for(Position p :switchDownPosition){
+            theWholeShit[p.getY()][p.getX()] = switchDown;
+        }
+
+        for(Position p :switchUpPosition){
+            theWholeShit[p.getY()][p.getX()] = switchUp;
+        }
+
+
+
 
 
         theWholeShit[goalPos.getY()][goalPos.getX()] = goal;
@@ -81,8 +106,14 @@ public class OverlayImageArray {
 
     }
 
-    public void addPaths(ArrayList<Position> pathPositions, Position startPos, Position goalPos){
+    public void addPaths(ArrayList<Position> pathPositions, ArrayList<Position> quicksandPositions,
+                         ArrayList<Position> boosterPositions, ArrayList<Position> switchDown,
+                         ArrayList<Position> switchUp, Position startPos, Position goalPos){
         this.pathPositions = pathPositions;
+        this.quicksandPosition = quicksandPositions;
+        this.boosterPosition = boosterPositions;
+        this.switchDownPosition = switchDown;
+        this.switchUpPosition = switchUp;
         this.startPos = startPos;
         this.goalPos = goalPos;
 
