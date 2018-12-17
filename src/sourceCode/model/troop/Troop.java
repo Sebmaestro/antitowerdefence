@@ -137,10 +137,8 @@ public abstract class Troop extends Rectangle implements Unit{
 
             if(!isGoalReached()) {
                 if (tileMap[east.getY()][east.getX()].canWalk()) {
-                    System.out.println("öster");
                     setPosition(east);
                 } else if (tileMap[south.getY()][south.getX()].canWalk()) {
-                    System.out.println("söder");
                     setPosition(south);
                     setDirection(Direction.SOUTH);
                 } else if (tileMap[north.getY()][north.getX()].canWalk()) {

@@ -78,6 +78,8 @@ public class LevelParser {
                             } else if (obj instanceof Start) {
                                 startPos = ((Start) obj).getPosition();
 
+                            } else if (obj instanceof Towerzone) {
+                                    towerZonePositions.add(((Towerzone) obj).getPosition());
                             } else if (obj instanceof Booster) {
                                 boosterPositions.add(((Booster) obj).getPosition());
 

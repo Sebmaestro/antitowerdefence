@@ -79,7 +79,7 @@ public class Controller {
 
         //Inläsning
         levelP = new LevelParser();
-        tiles = levelP.xmlparser("src/Resources/testlevel2.xml");
+        tiles = levelP.xmlparser("src/Resources/testlevel.xml");
         pathPosition = levelP.getPathPositions();
         towerPosition = levelP.getTowerZonePositions();
         quicksandPositions = levelP.getQuicksandPositions();
