@@ -55,8 +55,12 @@ public class HighscoreHandler {
             for (int i = 0; i < l.size(); i++) {
                 if (l.get(i).getFinishTime() > highscoreInfo.getFinishTime()) {
                     l.add(i, highscoreInfo);
-                    l.remove(10);
-                    break;
+                    if (l.size() < 10) {
+                        break;
+                    } else if (l.size() >= 11){
+                        l.remove(10);
+                        break;
+                    }
                 }
             }
         }

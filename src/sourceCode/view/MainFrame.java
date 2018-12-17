@@ -5,14 +5,17 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
-public class Frame extends JFrame{
+public class MainFrame extends JFrame{
+
     public static String title = "Mammaspel";
     public static Dimension size = new Dimension(1080,700);
-    private BufferedImage[][] underLay, overLay;
+    private BufferedImage[][] underlay, overlay;
     private Screen screen;
     private ButtonPanel buttonPanel;
     private GameMenu menuBar;
-    public Frame(){
+    public MainFrame(BufferedImage[][] underlay, BufferedImage[][] overlay) {
+        this.underlay = underlay;
+        this.overlay = overlay;
         setTitle(title);
         setSize(size);
         setResizable(false);
@@ -23,7 +26,17 @@ public class Frame extends JFrame{
         screen = new Screen();
         buttonPanel = new ButtonPanel();
         menuBar = new GameMenu();
-        //init();
+        initFrame();
+    }
+
+    public MainFrame initFrame(){
+        addScreen();
+        addButtonPanel();
+        addMenuBar();
+        getScreen().setImages(underlay, overlay);
+        getScreen().createGameScreen();
+
+        return this;
     }
 
     public ButtonPanel getButtonPanel(){

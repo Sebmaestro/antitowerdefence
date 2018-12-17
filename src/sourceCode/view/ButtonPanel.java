@@ -9,6 +9,7 @@ public class ButtonPanel extends JPanel {
     private JButton troop1, troop2, troop3;
     private JTextField moneyField;
     private JTextField goalCounter;
+    private JTextField timer;
 
     public ButtonPanel() {
         define();
@@ -21,15 +22,23 @@ public class ButtonPanel extends JPanel {
         moneyField = new JTextField();
         moneyField.setPreferredSize(new Dimension(120,30));
         moneyField.setEditable(false);
+
         goalCounter = new JTextField();
         goalCounter.setPreferredSize(new Dimension(200,30));
         goalCounter.setEditable(false);
+
+        timer = new JTextField();
+        timer.setPreferredSize(new Dimension(50, 30));
+        timer.setEditable(false);
+
         add(moneyField);
 
         add(troop1);
         add(troop2);
         add(troop3);
         add(goalCounter);
+
+        add(timer);
     }
 
     public void addActionListener(ActionListener e, String troop) {
@@ -47,6 +56,9 @@ public class ButtonPanel extends JPanel {
     }
     public void setGoalCounter(int goalCounter) {
         this.goalCounter.setText(goalCounter+"/50 troops in goal");
+    }
+    public void setTimer(int time) {
+        timer.setText("Time: "+time);
     }
 
 }
