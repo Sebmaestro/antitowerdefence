@@ -16,6 +16,8 @@ import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.Troop;
 import sourceCode.model.xmlparser.LevelParser;
+import sourceCode.model.xmlparser.LevelParser2;
+import sourceCode.model.xmlparser.Levels;
 import sourceCode.view.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -29,12 +31,13 @@ public class Game {
     private Model model;
     private Tile[][] tiles;
     private LevelParser levelP;
+    private LevelParser2 levelP2;
     private ImageArray imgArr;
     private OverlayImageArray overlayimgArr;
     private ArrayList<Position> pathPosition, towerPosition, quicksandPositions,
             boosterPositions, switchUpPositions, switchDownPositions;
     private Position startPos, goalPos;
-    private ArrayList<Troop> regularTroops;
+    private ArrayList<Troop> troopList, towerShootTroops;
     private ArrayList<Tower> towers;
     private ArrayList<LaserPositions> laserPositionList;
     private int goalCounter = 0;
@@ -46,33 +49,46 @@ public class Game {
     private Database db = new Database();
     private HighscoreHandler handler;
     private StartMenuFrame start;
+    private ArrayList<Levels> levelsArrayList;
 
     int gameWon = 0;
     Credit money = new Credit();
 
     public Game(){
 
+        levelsArrayList = new ArrayList<>();
         //Startar en ny startmeny
         start = new StartMenuFrame();
+        towerShootTroops = new ArrayList<>();
 
         //Inläsning av leveln
-        levelP = new LevelParser();
-        tiles = readLevel("src/Resources/testlevel.xml");
+        //levelP = new LevelParser();
+        levelP2 = new LevelParser2();
+        levelP2.xmlparser("src/Resources/levels.xml");
+        //tiles = readLevel("src/Resources/levels.xml");
+
+
+        levelsArrayList = levelP2.getLevelsArrayList();
+
+
+        tiles = levelsArrayList.get(1).getMapTiles();
+
 
         //Får alla positioner som vi behöver från kartan
-        pathPosition = levelP.getPathPositions();
-        towerPosition = levelP.getTowerZonePositions();
-        quicksandPositions = levelP.getQuicksandPositions();
-        boosterPositions = levelP.getBoosterPositions();
-        switchUpPositions = levelP.getSwitchUpPositions();
-        switchDownPositions = levelP.getSwitchDownPositions();
-        startPos = levelP.getStartPos();
-        goalPos = levelP.getGoalPos();
+        pathPosition = levelsArrayList.get(1).getPathPositions();
+        towerPosition = levelsArrayList.get(1).getTowerZonePositions();
+        quicksandPositions = levelsArrayList.get(1).getQuicksandPositions();
+        boosterPositions = levelsArrayList.get(1).getBoosterPositions();
+        switchUpPositions = levelsArrayList.get(1).getSwitchUpPositions();
+        switchDownPositions = levelsArrayList.get(1).getSwitchDownPositions();
+        startPos = levelsArrayList.get(1).getStartPos();
+        goalPos = levelsArrayList.get(1).getGoalPos();
+
 
         //Skapar BufferedImageArrays från kartan, både underLay och overLay
-        imgArr = new ImageArray(tiles);
+        imgArr = new ImageArray(levelsArrayList.get(1).getMapTiles());
         imgArr.setTowerPics(towerPosition);
-        overlayimgArr = new OverlayImageArray(tiles.length);
+        overlayimgArr = new OverlayImageArray(levelsArrayList.get(1).getMapTiles().length);
         overlayimgArr.addPaths(pathPosition, quicksandPositions, boosterPositions,
                 switchDownPositions, switchUpPositions, startPos, goalPos);
 
@@ -84,7 +100,7 @@ public class Game {
         setTheFrame(underlay, overlay);
 
         //Skapar listor för torn, trupper och lasers
-        regularTroops = new ArrayList<>();
+        troopList = new ArrayList<>();
         towers = new ArrayList<>();
         laserPositionList = new ArrayList<>();
 
@@ -92,7 +108,7 @@ public class Game {
         setUpTowers(towerPosition);
 
         //Lägger till trupper på sätt plats i overlayImage
-        overlayimgArr.addRegularTroopList(regularTroops);
+        overlayimgArr.addRegularTroopList(troopList);
     }
 
     public void init(){
@@ -106,11 +122,6 @@ public class Game {
             }
         };
         worker.execute();
-    }
-
-    public Tile[][] readLevel(String str){
-        tiles = levelP.xmlparser(str);
-        return tiles;
     }
 
     public Frame setTheFrame(BufferedImage[][] underlay, BufferedImage[][] overlay){
@@ -137,7 +148,7 @@ public class Game {
                     frame.getScreen().repaint();
 
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -153,7 +164,7 @@ public class Game {
     }
 
     public void removeTroops(){
-        Iterator<Troop> iter = regularTroops.iterator();
+        Iterator<Troop> iter = troopList.iterator();
         synchronized (troopListLock) {
             while(iter.hasNext()){
                 Troop reg = iter.next();
@@ -194,8 +205,8 @@ public class Game {
 
     public void moveTroops(){
         synchronized (troopListLock) {
-            if(regularTroops.size() > 0) {
-                for (Troop reg : regularTroops) {
+            if(troopList.size() > 0) {
+                for (Troop reg : troopList) {
                     reg.move(tiles);
 
                     System.out.println(reg.getHp());
@@ -207,47 +218,29 @@ public class Game {
 
 
     public void shootTroops(){
-
         synchronized (towerListLock) {
             if(towers.size() > 0) {
                 for (Tower tower : towers) {
-                    if(regularTroops.size() > 0) {
-                        if (tower.canReachTroop(regularTroops.get(0))) {
-                            frame.getScreen().getLaser().setLaserPosition(
-                                    tower.getPosition(), regularTroops.get(0).getPosition());
-                            frame.getScreen().drawLaser();
-                            tower.attack(regularTroops.get(0));
-                            LaserPositions laserpos = new LaserPositions(tower.getPosition(),regularTroops.get(0).getPosition());
-                            laserPositionList.add(laserpos);
-                        }
-                    }
-                    if(regularTroops.size() > 1) {
-                        if(!tower.canReachTroop(regularTroops.get(0))) {
-                            if (tower.canReachTroop(regularTroops.get(1))) {
-                                frame.getScreen().getLaser().setLaserPosition(
-                                        tower.getPosition(), regularTroops.get(1).getPosition());
-                                frame.getScreen().drawLaser();
-                                tower.attack(regularTroops.get(1));
-                                LaserPositions laserpos = new LaserPositions(tower.getPosition(), regularTroops.get(1).getPosition());
+                    int i = 0;
+
+                    for (Troop t : troopList) {
+                        if (tower.canReachTroop(t)) {
+                            if (i == 0) {
+                                i++;
+                                tower.addToAttack(t);
+                                LaserPositions laserpos = new LaserPositions(tower.getPosition(), t.getPosition());
                                 laserPositionList.add(laserpos);
                             }
                         }
                     }
-
-                    if(regularTroops.size() > 2) {
-                        if((!tower.canReachTroop(regularTroops.get(0)) && !tower.canReachTroop(regularTroops.get(1)))) {
-                            if (tower.canReachTroop(regularTroops.get(2))) {
-                                frame.getScreen().getLaser().setLaserPosition(
-                                        tower.getPosition(), regularTroops.get(2).getPosition());
-                                frame.getScreen().drawLaser();
-                                tower.attack(regularTroops.get(2));
-                                LaserPositions laserpos = new LaserPositions(tower.getPosition(), regularTroops.get(2).getPosition());
-                                laserPositionList.add(laserpos);
-                            }
-                        }
+                }
+                for(Tower t: towers){
+                    if(t.getToAttack().size() >0) {
+                        frame.getScreen().getLaser().setLaserPosition(t.getPosition(),
+                                t.getToAttack().get(0).getPosition());
+                        frame.getScreen().drawLaser();
+                        t.clearAttackList();
                     }
-
-
                 }
                 frame.getScreen().getLaser().setPositons(laserPositionList);
                 frame.getScreen().getLaser().setLasers();
@@ -334,7 +327,7 @@ public class Game {
             public void actionPerformed(ActionEvent e) {
                 if (money.getCredits() >= 100) {
                     Troop reg = new RegularTroop(startPos, EAST);
-                    regularTroops.add(reg);
+                    troopList.add(reg);
                     money.buyNewTroop(reg);
                 }
 
