@@ -29,6 +29,10 @@ public class LevelParser {
     public static ArrayList<Position> pathPositions = new ArrayList<>();
     public static ArrayList<Position> grassPositions = new ArrayList<>();
     public static ArrayList<Position> towerZonePositions = new ArrayList<>();
+    public static ArrayList<Position> boosterPositions = new ArrayList<>();
+    public static ArrayList<Position> quicksandPositions = new ArrayList<>();
+    public static ArrayList<Position> switchUpPositions = new ArrayList<>();
+    public static ArrayList<Position> switchDownPositions = new ArrayList<>();
     public static Tile[][] allTiles = new Tile[10][10];
 
     public static Tile[][] xmlparser(String input){
@@ -76,7 +80,21 @@ public class LevelParser {
 
                             } else if (gg instanceof Towerzone){
                                 towerZonePositions.add(((Towerzone) gg).getPosition());
+
+                            } else if (gg instanceof Booster){
+                                boosterPositions.add(((Booster) gg).getPosition());
+
+                            } else if (gg instanceof Quicksand){
+                                quicksandPositions.add(((Quicksand) gg).getPosition());
+
+                            } else if (gg instanceof Switchdown){
+                                switchDownPositions.add(((Switchdown) gg).getPosition());
+
+                            }else if (gg instanceof Switchup){
+                                switchUpPositions.add(((Switchup) gg).getPosition());
                             }
+
+
                             allTiles[i][tileNr] = (Tile) gg;
 
                             /*
@@ -130,8 +148,20 @@ public class LevelParser {
         return pathPositions;
     }
 
-    public ArrayList<Position> getSwitchPositions(){
-        return switchPositions;
+    public ArrayList<Position> getSwitchUpPositions(){
+        return switchUpPositions;
+    }
+
+    public ArrayList<Position> getSwitchDownPositions(){
+        return switchDownPositions;
+    }
+
+    public ArrayList<Position> getQuicksandPositions(){
+        return quicksandPositions;
+    }
+
+    public ArrayList<Position> getBoosterPositions(){
+        return boosterPositions;
     }
 
     public ArrayList<Position> getTowerZonePositions(){

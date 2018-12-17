@@ -1,15 +1,17 @@
 package sourceCode.model.tile;
+
 import sourceCode.model.Position;
 import sourceCode.model.troop.Direction;
 import sourceCode.model.troop.Troop;
-import static sourceCode.model.troop.Direction.*;
+
+import static sourceCode.model.troop.Direction.SOUTH;
 
 /**
- * Author: Sebastian Arledal c17sal
+ * Created by denni on 2018-12-17.
  */
-public class PathSwitch extends Tile {
+public class Switchdown extends Tile{
 
-    public PathSwitch(Position p) {
+    public Switchdown(Position p) {
         super(p);
         graphic = "src/Resources/switch-down.png";
         dir = SOUTH;
@@ -32,19 +34,12 @@ public class PathSwitch extends Tile {
 
     @Override
     public void landOn(Troop t) {
-        t.setDirection(getDirection());
-    }
 
-    public void setDirection() {
-        if (dir == NORTH) {
-            dir = SOUTH;
-            graphic = "src/Resources/switch-down.png";
-        } else
-            dir = NORTH;
-        graphic = "src/Resources/switch-up.png";
+        t.setDirection(SOUTH);
     }
 
     public Direction getDirection() {
         return dir;
     }
 }
+
