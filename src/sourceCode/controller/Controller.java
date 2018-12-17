@@ -370,6 +370,7 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), 5));
                 popupFrame.clear();
+                popupFrame.setColumns();
                 popupFrame.showHighscores(handler.getList());
                 db.saveHighscores(handler.getList(), "Map2");
                 newHighscore.dispose();
