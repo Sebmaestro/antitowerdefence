@@ -166,33 +166,37 @@ public class Controller {
                             }
                         }
                     } else if (restartPressed) {
-                        System.out.println("tryckt på knappen");
-                        //goalCounter = 5;
-                        gameDone = true;
+
                         mainFrame.dispose();
                         levelList = g.getLevelsArrayList();
                         g.setLevel(g.getCurrentLevelname());
                         mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
-                        //gameDone = false;
-                        initGame();
-                        setRegularTroopListener();
-                        setMenuQuitListener();
-                        setAboutListener();
-                        setHelpListener();
-                        setRestartListener();
-                        //gameWon = false;
-                        g.resetGame();
-                        handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
-                        mainFrame.getGameMenu().setRestartNewGameText("Restart");
-                        //gameWon = true;
+                        gameDone = true;
+
                     }
                 });
+
+
             } catch (InterruptedException | InvocationTargetException e) {
                 e.printStackTrace();
             }
             long elapsedTime = System.currentTimeMillis() - startTime;
             elapsedSeconds = elapsedTime / 1000;
             mainFrame.getButtonPanel().setTimer(elapsedSeconds);
+        }
+        if(restartPressed){
+
+            initGame();
+            setRegularTroopListener();
+            setMenuQuitListener();
+            setAboutListener();
+            setHelpListener();
+            setRestartListener();
+            //gameWon = false;
+            g.resetGame();
+            handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
+            mainFrame.getGameMenu().setRestartNewGameText("Restart");
+            //gameWon = true;
         }
         System.out.println("BREAAAAAAAAAAAAAK");
     }
