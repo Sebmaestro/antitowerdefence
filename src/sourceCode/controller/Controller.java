@@ -94,11 +94,13 @@ public class Controller {
                     mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
                     mainFrame.getScreen().repaint();
 
+                    /*
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    */
 
 
                     laserPosList = g.shootTroops();
