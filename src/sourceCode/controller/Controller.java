@@ -152,6 +152,7 @@ public class Controller {
 
             initGame();
             setRegularTroopListener();
+            setTeleportTroopListener();
             setMenuQuitListener();
             setAboutListener();
             setHelpListener();
@@ -276,11 +277,23 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!isPaused) {
-                    g.sendTroop();
+                    g.sendRegularTroop();
                 }
 
             }
         }, "Regular");
+    }
+
+    private void setTeleportTroopListener(){
+        mainFrame.getButtonPanel().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!isPaused) {
+                    g.sendTeleporterTroop();
+                }
+
+            }
+        }, "Teleport");
     }
 
     private void setMenuQuitListener() {
@@ -346,6 +359,7 @@ public class Controller {
         gameDone = false;
         initGame();
         setRegularTroopListener();
+        setTeleportTroopListener();
         setMenuQuitListener();
         setAboutListener();
         setHelpListener();

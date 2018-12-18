@@ -10,6 +10,7 @@ import sourceCode.model.tile.Tile;
 import sourceCode.model.tower.RegularTower;
 import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.RegularTroop;
+import sourceCode.model.troop.TeleporterTroop;
 import sourceCode.model.troop.Troop;
 //mport sourceCode.model.xmlparser.LevelParser;
 import sourceCode.model.xmlparser.LevelParser2;
@@ -152,12 +153,21 @@ public class Game {
         return overlayimgArr;
     }
 
-    public void sendTroop() {
+    public void sendRegularTroop() {
 
         if (money.getCredits() >= 100) {
             Troop reg = new RegularTroop(startPos, EAST);
             regularTroops.add(reg);
             money.buyNewTroop(reg);
+        }
+    }
+
+    public void sendTeleporterTroop() {
+
+        if (money.getCredits() >= 700) {
+            Troop tel = new TeleporterTroop(startPos, EAST);
+            regularTroops.add(tel);
+            money.buyNewTroop(tel);
         }
     }
 
@@ -167,7 +177,7 @@ public class Game {
 
     public void resetGame() {
         goalCounter = 0;
-        money.setCredits(500);
+        money.setCredits(5000);
         //laserPositionList.clear();
         //regularTroops.clear();
         //towers.clear();

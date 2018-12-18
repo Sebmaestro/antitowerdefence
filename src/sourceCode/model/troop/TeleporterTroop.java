@@ -18,6 +18,7 @@ public class TeleporterTroop extends Troop {
         speed = 10;
         isCreatingTeleport = false;
         troopID = 1;
+        graphic = "Teleporter";
     }
 
     @Override

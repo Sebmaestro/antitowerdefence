@@ -1,7 +1,7 @@
 package sourceCode.model;
 
 import sourceCode.model.tile.Tile;
-import sourceCode.model.xmlparser.LevelParser;
+
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
