@@ -37,7 +37,7 @@ public class Controller {
     private Position startPos, goalPos;
     private ArrayList<Troop> regularTroops;
     private ArrayList<Tower> towers;
-    private int goalCounter = 0;
+    private int goalCounter = 0, paused = 0;
     private BufferedImage[][] underlay, overlay;
     private final Object troopListLock = new Object();
     private final Object towerListLock = new Object();
@@ -80,6 +80,7 @@ public class Controller {
         setMap2Listener();
         setHighscoreListener();
 
+
         //g.init();
         //money = new Credit();
         //db = new Database();
@@ -120,59 +121,59 @@ public class Controller {
 
                     if (!isPaused) {
 
-                    }
-                    mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
-                    mainFrame.getButtonPanel().setMoneyField(g.getMoney());
-                    g.getOverlayimgArr().updateImage();
-                    mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
-                    mainFrame.getScreen().repaint();
+                        mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
+                        mainFrame.getButtonPanel().setMoneyField(g.getMoney());
+                        g.getOverlayimgArr().updateImage();
+                        mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
+                        mainFrame.getScreen().repaint();
 
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    laserPosList = g.shootTroops();
-                    g.removeTroops();
-                    g.moveTroops();
-                    mainFrame.getScreen().getLaser().setPositons(laserPosList);
-                    mainFrame.getScreen().getLaser().setLasers();
-                    mainFrame.getScreen().drawLaser();
-
-                    //Här uppdaterar vi vyn
-
-                    if (g.getGoalCounter() > 1) {
-                        if (!gameWon) {
-                            if (handler.getList().isEmpty() || !handler.listFull()
-                                   || (handler.getTimeAtEndOfList() > (int)elapsedSeconds)) {
-                                newHighscore = new PopupNewHighscoreSetter();
-                                setSubmitButtonListener();
-                            }
-
-
-                            popupShowHighscores = new PopupShowHighscores("Highscores!");
-                            popupShowHighscores.setColumns();
-                            popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
-                            popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
-                            gameWon = true;
-                            gameDone = true;
-                            mainFrame.getGameMenu().setRestartNewGameText("New Game");
-                            if (!wasSet) {
-                                setPlayagainListener();
-                                setQuitButtonListener();
-                                //wasSet = true;
-                            }
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                    } else if (restartPressed) {
 
-                        mainFrame.dispose();
-                        levelList = g.getLevelsArrayList();
-                        g.setLevel(g.getCurrentLevelname());
-                        mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
-                        gameDone = true;
 
+                        laserPosList = g.shootTroops();
+                        g.removeTroops();
+                        g.moveTroops();
+                        mainFrame.getScreen().getLaser().setPositons(laserPosList);
+                        mainFrame.getScreen().getLaser().setLasers();
+                        mainFrame.getScreen().drawLaser();
+
+                        //Här uppdaterar vi vyn
+
+                        if (g.getGoalCounter() > 1) {
+                            if (!gameWon) {
+                                if (handler.getList().isEmpty() || !handler.listFull()
+                                        || (handler.getTimeAtEndOfList() > (int) elapsedSeconds)) {
+                                    newHighscore = new PopupNewHighscoreSetter();
+                                    setSubmitButtonListener();
+                                }
+
+
+                                popupShowHighscores = new PopupShowHighscores("Highscores!");
+                                popupShowHighscores.setColumns();
+                                popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
+                                popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
+                                gameWon = true;
+                                gameDone = true;
+                                mainFrame.getGameMenu().setRestartNewGameText("New Game");
+                                if (!wasSet) {
+                                    setPlayagainListener();
+                                    setQuitButtonListener();
+                                    //wasSet = true;
+                                }
+                            }
+                        } else if (restartPressed) {
+
+                            mainFrame.dispose();
+                            levelList = g.getLevelsArrayList();
+                            g.setLevel(g.getCurrentLevelname());
+                            mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
+                            gameDone = true;
+
+                        }
                     }
                 });
 
@@ -190,6 +191,7 @@ public class Controller {
             setRegularTroopListener();
             setMenuQuitListener();
             setAboutListener();
+            setPauseListener();
             setHelpListener();
             setRestartListener();
             //gameWon = false;
@@ -216,6 +218,23 @@ public class Controller {
         }, "play");
     }
 
+    public void setPauseListener(){
+        mainFrame.getGameMenu().setPauseListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (paused == 0) {
+                    isPaused = true;
+                    mainFrame.getGameMenu().setPauseText("Resume");
+                    paused = 1;
+                } else {
+                    isPaused = false;
+                    mainFrame.getGameMenu().setPauseText("Pause");
+                    paused = 0;
+                }
+            }
+        });
+    }
+
     public void setStartmenuQuitButtonListener() {
         start.addActionListener(new ActionListener() {
             @Override
@@ -237,7 +256,7 @@ public class Controller {
                 initGame();
                 setRegularTroopListener();
                 setMenuQuitListener();
-                setAboutListener();
+                setPauseListener();
                 setHelpListener();
                 setAboutListener();
                 setRestartListener();
@@ -261,6 +280,7 @@ public class Controller {
                 initGame();
                 setRegularTroopListener();
                 setMenuQuitListener();
+                setPauseListener();
                 setAboutListener();
                 setHelpListener();
                 setRestartListener();
@@ -328,14 +348,19 @@ public class Controller {
         }, "quit");
     }
 
-    public void setRegularTroopListener(){
-        mainFrame.getButtonPanel().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                g.sendTroop();
+    public void setRegularTroopListener() {
+        {
+            mainFrame.getButtonPanel().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!isPaused) {
+                        g.sendTroop();
+                    }
 
-            }
-        }, "Regular");
+                }
+            }, "Regular");
+
+        }
     }
 
     public void setMenuQuitListener() {
