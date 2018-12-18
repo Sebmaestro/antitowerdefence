@@ -129,6 +129,7 @@ public class Controller {
                                 gameWon = true;
                                 gameDone = true;
                                 mainFrame.getGameMenu().setRestartNewGameText("New Game");
+                                setNewGameListener();
                                 setPlayagainListener();
                                 setQuitButtonListener();
                             }
@@ -146,6 +147,7 @@ public class Controller {
                 });
 
 
+
             } catch (InterruptedException | InvocationTargetException e) {
                 e.printStackTrace();
             }
@@ -161,7 +163,6 @@ public class Controller {
 
 
         if(restartPressed){
-
             initGame();
             setRegularTroopListener();
             setTeleportTroopListener();
@@ -175,7 +176,28 @@ public class Controller {
             mainFrame.getGameMenu().setRestartNewGameText("Restart");
         }
     }
-
+    public void setNewGameListener() {
+        mainFrame.getGameMenu().setRestartListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(popupShowHighscores != null) {
+                    popupShowHighscores.dispose();
+                }
+                initGame();
+                setRegularTroopListener();
+                setTeleportTroopListener();
+                setMenuQuitListener();
+                setAboutListener();
+                setHelpListener();
+                setRestartListener();
+                setPauseListener();
+                gameWon = false;
+                g.resetGame();
+                handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
+                mainFrame.getGameMenu().setRestartNewGameText("Restart");
+            }
+        });
+    }
     private void setPlayagainListener() {
         popupShowHighscores.addActionListener(new ActionListener() {
             @Override
