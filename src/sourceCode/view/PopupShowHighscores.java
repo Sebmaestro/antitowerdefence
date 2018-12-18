@@ -3,28 +3,22 @@ package sourceCode.view;
 import sourceCode.model.database.HighscoreInfo;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PopupShowHighscores extends JFrame {
 
-    private JPanel highscore1;
-    private JPanel highscore2;
-    private JPanel buttonPanel;
     private JTextArea idArea1;
     private JTextArea playerArea1;
     private JTextArea timeArea1;
+
     private JTextArea idArea2;
     private JTextArea playerArea2;
     private JTextArea timeArea2;
+
     private JButton playAgain;
     private JButton quit;
-    //private JTextField map1;
-    private JLabel map1;
-    private JLabel map2;
 
     public PopupShowHighscores(String s) {
         super(s);
@@ -44,16 +38,14 @@ public class PopupShowHighscores extends JFrame {
     }
 
     private JPanel buildHighscorePanel1() {
-        highscore1 = new JPanel();
+        JPanel highscore1 = new JPanel();
         highscore1.setLayout(new BorderLayout());
         idArea1 = new JTextArea();
         idArea1.setColumns(2);
         playerArea1 = new JTextArea();
         playerArea1.setColumns(10);
         timeArea1 = new JTextArea();
-        //map1 = new JTextField("Map1");
-        map1 = new JLabel("Map1");
-        //map1.setEditable(false);
+        JLabel map1 = new JLabel("Map1");
         idArea1.setEditable(false);
         playerArea1.setEditable(false);
         timeArea1.setEditable(false);
@@ -66,14 +58,14 @@ public class PopupShowHighscores extends JFrame {
     }
 
     private JPanel buildHighscorePanel2() {
-        highscore2 = new JPanel();
+        JPanel highscore2 = new JPanel();
         highscore2.setLayout(new BorderLayout());
         idArea2 = new JTextArea();
         idArea2.setColumns(2);
         playerArea2 = new JTextArea();
         playerArea2.setColumns(10);
         timeArea2 = new JTextArea();
-        map2 = new JLabel("Map2");
+        JLabel map2 = new JLabel("Map2");
         idArea2.setEditable(false);
         playerArea2.setEditable(false);
         timeArea2.setEditable(false);
@@ -86,10 +78,10 @@ public class PopupShowHighscores extends JFrame {
     }
 
     private JPanel buildButtonPanel() {
-        buttonPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
 
-        playAgain = new JButton("Play");
+        playAgain = new JButton("Startmenu");
         quit = new JButton("Quit");
 
         buttonPanel.add(playAgain);
