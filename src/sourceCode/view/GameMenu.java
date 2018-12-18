@@ -76,5 +76,8 @@ public class GameMenu extends JMenuBar{
     public void setRestartNewGameText(String str) {
         restart.setText(str);
     }
+    public void setPauseText(String str) {
+        pause.setText(str);
+    }
 
 }
