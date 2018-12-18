@@ -1,3 +1,4 @@
+/*
 package sourceCode.model.xmlparser;
 
 import sourceCode.model.Position;
@@ -19,9 +20,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * Created by denni on 2018-12-05.
- */
 public class LevelParser {
     public static Position startPos;
     public static Position goalPos;
@@ -144,3 +142,4 @@ public class LevelParser {
         return goalPos;
     }
 }
+*/

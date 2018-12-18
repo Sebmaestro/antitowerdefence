@@ -5,7 +5,6 @@ import sourceCode.model.tile.Tile;
 import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.Troop;
-import sourceCode.model.xmlparser.LevelParser;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

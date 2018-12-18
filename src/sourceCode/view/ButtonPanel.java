@@ -28,7 +28,7 @@ public class ButtonPanel extends JPanel {
         goalCounter.setEditable(false);
 
         timer = new JTextField();
-        timer.setPreferredSize(new Dimension(50, 30));
+        timer.setPreferredSize(new Dimension(100, 30));
         timer.setEditable(false);
 
         add(moneyField);
@@ -57,7 +57,7 @@ public class ButtonPanel extends JPanel {
     public void setGoalCounter(int goalCounter) {
         this.goalCounter.setText(goalCounter+"/50 troops in goal");
     }
-    public void setTimer(int time) {
+    public void setTimer(Long time) {
         timer.setText("Time: "+time);
     }
 

@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PopupFrame extends JFrame {
+public class PopupShowHighscores extends JFrame {
 
     private JPanel highscore1;
     private JPanel highscore2;
@@ -26,7 +26,7 @@ public class PopupFrame extends JFrame {
     private JLabel map1;
     private JLabel map2;
 
-    public PopupFrame(String s) {
+    public PopupShowHighscores(String s) {
         super(s);
         setSize(380, 500);
         setLayout(new FlowLayout());
@@ -89,7 +89,7 @@ public class PopupFrame extends JFrame {
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
 
-        playAgain = new JButton("Play again");
+        playAgain = new JButton("Play");
         quit = new JButton("Quit");
 
         buttonPanel.add(playAgain);

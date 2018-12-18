@@ -61,12 +61,12 @@ public class Database {
         String sqlDelete;
         String sqlInsert;
         switch (table) {
-            case "map1":
+            case "Level 1":
                 sqlDelete = "DELETE FROM Map1";
                 sqlInsert = "INSERT INTO Map1(HighscoreId, " +
                         "PlayerName, FinishTime) VALUES(?, ?, ?)";
                 break;
-            case "map2":
+            case "Level 2":
                 sqlDelete = "DELETE FROM Map2";
                 sqlInsert = "INSERT INTO Map2(HighscoreId, " +
                         "PlayerName, FinishTime) VALUES(?, ?, ?)";
@@ -105,10 +105,10 @@ public class Database {
         String sql = null;
 
         switch (table) {
-            case "map1":
+            case "Level 1":
                 sql = "SELECT PlayerName, FinishTime FROM Map1";
                 break;
-            case "map2":
+            case "Level 2":
                 sql = "SELECT PlayerName, FinishTime FROM Map2";
                 break;
             default:

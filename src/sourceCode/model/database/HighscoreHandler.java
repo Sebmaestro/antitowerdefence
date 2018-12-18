@@ -12,23 +12,22 @@ import java.util.List;
  */
 public class HighscoreHandler {
 
-        private List<HighscoreInfo> l;
+    private List<HighscoreInfo> l;
 
     /**
      * Constructor
      */
     public HighscoreHandler(List<HighscoreInfo> list) {
-            l = new ArrayList<>(10);
-            l = list;
-        }
+        l = list;
+    }
 
     /**
      * Returns the list
      * @return l - the list
      */
     public List<HighscoreInfo> getList() {
-            return l;
-        }
+        return l;
+    }
 
     /**
      * Insert a highscore in the list if the list isnt full
@@ -37,12 +36,12 @@ public class HighscoreHandler {
      * @return boolean - true or false
      */
     public boolean addHighscoreToList(HighscoreInfo highscoreInfo) {
-            if (l.size() >= 10) {
-                return true;
-            } else
-                addHighscoreInNonFullList(highscoreInfo);
-                return false;
-        }
+        if (l.size() >= 10) {
+            return true;
+        } else
+            addHighscoreInNonFullList(highscoreInfo);
+        return false;
+    }
 
     /**
      * Loops the list and checks if a new player can take a spot in the
@@ -52,18 +51,20 @@ public class HighscoreHandler {
      * @param highscoreInfo - Object holding the score data
      */
     public void checkAndInsertHighscore(HighscoreInfo highscoreInfo) {
-            for (int i = 0; i < l.size(); i++) {
-                if (l.get(i).getFinishTime() > highscoreInfo.getFinishTime()) {
-                    l.add(i, highscoreInfo);
-                    if (l.size() < 10) {
-                        break;
-                    } else if (l.size() >= 11){
-                        l.remove(10);
-                        break;
-                    }
+        for (int i = 0; i < l.size(); i++) {
+            if (l.get(i).getFinishTime() > highscoreInfo.getFinishTime()) {
+                l.add(i, highscoreInfo);
+                if (l.size() < 10) {
+                    break;
+                } else if (l.size() >= 11){
+                    l.remove(10);
+                    break;
                 }
             }
+        } if (l.isEmpty()) {
+            l.add(0, highscoreInfo);
         }
+    }
 
     /**
      * Adds a highscore to the list
@@ -71,6 +72,10 @@ public class HighscoreHandler {
      * @param highscoreInfo - Object holding the score data
      */
     private void addHighscoreInNonFullList(HighscoreInfo highscoreInfo) {
-            l.add(highscoreInfo);
-        }
+        l.add(highscoreInfo);
+    }
+
+    public int getTimeAtEndOfList() {
+        return l.get(l.size() - 1).getFinishTime();
+    }
 }

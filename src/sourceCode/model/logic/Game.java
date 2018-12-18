@@ -1,6 +1,5 @@
 package sourceCode.model.logic;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import sourceCode.model.*;
 import sourceCode.model.Model;
@@ -10,20 +9,24 @@ import sourceCode.model.database.HighscoreHandler;
 import sourceCode.model.tile.Tile;
 import sourceCode.model.tower.RegularTower;
 import sourceCode.model.tower.Tower;
+import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.Troop;
-import sourceCode.model.xmlparser.LevelParser;
+//mport sourceCode.model.xmlparser.LevelParser;
+import sourceCode.model.xmlparser.LevelParser2;
+import sourceCode.model.xmlparser.Levels;
 import sourceCode.view.*;
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import static sourceCode.model.troop.Direction.EAST;
 
 public class Game {
-    private MainFrame mainFrame;
+    //private Frame frame;
     private Model model;
     private Tile[][] tiles;
-    private LevelParser levelP;
+    //private LevelParser levelP;
+    private LevelParser2 levelP2;
     private ImageArray imgArr;
     private OverlayImageArray overlayimgArr;
     private ArrayList<Position> pathPosition, towerPosition, quicksandPositions,
@@ -36,58 +39,36 @@ public class Game {
     private BufferedImage[][] underlay, overlay;
     private final Object troopListLock = new Object();
     private final Object towerListLock = new Object();
-    private PopupFrame popupFrame;
-    private PopupHighscoreFrame newHighscore;
+    private PopupShowHighscores popupShowHighscores;
+    private PopupNewHighscoreSetter newHighscore;
     private Database db = new Database();
     private HighscoreHandler handler;
     private StartMenuFrame start;
+    private ArrayList<Levels> levelsArrayList;
+    private String currentLevelname;
 
     int gameWon = 0;
-    Credit money = new Credit();
+    private Credit money = new Credit();
 
     public Game(){
 
+        levelsArrayList = new ArrayList<>();
         //Startar en ny startmeny
         //start = new StartMenuFrame();
 
         //Inläsning av leveln
-        levelP = new LevelParser();
-        tiles = readLevel("src/Resources/testlevel.xml");
+        //levelP = new LevelParser();
+        levelP2 = new LevelParser2();
+        levelP2.xmlparser("src/Resources/levels.xml");
+        //tiles = readLevel("src/Resources/levels.xml");
+
+
+        levelsArrayList = levelP2.getLevelsArrayList();
+
+
+
 
         //Får alla positioner som vi behöver från kartan
-        pathPosition = levelP.getPathPositions();
-        towerPosition = levelP.getTowerZonePositions();
-        quicksandPositions = levelP.getQuicksandPositions();
-        boosterPositions = levelP.getBoosterPositions();
-        switchUpPositions = levelP.getSwitchUpPositions();
-        switchDownPositions = levelP.getSwitchDownPositions();
-        startPos = levelP.getStartPos();
-        goalPos = levelP.getGoalPos();
-
-        //Skapar BufferedImageArrays från kartan, både underLay och overLay
-        imgArr = new ImageArray(tiles);
-        imgArr.setTowerPics(towerPosition);
-        overlayimgArr = new OverlayImageArray(tiles.length);
-        overlayimgArr.addPaths(pathPosition, quicksandPositions, boosterPositions,
-                switchDownPositions, switchUpPositions, startPos, goalPos);
-
-        //Kopierar dessa bilder för inskickning till mainFrame
-        underlay = copyOff(imgArr.getTheWholeShit());
-        overlay = copyOff(overlayimgArr.getTheWholeShit());
-
-        //Skapar en mainFrame med BufferedImageArrays
-        //setTheFrame(underlay, overlay);
-
-        //Skapar listor för torn, trupper och lasers
-        regularTroops = new ArrayList<>();
-        towers = new ArrayList<>();
-        laserPositionList = new ArrayList<>();
-
-        //Sätter tornen på rätt plats
-        setUpTowers(towerPosition);
-
-        //Lägger till trupper på sätt plats i overlayImage
-        overlayimgArr.addRegularTroopList(regularTroops);
     }
 
     public BufferedImage[][] getUnderlay() {
@@ -98,11 +79,63 @@ public class Game {
         return overlay;
     }
 
+
+    public int getMoney() {
+        return money.getCredits();
+    }
+
+    public ArrayList<Levels> getLevelsArrayList() {
+        return levelsArrayList;
+    }
+
+    public void setLevel(String levelName) {
+        for (Levels l:levelsArrayList) {
+            if (l.getlevelName().equals(levelName)) {
+                currentLevelname = levelName;
+
+                tiles = l.getMapTiles();
+
+                pathPosition = l.getPathPositions();
+                towerPosition = l.getTowerZonePositions();
+                quicksandPositions = l.getQuicksandPositions();
+                boosterPositions = l.getBoosterPositions();
+                switchUpPositions = l.getSwitchUpPositions();
+                switchDownPositions = l.getSwitchDownPositions();
+                startPos = l.getStartPos();
+                goalPos = l.getGoalPos();
+
+
+                //Skapar BufferedImageArrays från kartan, både underLay och overLay
+                imgArr = new ImageArray(l.getMapTiles());
+                imgArr.setTowerPics(towerPosition);
+                overlayimgArr = new OverlayImageArray(l.getMapTiles().length);
+                overlayimgArr.addPaths(pathPosition, quicksandPositions, boosterPositions,
+                        switchDownPositions, switchUpPositions, startPos, goalPos);
+
+                //Kopierar dessa bilder för inskickning till frame
+                underlay = copyOff(imgArr.getTheWholeShit());
+                overlay = copyOff(overlayimgArr.getTheWholeShit());
+
+                //Skapar en frame med BufferedImageArrays
+                //setTheFrame(underlay, overlay);
+
+                //Skapar listor för torn, trupper och lasers
+                regularTroops = new ArrayList<>();
+                towers = new ArrayList<>();
+                laserPositionList = new ArrayList<>();
+
+                //Sätter tornen på rätt plats
+                setUpTowers(towerPosition);
+
+                //Lägger till trupper på sätt plats i overlayImage
+                overlayimgArr.addRegularTroopList(regularTroops);
+            }
+        }
+    }
+
+    /*
     public void init(){
-
-
         //Loopar spelet
-
         SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
@@ -112,22 +145,52 @@ public class Game {
             }
         };
         worker.execute();
-
-    }
-
-    public Tile[][] readLevel(String str){
-        tiles = levelP.xmlparser(str);
-        return tiles;
-    }
-
-    /*
-
-
-    public MainFrame getFrame() {
-        return mainFrame;
     }
     */
 
+    public OverlayImageArray getOverlayimgArr() {
+        return overlayimgArr;
+    }
+
+    public void sendTroop() {
+
+        if (money.getCredits() >= 100) {
+            Troop reg = new RegularTroop(startPos, EAST);
+            regularTroops.add(reg);
+            money.buyNewTroop(reg);
+        }
+    }
+
+    public int getGoalCounter() {
+        return goalCounter;
+    }
+
+    public void resetGame() {
+        goalCounter = 0;
+        money.setCredits(500);
+        //resetTimer
+    }
+
+
+    public String getCurrentLevelname() {
+        return currentLevelname;
+    }
+
+
+    /*
+    public Frame setTheFrame(BufferedImage[][] underlay, BufferedImage[][] overlay){
+        frame = new Frame();
+        frame.addScreen();
+        frame.addButtonPanel();
+        frame.getScreen().setImages(underlay, overlay);
+        setRegularTroopListener();
+        frame.getScreen().createGameScreen();
+
+        return frame;
+    }
+    */
+
+    /*
     public void gameLoop() {
         double time = System.nanoTime();
 
@@ -135,10 +198,10 @@ public class Game {
             try {
                 SwingUtilities.invokeAndWait(() -> {
 
-                    mainFrame.getButtonPanel().setMoneyField(money.getCredits());
+                    //frame.getButtonPanel().setMoneyField(money.getCredits());
                     overlayimgArr.updateImage();
-                    mainFrame.getScreen().updateOverlay(copyOff(overlayimgArr.getTheWholeShit()));
-                    mainFrame.getScreen().repaint();
+                    //frame.getScreen().updateOverlay(copyOff(overlayimgArr.getTheWholeShit()));
+                    //frame.getScreen().repaint();
 
                     try {
                         Thread.sleep(100);
@@ -155,6 +218,7 @@ public class Game {
             }
         }
     }
+    */
 
     public void removeTroops(){
         Iterator<Troop> iter = regularTroops.iterator();
@@ -166,28 +230,32 @@ public class Game {
                     iter.remove();
                     if(reg.isGoalReached()) {
                         money.getGoalCredits();
+                        goalCounter++;
 
+                        /*
                         if(goalCounter<1) {
                             goalCounter++;
-                            mainFrame.getButtonPanel().setGoalCounter(goalCounter);
+                            //frame.getButtonPanel().setGoalCounter(goalCounter);
                         } else if (gameWon == 0){
                             //Game is done
                             gameWon = 1;
-                            popupFrame = new PopupFrame("Map2");
-                            newHighscore = new PopupHighscoreFrame();
+                            popupShowHighscores = new PopupShowHighscores("Map2");
+                            newHighscore = new PopupNewHighscoreSetter();
                             Database db = new Database();
                             handler = new HighscoreHandler(db.getHighscores("Map2"));
-                            popupFrame.setColumns();
-
+                            //setSubmitButtonListener();
+                            //setQuitButtonListener();
+                            popupShowHighscores.setColumns();
+                        */
 
                             //handler.checkAndInsertHighscore(new HighscoreInfo("Thebiggest", 45));
                             //handler.checkAndInsertHighscore(new HighscoreInfo("xgod", 10));
-                            //popupFrame.showHighscores(handler.getList());
-                            db.saveHighscores(handler.getList(), "Map2");
-                        }
+                            //popupShowHighscores.showHighscores(handler.getList());
+                            //db.saveHighscores(handler.getList(), "Map2");
+                        //}
 
-                        goalCounter++;
-                        // mainFrame.getButtonPanel().setGoalCounter(goalCounter);
+                        //goalCounter++;
+                        // frame.getButtonPanel().setGoalCounter(goalCounter);
                     }
                 }
             }
@@ -208,54 +276,37 @@ public class Game {
     }
 
 
-    public void shootTroops(){
-
+    public ArrayList<LaserPositions> shootTroops() {
         synchronized (towerListLock) {
+            laserPositionList.clear();
             if(towers.size() > 0) {
                 for (Tower tower : towers) {
-                    if(regularTroops.size() > 0) {
-                        if (tower.canReachTroop(regularTroops.get(0))) {
-                            mainFrame.getScreen().getLaser().setLaserPosition(
-                                    tower.getPosition(), regularTroops.get(0).getPosition());
-                            mainFrame.getScreen().drawLaser();
-                            tower.attack(regularTroops.get(0));
-                            LaserPositions laserpos = new LaserPositions(tower.getPosition(),regularTroops.get(0).getPosition());
-                            laserPositionList.add(laserpos);
-                        }
-                    }
-                    if(regularTroops.size() > 1) {
-                        if(!tower.canReachTroop(regularTroops.get(0))) {
-                            if (tower.canReachTroop(regularTroops.get(1))) {
-                                mainFrame.getScreen().getLaser().setLaserPosition(
-                                        tower.getPosition(), regularTroops.get(1).getPosition());
-                                mainFrame.getScreen().drawLaser();
-                                tower.attack(regularTroops.get(1));
-                                LaserPositions laserpos = new LaserPositions(tower.getPosition(), regularTroops.get(1).getPosition());
+                    int i = 0;
+                    for (Troop t : regularTroops) {
+                        if (tower.canReachTroop(t)) {
+                            if (i == 0) {
+                                i++;
+                                tower.addToAttackList(t);
+                                LaserPositions laserpos = new LaserPositions(tower.getPosition(), t.getPosition());
                                 laserPositionList.add(laserpos);
                             }
                         }
                     }
-
-                    if(regularTroops.size() > 2) {
-                        if((!tower.canReachTroop(regularTroops.get(0)) && !tower.canReachTroop(regularTroops.get(1)))) {
-                            if (tower.canReachTroop(regularTroops.get(2))) {
-                                mainFrame.getScreen().getLaser().setLaserPosition(
-                                        tower.getPosition(), regularTroops.get(2).getPosition());
-                                mainFrame.getScreen().drawLaser();
-                                tower.attack(regularTroops.get(2));
-                                LaserPositions laserpos = new LaserPositions(tower.getPosition(), regularTroops.get(2).getPosition());
-                                laserPositionList.add(laserpos);
-                            }
-                        }
-                    }
-
-
                 }
-                mainFrame.getScreen().getLaser().setPositons(laserPositionList);
-                mainFrame.getScreen().getLaser().setLasers();
+                for(Tower t: towers){
+                    if(t.getToAttackList().size() >0) {
+                        //frame.getScreen().getLaser().setLaserPosition(t.getPosition(),
+                         //       t.getToAttack().get(0).getPosition());
+                        //frame.getScreen().drawLaser();
+                        t.clearToAttackList();
+                    }
+                }
+
+                //frame.getScreen().getLaser().setPositons(laserPositionList);
+                //frame.getScreen().getLaser().setLasers();
             }
         }
-        laserPositionList.clear();
+        return laserPositionList;
     }
 
     public static BufferedImage[][] copyOff(BufferedImage[][] original){
@@ -269,6 +320,83 @@ public class Game {
         }
         return copy;
     }
+
+
+    /*
+    public void setPlayagainListener() {
+        popupShowHighscores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Kör igen
+            }
+        }, "play");
+    }
+
+    public void setMap1Listener() {
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Välj xml för första mappen och starta spelet
+            }
+        }, "map1");
+    }
+
+    public void setMap2Listener() {
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Välj xml för andra mappen och starta spelet
+            }
+        }, "map2");
+    }
+
+    public void setHighscoreListener() {
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Visa highscore
+            }
+        }, "highscore");
+    }
+
+    public void setSubmitButtonListener() {
+        newHighscore.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), 5));
+                popupShowHighscores.clear();
+                popupShowHighscores.setColumns();
+                popupShowHighscores.showHighscores(handler.getList());
+                db.saveHighscores(handler.getList(), "Map2");
+                newHighscore.dispose();
+            }
+        });
+    }
+
+    public void setQuitButtonListener() {
+        popupShowHighscores.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        }, "quit");
+    }
+
+    public void setRegularTroopListener(){
+        frame.getButtonPanel().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (money.getCredits() >= 100) {
+                    Troop reg = new RegularTroop(startPos, EAST);
+                    regularTroops.add(reg);
+                    money.buyNewTroop(reg);
+                }
+
+            }
+        }, "Regular");
+    }
+    */
+
 
     public void setUpTowers(ArrayList<Position> towerPosition){
         for(Position p: towerPosition){

@@ -3,6 +3,7 @@ package sourceCode.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import sourceCode.model.*;
 import sourceCode.model.Model;
@@ -13,20 +14,22 @@ import sourceCode.model.database.HighscoreInfo;
 import sourceCode.model.logic.Game;
 import sourceCode.model.tile.Tile;
 import sourceCode.model.tower.Tower;
-import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.Troop;
-import sourceCode.model.xmlparser.LevelParser;
+//import sourceCode.model.xmlparser.LevelParser;
+import sourceCode.model.xmlparser.Levels;
 import sourceCode.view.*;
 
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import static sourceCode.model.troop.Direction.EAST;
+
+import static sourceCode.model.logic.Game.copyOff;
 
 public class Controller {
     private MainFrame mainFrame;
     private Model model;
     private Tile[][] tiles;
-    private LevelParser levelP;
+    //private LevelParser levelP;
     private ImageArray imgArr;
     private OverlayImageArray overlayimgArr;
     private ArrayList<Position> pathPosition, towerPosition, quicksandPositions,
@@ -34,28 +37,40 @@ public class Controller {
     private Position startPos, goalPos;
     private ArrayList<Troop> regularTroops;
     private ArrayList<Tower> towers;
-    private ArrayList<LaserPositions> laserPositionList;
     private int goalCounter = 0;
     private BufferedImage[][] underlay, overlay;
     private final Object troopListLock = new Object();
     private final Object towerListLock = new Object();
 
-    private PopupFrame popupFrame;
-    private PopupHighscoreFrame newHighscore;
+    private PopupShowHighscores popupShowHighscores;
+    private PopupNewHighscoreSetter newHighscore;
     private Database db;
     private HighscoreHandler handler;
     private StartMenuFrame start;
     private Game g;
+
+    private boolean gameWon = false;
+    private boolean wasSet = false;
+    private boolean gameDone = false;
+
+    private long elapsedSeconds;
+
+    private ArrayList<LaserPositions> laserPosList;
+
+    private ArrayList<Levels> levelList;
 
     //private int gameWon = 0;
     private Credit money;
 
 
     public Controller() throws IOException {
+        db = new Database();
         g = new Game();
+        levelList = new ArrayList<>();
         //mainFrame = new MainFrame(g.getOverlay(), g.getUnderlay());
 
         //g.init();
+
 
         start = new StartMenuFrame();
         setStartmenuQuitButtonListener();
@@ -67,8 +82,8 @@ public class Controller {
         //money = new Credit();
         //db = new Database();
         //handler = new HighscoreHandler(db.getHighscores("map2"));
-        //newHighscore = new PopupHighscoreFrame();
-        //popupFrame = new PopupFrame("map2");
+        //newHighscore = new PopupNewHighscoreSetter();
+        //popupShowHighscores = new PopupShowHighscores("map2");
         //mainFrame = new MainFrame();
 
         /*
@@ -78,11 +93,91 @@ public class Controller {
         */
     }
 
+    public void initGame(){
+        //Loopar spelet
+        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+
+                gameLoop();
+                return null;
+            }
+        };
+        worker.execute();
+    }
+
+    public void gameLoop() {
+        long startTime = System.currentTimeMillis();
+
+        while(!gameDone) {
+            try {
+                SwingUtilities.invokeAndWait(() -> {
+
+
+                    mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
+                    mainFrame.getButtonPanel().setMoneyField(g.getMoney());
+                    g.getOverlayimgArr().updateImage();
+                    mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
+                    mainFrame.getScreen().repaint();
+
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    laserPosList = g.shootTroops();
+                    g.removeTroops();
+                    g.moveTroops();
+                    mainFrame.getScreen().getLaser().setPositons(laserPosList);
+                    mainFrame.getScreen().getLaser().setLasers();
+                    mainFrame.getScreen().drawLaser();
+
+                    //Här uppdaterar vi vyn
+
+                    if (g.getGoalCounter() > 1) {
+                        if (!gameWon) {
+                            if (handler.getList().isEmpty() || (handler.getTimeAtEndOfList() > (int)elapsedSeconds)) {
+                                newHighscore = new PopupNewHighscoreSetter();
+                                setSubmitButtonListener();
+                            }
+
+
+                            popupShowHighscores = new PopupShowHighscores("Highscores!");
+                            popupShowHighscores.setColumns();
+                            popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
+                            popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
+                            gameWon = true;
+                            gameDone = true;
+                            mainFrame.dispose();
+                            if (!wasSet) {
+                                setPlayagainListener();
+                                setQuitButtonListener();
+                                //wasSet = true;
+                            }
+                        }
+                    }
+                });
+            } catch (InterruptedException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            long elapsedTime = System.currentTimeMillis() - startTime;
+            elapsedSeconds = elapsedTime / 1000;
+            mainFrame.getButtonPanel().setTimer(elapsedSeconds);
+        }
+    }
+
     public void setPlayagainListener() {
-        popupFrame.addActionListener(new ActionListener() {
+        popupShowHighscores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Kör igen
+                start.dispose();
+                start = new StartMenuFrame();
+                popupShowHighscores.dispose();
+                setHighscoreListener();
+                setMap1Listener();
+                setMap2Listener();
             }
         }, "play");
     }
@@ -100,7 +195,16 @@ public class Controller {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //g.init();
+                start.dispose();
+                levelList = g.getLevelsArrayList();
+                g.setLevel("Level 1");
+                mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
+                gameDone = false;
+                initGame();
+                setRegularTroopListener();
+                gameWon = false;
+                g.resetGame();
+                handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
             }
         }, "map1");
     }
@@ -109,7 +213,16 @@ public class Controller {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Välj xml för andra mappen och starta spelet
+                start.dispose();
+                levelList = g.getLevelsArrayList();
+                g.setLevel("Level 2");
+                mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
+                gameDone = false;
+                initGame();
+                setRegularTroopListener();
+                g.resetGame();
+                gameWon = false;
+                handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
             }
         }, "map2");
     }
@@ -118,37 +231,51 @@ public class Controller {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                popupFrame = new PopupFrame("Highscore");
-                popupFrame.setColumns();
-                db = new Database();
+                popupShowHighscores = new PopupShowHighscores("Highscore");
+                popupShowHighscores.setColumns();
+                //db = new Database();
                 //handler = new HighscoreHandler(db.getHighscores("map1"));
                 //handler.checkAndInsertHighscore(new HighscoreInfo("Simon", 40));
                 //handler.checkAndInsertHighscore(new HighscoreInfo("dunkarn", 20));
                 //db.saveHighscores(handler.getList(), "map1");
-                popupFrame.showHighscores(db.getHighscores("map2"), "map2");
-                popupFrame.showHighscores(db.getHighscores("map1"), "map1");
+                popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
+                popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
+                start.dispose();
+                if (!wasSet) {
+                    setPlayagainListener();
+                    //wasSet = true;
+                }
+                setQuitButtonListener();
             }
         }, "highscore");
     }
 
-    /*
     public void setSubmitButtonListener() {
         newHighscore.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), 5));
-                popupFrame.clear();
-                popupFrame.setColumns();
-                popupFrame.showHighscores(handler.getList());
-                db.saveHighscores(handler.getList(), "Map2");
+                //handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), 5));
+                //popupShowHighscores.clear();
+                //popupShowHighscores.setColumns();
+                //popupShowHighscores.showHighscores(handler.getList());
+                //db.saveHighscores(handler.getList(), "Map2");
+                //newHighscore.dispose();
+                handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), (int)elapsedSeconds));
                 newHighscore.dispose();
+                db.saveHighscores(handler.getList(), g.getCurrentLevelname());
+                popupShowHighscores.dispose();
+                popupShowHighscores = new PopupShowHighscores("halloj");
+                popupShowHighscores.setColumns();
+                popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
+                popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
+                setPlayagainListener();
+                setQuitButtonListener();
             }
         });
     }
-    */
 
     public void setQuitButtonListener() {
-        popupFrame.addActionListener(new ActionListener() {
+        popupShowHighscores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
@@ -160,11 +287,7 @@ public class Controller {
         mainFrame.getButtonPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (money.getCredits() >= 100) {
-                    Troop reg = new RegularTroop(startPos, EAST);
-                    regularTroops.add(reg);
-                    money.buyNewTroop(reg);
-                }
+                g.sendTroop();
 
             }
         }, "Regular");

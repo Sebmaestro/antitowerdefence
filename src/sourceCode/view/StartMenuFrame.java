@@ -13,7 +13,7 @@ public class StartMenuFrame extends JFrame {
     public StartMenuFrame() {
         super("Anti Towerdefence");
 
-        setSize(300, 90);
+        setSize(300, 200);
 
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
@@ -31,6 +31,9 @@ public class StartMenuFrame extends JFrame {
         add(panel);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        setLocationRelativeTo(null);
+
         setVisible(true);
     }
 
