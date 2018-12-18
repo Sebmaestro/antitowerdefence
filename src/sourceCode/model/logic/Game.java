@@ -168,6 +168,9 @@ public class Game {
     public void resetGame() {
         goalCounter = 0;
         money.setCredits(500);
+        //laserPositionList.clear();
+        //regularTroops.clear();
+        //towers.clear();
         //resetTimer
     }
 

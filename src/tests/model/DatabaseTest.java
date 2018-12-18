@@ -69,6 +69,7 @@ public class DatabaseTest {
     public void clearDatabase() {
         Database db = new Database();
         db.saveHighscores(new ArrayList<>(), "Level 2");
+        db.saveHighscores(new ArrayList<>(), "Level 1");
 
         assertEquals(db.getHighscores("Level 2").size(), 0);
     }
