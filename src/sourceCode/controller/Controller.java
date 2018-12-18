@@ -39,6 +39,9 @@ public class Controller {
     private boolean isPaused = false;
     private boolean restartPressed = false;
     private int paused = 0;
+    private long startTime;
+    private long elapsed;
+    private int finishTime;
 
     private long elapsedSeconds;
 
@@ -78,7 +81,10 @@ public class Controller {
     }
 
     private void gameLoop() {
-        long startTime = System.currentTimeMillis();
+        elapsed = 0;
+        finishTime = 0;
+        startTimer();
+        //long startTime = System.currentTimeMillis();
 
         gameDone = false;
         restartPressed = false;
@@ -87,7 +93,6 @@ public class Controller {
                 SwingUtilities.invokeAndWait(() -> {
 
                     if (!isPaused) {
-
 
                         mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
                         mainFrame.getButtonPanel().setMoneyField(g.getMoney());
@@ -112,11 +117,10 @@ public class Controller {
                         if (g.getGoalCounter() > 1) {
                             if (!gameWon) {
                                 if (handler.getList().isEmpty() || !handler.listFull()
-                                        || (handler.getTimeAtEndOfList() > (int) elapsedSeconds)) {
+                                        || (handler.getTimeAtEndOfList() > finishTime)) {
                                     newHighscore = new PopupNewHighscoreSetter();
                                     setSubmitButtonListener();
                                 }
-
 
                                 popupShowHighscores = new PopupShowHighscores("Highscores!");
                                 popupShowHighscores.setColumns();
@@ -128,15 +132,16 @@ public class Controller {
                                 setPlayagainListener();
                                 setQuitButtonListener();
                             }
-                        } else if (restartPressed) {
-
-                            mainFrame.dispose();
-                            levelList = g.getLevelsArrayList();
-                            g.setLevel(g.getCurrentLevelname());
-                            mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
-                            gameDone = true;
-
                         }
+                    }
+
+                    if(restartPressed){
+                        mainFrame.dispose();
+                        levelList = g.getLevelsArrayList();
+                        g.setLevel(g.getCurrentLevelname());
+                        mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
+                        gameDone = true;
+                        isPaused = false;
                     }
                 });
 
@@ -144,10 +149,17 @@ public class Controller {
             } catch (InterruptedException | InvocationTargetException e) {
                 e.printStackTrace();
             }
-            long elapsedTime = System.currentTimeMillis() - startTime;
-            elapsedSeconds = elapsedTime / 1000;
-            mainFrame.getButtonPanel().setTimer(elapsedSeconds);
+
+            //long elapsedTime = System.currentTimeMillis() - startTime;
+            //elapsedSeconds = elapsedTime / 1000;
+            //mainFrame.getButtonPanel().setTimer(elapsedSeconds);
+            if(!isPaused) {
+                mainFrame.getButtonPanel().setTimer(getElapsed());
+                getGameTime();//finishTime = (int)getElapsed();
+            }
         }
+
+
         if(restartPressed){
 
             initGame();
@@ -192,6 +204,24 @@ public class Controller {
             }
         }, "quit");
     }
+
+    public void startTimer(){
+        startTime = System.currentTimeMillis();
+    }
+
+    public void stopTimer(){
+        elapsed = elapsed + System.currentTimeMillis() - startTime;
+    }
+
+    public long getElapsed(){
+
+            return ((elapsed + System.currentTimeMillis() - startTime)/1000);
+    }
+    public void getGameTime(){
+
+        finishTime = (int)getElapsed();
+    }
+
 
     private void setMap1Listener() {
         start.addActionListener(new ActionListener() {
@@ -249,7 +279,7 @@ public class Controller {
         newHighscore.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), (int)elapsedSeconds));
+                handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), finishTime));
                 newHighscore.dispose();
                 db.saveHighscores(handler.getList(), g.getCurrentLevelname());
                 popupShowHighscores.dispose();
@@ -370,10 +400,12 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 if (paused == 0) {
                     isPaused = true;
+                    stopTimer();
                     mainFrame.getGameMenu().setPauseText("Resume");
                     paused = 1;
                 } else {
                     isPaused = false;
+                    startTimer();
                     mainFrame.getGameMenu().setPauseText("Pause");
                     paused = 0;
                 }
