@@ -116,6 +116,7 @@ public abstract class Troop extends Rectangle implements Unit{
 
     }
 
+
     public void move(Tile[][] tileMap){
 
         if(isGoalReached()){
@@ -134,6 +135,7 @@ public abstract class Troop extends Rectangle implements Unit{
             if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("src/resources/start.png")) {
                     checkIfGoal(tileMap);
             }
+
 
             if(!isGoalReached()) {
                 if (tileMap[east.getY()][east.getX()].canWalk()) {
@@ -159,6 +161,7 @@ public abstract class Troop extends Rectangle implements Unit{
                 checkIfGoal(tileMap);
             }
 
+
             if(!isGoalReached()) {
 
                 if (tileMap[south.getY()][south.getX()].canWalk()) {
@@ -183,6 +186,7 @@ public abstract class Troop extends Rectangle implements Unit{
                 checkIfGoal(tileMap);
             }
 
+
             if(!isGoalReached()) {
 
                 if (tileMap[west.getY()][west.getX()].canWalk()) {
@@ -206,6 +210,7 @@ public abstract class Troop extends Rectangle implements Unit{
             if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("src/resources/start.png")) {
                 checkIfGoal(tileMap);
             }
+
 
             if(!isGoalReached()) {
                 if (tileMap[north.getY()][north.getX()].canWalk()) {

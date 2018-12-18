@@ -121,7 +121,7 @@ public class Controller {
                         mainFrame.getScreen().getLaser().setLasers();
                         mainFrame.getScreen().drawLaser();
 
-                        if (g.getGoalCounter() > 1) {
+                        if (g.getGoalCounter() > 4) {
                             if (!gameWon) {
                                 if (handler.getList().isEmpty() || !handler.listFull()
                                         || (handler.getTimeAtEndOfList() > finishTime)) {
@@ -237,6 +237,7 @@ public class Controller {
                 for (Position p:allSwitches) {
 
                     if (mouseX == p.getX() && mouseY == p.getY()){
+                        g.changeSwitch(p);
 
                     }
                 }

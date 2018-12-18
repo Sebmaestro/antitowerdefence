@@ -120,8 +120,37 @@ public class OverlayImageArray {
 
     }
 
-    public void laser(){
+    public void changeSwitchUpToDown(Position p){
+        int i = 0;
+        boolean found = false;
+        for(Position pos: switchUpPosition){
+            if(pos == p){
+                found = true;
+                System.out.println(i);
+                break;
+            }
+            i++;
+        }
+        if(found){
+            switchUpPosition.remove(i);
+            switchDownPosition.add(p);
+        }
+    }
 
+    public void changeSwitchDownToUp(Position p){
+        int j = 0;
+        boolean found = false;
+        for(Position pos: switchDownPosition){
+            if(pos == p){
+                found = true;
+                break;
+            }
+            j++;
+        }
+        if(found){
+            switchDownPosition.remove(j);
+            switchUpPosition.add(p);
+        }
     }
 
     public void updateImage(){

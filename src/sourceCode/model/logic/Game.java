@@ -4,7 +4,7 @@ import sourceCode.model.*;
 import sourceCode.model.credit.Credit;
 import sourceCode.model.database.Database;
 import sourceCode.model.database.HighscoreHandler;
-import sourceCode.model.tile.Tile;
+import sourceCode.model.tile.*;
 import sourceCode.model.tower.RegularTower;
 import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.RegularTroop;
@@ -54,6 +54,7 @@ public class Game {
     private String currentLevelname;
 
 
+
     int gameWon = 0;
     private Credit money = new Credit();
 
@@ -95,6 +96,7 @@ public class Game {
     public ArrayList<Levels> getLevelsArrayList() {
         return levelsArrayList;
     }
+
 
     public void setLevel(String levelName) {
         for (Levels l:levelsArrayList) {
@@ -160,6 +162,17 @@ public class Game {
 
     public OverlayImageArray getOverlayimgArr() {
         return overlayimgArr;
+    }
+
+    public void changeSwitch(Position p){
+        if (tiles[p.getY()][p.getX()].getGraphic().equals("src/Resources/switch-down.png")){
+            tiles[p.getY()][p.getX()] = new Switchup(p);
+            overlayimgArr.changeSwitchDownToUp(p);
+        }
+        else if(tiles[p.getY()][p.getX()].getGraphic().equals("src/Resources/switch-up.png")){
+            tiles[p.getY()][p.getX()] = new Switchdown(p);
+            overlayimgArr.changeSwitchUpToDown(p);
+        }
     }
 
     public void sendRegularTroop() {
@@ -288,9 +301,11 @@ public class Game {
         synchronized (troopListLock) {
             if(regularTroops.size() > 0) {
                 for (Troop reg : regularTroops) {
+
+                    tiles[reg.getPosition().getY()][reg.getPosition().getX()].landOn(reg);
                     reg.move(tiles);
 
-                    System.out.println(reg.getHp());
+                    //System.out.println(reg.getHp());
 
                 }
             }
