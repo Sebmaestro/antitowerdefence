@@ -121,7 +121,7 @@ public class Controller {
                     mainFrame.getScreen().repaint();
 
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(200);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -150,7 +150,7 @@ public class Controller {
                             popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
                             gameWon = true;
                             gameDone = true;
-                            mainFrame.dispose();
+                            mainFrame.getGameMenu().setRestartNewGameText("New Game");
                             if (!wasSet) {
                                 setPlayagainListener();
                                 setQuitButtonListener();
@@ -172,6 +172,7 @@ public class Controller {
         popupShowHighscores.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                mainFrame.dispose();
                 start.dispose();
                 start = new StartMenuFrame();
                 popupShowHighscores.dispose();
@@ -202,6 +203,12 @@ public class Controller {
                 gameDone = false;
                 initGame();
                 setRegularTroopListener();
+                setMenuQuitListener();
+                setAboutListener();
+                setHelpListener();
+                setAboutListener();
+                setRestartListener();
+                mainFrame.getGameMenu().setRestartNewGameText("Restart");
                 gameWon = false;
                 g.resetGame();
                 handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
@@ -220,6 +227,11 @@ public class Controller {
                 gameDone = false;
                 initGame();
                 setRegularTroopListener();
+                setMenuQuitListener();
+                setAboutListener();
+                setHelpListener();
+                setRestartListener();
+                mainFrame.getGameMenu().setRestartNewGameText("Restart");
                 g.resetGame();
                 gameWon = false;
                 handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
@@ -291,6 +303,73 @@ public class Controller {
 
             }
         }, "Regular");
+    }
+
+    public void setMenuQuitListener() {
+        mainFrame.getGameMenu().setQuitListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int choice = JOptionPane.showConfirmDialog(mainFrame,
+                        "Are you sure you want to exit?", "Confirm exit",
+                        JOptionPane.YES_NO_OPTION);
+
+                if(choice == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                }
+            }
+        });
+    }
+
+    public void setAboutListener() {
+        mainFrame.getGameMenu().setAboutListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,"Made by:\n" +
+                        "Simon Lundkvist, Sebastian Arledal, Dennis Karlman, David Eriksson","About",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+    }
+
+    public void setHelpListener() {
+        mainFrame.getGameMenu().setHelpListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null,
+                        "The goal is to get 50 troops to reach the goal alive as fast as possible.\n" +
+                                "You can send troops by using the buttons on the bottom of the screen.\n" +
+                                "Sending a troop costs credits, the cost is displayed on the associated buttons.\n" +
+                                "You can view your available credits on the bottom of the screen.\n" +
+                                "Every troop that reaches the goal alive will grant you credits.");
+            }
+        });
+    }
+
+    public void setRestartListener() {
+        mainFrame.getGameMenu().setRestartListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(gameDone) {
+                    popupShowHighscores.dispose();
+                }
+                mainFrame.dispose();
+                levelList = g.getLevelsArrayList();
+                g.setLevel("Level 1");
+                mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
+                gameDone = false;
+                initGame();
+                setRegularTroopListener();
+                setMenuQuitListener();
+                setAboutListener();
+                setHelpListener();
+                setRestartListener();
+                gameWon = false;
+                g.resetGame();
+                handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
+                mainFrame.getGameMenu().setRestartNewGameText("Restart");
+            }
+        });
     }
 }
 

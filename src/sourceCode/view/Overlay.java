@@ -3,7 +3,6 @@ package sourceCode.view;
 import sourceCode.model.ImageArray;
 import sourceCode.model.OverlayImageArray;
 import sourceCode.model.tile.Tile;
-import sourceCode.model.xmlparser.LevelParser;
 
 import javax.swing.*;
 import java.awt.*;
