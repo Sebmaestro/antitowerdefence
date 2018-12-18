@@ -342,7 +342,6 @@ public class Controller {
         setMenuQuitListener();
         setAboutListener();
         setHelpListener();
-        setRestartListener();
     }
 }
 
