@@ -1,8 +1,6 @@
 package sourceCode.model.logic;
 
-import java.util.*;
 import sourceCode.model.*;
-import sourceCode.model.Model;
 import sourceCode.model.credit.Credit;
 import sourceCode.model.database.Database;
 import sourceCode.model.database.HighscoreHandler;
@@ -12,15 +10,22 @@ import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.TeleporterTroop;
 import sourceCode.model.troop.Troop;
-//mport sourceCode.model.xmlparser.LevelParser;
 import sourceCode.model.xmlparser.LevelParser2;
 import sourceCode.model.xmlparser.Levels;
-import sourceCode.view.*;
+import sourceCode.view.PopupNewHighscoreSetter;
+import sourceCode.view.PopupShowHighscores;
+import sourceCode.view.StartMenuFrame;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import static sourceCode.model.troop.Direction.EAST;
+
+//mport sourceCode.model.xmlparser.LevelParser;
 
 public class Game {
     //private Frame frame;
@@ -31,7 +36,7 @@ public class Game {
     private ImageArray imgArr;
     private OverlayImageArray overlayimgArr;
     private ArrayList<Position> pathPosition, towerPosition, quicksandPositions,
-            boosterPositions, switchUpPositions, switchDownPositions;
+            boosterPositions, switchUpPositions, switchDownPositions, allSwitchPositions;
     private Position startPos, goalPos;
     private ArrayList<Troop> regularTroops;
     private ArrayList<Tower> towers;
@@ -47,6 +52,7 @@ public class Game {
     private StartMenuFrame start;
     private ArrayList<Levels> levelsArrayList;
     private String currentLevelname;
+
 
     int gameWon = 0;
     private Credit money = new Credit();
@@ -80,6 +86,7 @@ public class Game {
         return overlay;
     }
 
+    public ArrayList <Position> getSwitchPos(){ return allSwitchPositions; }
 
     public int getMoney() {
         return money.getCredits();
@@ -102,6 +109,8 @@ public class Game {
                 boosterPositions = l.getBoosterPositions();
                 switchUpPositions = l.getSwitchUpPositions();
                 switchDownPositions = l.getSwitchDownPositions();
+                allSwitchPositions = l.getAllSwitchPositions();
+
                 startPos = l.getStartPos();
                 goalPos = l.getGoalPos();
 

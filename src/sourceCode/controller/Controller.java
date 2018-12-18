@@ -1,20 +1,26 @@
 package sourceCode.controller;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import sourceCode.model.*;
+import sourceCode.model.LaserPositions;
+import sourceCode.model.Position;
 import sourceCode.model.database.Database;
 import sourceCode.model.database.HighscoreHandler;
 import sourceCode.model.database.HighscoreInfo;
 import sourceCode.model.logic.Game;
 import sourceCode.model.xmlparser.Levels;
-import sourceCode.view.*;
+import sourceCode.view.MainFrame;
+import sourceCode.view.PopupNewHighscoreSetter;
+import sourceCode.view.PopupShowHighscores;
+import sourceCode.view.StartMenuFrame;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import static sourceCode.model.logic.Game.copyOff;
 
@@ -73,6 +79,7 @@ public class Controller {
             protected Void doInBackground() throws Exception {
 
 
+                setSwitchListener();
                 gameLoop();
                 return null;
             }
@@ -216,6 +223,26 @@ public class Controller {
                 setStartmenuQuitButtonListener();
             }
         }, "play");
+    }
+
+    private void setSwitchListener(){
+        mainFrame.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                int mouseX = (e.getX()/55)-4;
+                int mouseY = (e.getY()/55)-1;
+                ArrayList <Position> allSwitches = g.getSwitchPos();
+
+                for (Position p:allSwitches) {
+
+                    if (mouseX == p.getX() && mouseY == p.getY()){
+
+                    }
+                }
+            }
+        });
+
     }
 
     private void setStartmenuQuitButtonListener() {

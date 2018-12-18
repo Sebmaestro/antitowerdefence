@@ -1,16 +1,14 @@
 package sourceCode.model.xmlparser;
 
-import sourceCode.model.Position;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import sourceCode.model.Position;
 import sourceCode.model.reflection.Reflection;
 import sourceCode.model.tile.*;
-import sourceCode.model.tower.Tower;
-
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,6 +30,7 @@ public class LevelParser2 {
     public static ArrayList<Position> quicksandPositions;
     public static ArrayList<Position> switchUpPositions;
     public static ArrayList<Position> switchDownPositions;
+    public static ArrayList<Position> allSwitchPositions;
     public static Tile[][] allTiles;
     public static ArrayList<Levels> levelsArrayList;
 
@@ -69,6 +68,7 @@ public class LevelParser2 {
                 quicksandPositions = new ArrayList<>();
                 switchUpPositions = new ArrayList<>();
                 switchDownPositions = new ArrayList<>();
+                allSwitchPositions = new ArrayList<>();
 
                 level = new Levels();
                 Node s = levelList.item(q);
@@ -120,9 +120,12 @@ public class LevelParser2 {
 
                                 } else if (obj instanceof Switchdown) {
                                     switchDownPositions.add(((Switchdown) obj).getPosition());
+                                    allSwitchPositions.add(((Switchdown) obj).getPosition());
 
                                 } else if (obj instanceof Switchup) {
                                     switchUpPositions.add(((Switchup) obj).getPosition());
+                                    allSwitchPositions.add(((Switchup) obj).getPosition());
+
                                 }
                                 //System.out.println(i);
 
@@ -141,6 +144,7 @@ public class LevelParser2 {
                 level.addQuicksandPositions(quicksandPositions);
                 level.addSwitchUpPositions(switchUpPositions);
                 level.addSwitchDownPositions(switchDownPositions);
+                level.addAllSwitchPositions(allSwitchPositions);
                 level.addLevels(allTiles);
                 levelsArrayList.add(level);
             }
@@ -169,6 +173,10 @@ public class LevelParser2 {
 
     public ArrayList<Position> getSwitchDownPositions(){
         return switchDownPositions;
+    }
+
+    public ArrayList<Position> getAllSwitchPositions(){
+        return allSwitchPositions;
     }
 
     public ArrayList<Position> getQuicksandPositions(){
