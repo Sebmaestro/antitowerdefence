@@ -415,5 +415,13 @@ public class Controller {
             }
         });
     }
+    public void setTeleportListener() {
+        mainFrame.getButtonPanel().addSetTeleportListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
 }
 
