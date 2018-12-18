@@ -52,6 +52,8 @@ public class Controller {
     private boolean gameWon = false;
     private boolean wasSet = false;
     private boolean gameDone = false;
+    private boolean isPaused = false;
+    private boolean restartPressed = false;
 
     private long elapsedSeconds;
 
@@ -99,6 +101,7 @@ public class Controller {
             @Override
             protected Void doInBackground() throws Exception {
 
+
                 gameLoop();
                 return null;
             }
@@ -109,11 +112,15 @@ public class Controller {
     public void gameLoop() {
         long startTime = System.currentTimeMillis();
 
+        gameDone = false;
+        restartPressed = false;
         while(!gameDone) {
             try {
                 SwingUtilities.invokeAndWait(() -> {
 
+                    if (!isPaused) {
 
+                    }
                     mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
                     mainFrame.getButtonPanel().setMoneyField(g.getMoney());
                     g.getOverlayimgArr().updateImage();
@@ -121,7 +128,7 @@ public class Controller {
                     mainFrame.getScreen().repaint();
 
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -138,7 +145,8 @@ public class Controller {
 
                     if (g.getGoalCounter() > 1) {
                         if (!gameWon) {
-                            if (handler.getList().isEmpty() || (handler.getTimeAtEndOfList() > (int)elapsedSeconds)) {
+                            if (handler.getList().isEmpty() || !handler.listFull()
+                                   || (handler.getTimeAtEndOfList() > (int)elapsedSeconds)) {
                                 newHighscore = new PopupNewHighscoreSetter();
                                 setSubmitButtonListener();
                             }
@@ -157,6 +165,26 @@ public class Controller {
                                 //wasSet = true;
                             }
                         }
+                    } else if (restartPressed) {
+                        System.out.println("tryckt på knappen");
+                        //goalCounter = 5;
+                        gameDone = true;
+                        mainFrame.dispose();
+                        levelList = g.getLevelsArrayList();
+                        g.setLevel(g.getCurrentLevelname());
+                        mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
+                        //gameDone = false;
+                        initGame();
+                        setRegularTroopListener();
+                        setMenuQuitListener();
+                        setAboutListener();
+                        setHelpListener();
+                        setRestartListener();
+                        //gameWon = false;
+                        g.resetGame();
+                        handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
+                        mainFrame.getGameMenu().setRestartNewGameText("Restart");
+                        //gameWon = true;
                     }
                 });
             } catch (InterruptedException | InvocationTargetException e) {
@@ -166,6 +194,7 @@ public class Controller {
             elapsedSeconds = elapsedTime / 1000;
             mainFrame.getButtonPanel().setTimer(elapsedSeconds);
         }
+        System.out.println("BREAAAAAAAAAAAAAK");
     }
 
     public void setPlayagainListener() {
@@ -353,21 +382,7 @@ public class Controller {
                 if(gameDone) {
                     popupShowHighscores.dispose();
                 }
-                mainFrame.dispose();
-                levelList = g.getLevelsArrayList();
-                g.setLevel("Level 1");
-                mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
-                gameDone = false;
-                initGame();
-                setRegularTroopListener();
-                setMenuQuitListener();
-                setAboutListener();
-                setHelpListener();
-                setRestartListener();
-                gameWon = false;
-                g.resetGame();
-                handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
-                mainFrame.getGameMenu().setRestartNewGameText("Restart");
+                restartPressed = true;
             }
         });
     }
