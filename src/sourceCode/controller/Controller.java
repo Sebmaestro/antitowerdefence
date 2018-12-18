@@ -38,6 +38,7 @@ public class Controller {
     private boolean gameDone = false;
     private boolean isPaused = false;
     private boolean restartPressed = false;
+    private int paused = 0;
 
     private long elapsedSeconds;
 
@@ -87,54 +88,55 @@ public class Controller {
 
                     if (!isPaused) {
 
-                    }
-                    mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
-                    mainFrame.getButtonPanel().setMoneyField(g.getMoney());
-                    g.getOverlayimgArr().updateImage();
-                    mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
-                    mainFrame.getScreen().repaint();
 
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                        mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
+                        mainFrame.getButtonPanel().setMoneyField(g.getMoney());
+                        g.getOverlayimgArr().updateImage();
+                        mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
+                        mainFrame.getScreen().repaint();
 
-
-                    laserPosList = g.shootTroops();
-                    g.removeTroops();
-                    g.moveTroops();
-                    mainFrame.getScreen().getLaser().setPositons(laserPosList);
-                    mainFrame.getScreen().getLaser().setLasers();
-                    mainFrame.getScreen().drawLaser();
-
-                    if (g.getGoalCounter() > 1) {
-                        if (!gameWon) {
-                            if (handler.getList().isEmpty() || !handler.listFull()
-                                   || (handler.getTimeAtEndOfList() > (int)elapsedSeconds)) {
-                                newHighscore = new PopupNewHighscoreSetter();
-                                setSubmitButtonListener();
-                            }
-
-
-                            popupShowHighscores = new PopupShowHighscores("Highscores!");
-                            popupShowHighscores.setColumns();
-                            popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
-                            popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
-                            gameWon = true;
-                            gameDone = true;
-                            mainFrame.getGameMenu().setRestartNewGameText("New Game");
-                            setPlayagainListener();
-                            setQuitButtonListener();
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
-                    } else if (restartPressed) {
 
-                        mainFrame.dispose();
-                        levelList = g.getLevelsArrayList();
-                        g.setLevel(g.getCurrentLevelname());
-                        mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
-                        gameDone = true;
 
+                        laserPosList = g.shootTroops();
+                        g.removeTroops();
+                        g.moveTroops();
+                        mainFrame.getScreen().getLaser().setPositons(laserPosList);
+                        mainFrame.getScreen().getLaser().setLasers();
+                        mainFrame.getScreen().drawLaser();
+
+                        if (g.getGoalCounter() > 1) {
+                            if (!gameWon) {
+                                if (handler.getList().isEmpty() || !handler.listFull()
+                                        || (handler.getTimeAtEndOfList() > (int) elapsedSeconds)) {
+                                    newHighscore = new PopupNewHighscoreSetter();
+                                    setSubmitButtonListener();
+                                }
+
+
+                                popupShowHighscores = new PopupShowHighscores("Highscores!");
+                                popupShowHighscores.setColumns();
+                                popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
+                                popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
+                                gameWon = true;
+                                gameDone = true;
+                                mainFrame.getGameMenu().setRestartNewGameText("New Game");
+                                setPlayagainListener();
+                                setQuitButtonListener();
+                            }
+                        } else if (restartPressed) {
+
+                            mainFrame.dispose();
+                            levelList = g.getLevelsArrayList();
+                            g.setLevel(g.getCurrentLevelname());
+                            mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
+                            gameDone = true;
+
+                        }
                     }
                 });
 
@@ -154,6 +156,7 @@ public class Controller {
             setAboutListener();
             setHelpListener();
             setRestartListener();
+            setPauseListener();
             g.resetGame();
             handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
             mainFrame.getGameMenu().setRestartNewGameText("Restart");
@@ -199,6 +202,7 @@ public class Controller {
                 initMainframeAndSetListeners();
                 setAboutListener();
                 setRestartListener();
+                setPauseListener();
                 mainFrame.getGameMenu().setRestartNewGameText("Restart");
                 gameWon = false;
                 g.resetGame();
@@ -216,6 +220,7 @@ public class Controller {
                 g.setLevel("Level 2");
                 initMainframeAndSetListeners();
                 setRestartListener();
+                setPauseListener();
                 mainFrame.getGameMenu().setRestartNewGameText("Restart");
                 g.resetGame();
                 gameWon = false;
@@ -270,7 +275,9 @@ public class Controller {
         mainFrame.getButtonPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                g.sendTroop();
+                if(!isPaused) {
+                    g.sendTroop();
+                }
 
             }
         }, "Regular");
@@ -342,6 +349,22 @@ public class Controller {
         setMenuQuitListener();
         setAboutListener();
         setHelpListener();
+    }
+    public void setPauseListener(){
+        mainFrame.getGameMenu().setPauseListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (paused == 0) {
+                    isPaused = true;
+                    mainFrame.getGameMenu().setPauseText("Resume");
+                    paused = 1;
+                } else {
+                    isPaused = false;
+                    mainFrame.getGameMenu().setPauseText("Pause");
+                    paused = 0;
+                }
+            }
+        });
     }
 }
 
