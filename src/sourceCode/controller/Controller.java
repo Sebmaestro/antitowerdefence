@@ -347,7 +347,7 @@ public class Controller {
         initGame();
         setRegularTroopListener();
         setMenuQuitListener();
-        setAboutListener();
+       // setAboutListener();
         setHelpListener();
     }
     public void setPauseListener(){
