@@ -23,6 +23,7 @@ public class HighscoreHandler {
 
     /**
      * Returns the list
+     *
      * @return l - the list
      */
     public List<HighscoreInfo> getList() {
@@ -51,20 +52,36 @@ public class HighscoreHandler {
      * @param highscoreInfo - Object holding the score data
      */
     public void checkAndInsertHighscore(HighscoreInfo highscoreInfo) {
-        for (int i = 0; i < l.size(); i++) {
-            if (l.get(i).getFinishTime() > highscoreInfo.getFinishTime()) {
-                l.add(i, highscoreInfo);
-                if (l.size() < 10) {
-                    break;
-                } else if (l.size() >= 11){
+        if (l.isEmpty()) {
+            //If list is empty the highscore will be put in directly and return from function
+            l.add(0, highscoreInfo);
+            return;
+        }
+
+        if (listFull()) {
+            //If list is full, insert new highscore if good enough and remove worst highscore
+            for (int i = 0; i < l.size(); i++) {
+                if (l.get(i).getFinishTime() > highscoreInfo.getFinishTime()) {
+                    l.add(i, highscoreInfo);
                     l.remove(10);
-                    break;
+                    return;
                 }
             }
-        } if (l.isEmpty()) {
-            l.add(0, highscoreInfo);
+        } else if (!listFull() && !l.isEmpty() &&
+                highscoreInfo.getFinishTime() >= l.get(l.size() - 1).getFinishTime()) {
+                //If list is not full or empty and score is worst, insert in back of list
+            l.add(l.size(), highscoreInfo);
+        } else {
+            //If list is not full or empty and the time is somewhere in the middle
+            for (int i = 0; i < l.size(); i++) {
+                if (l.get(i).getFinishTime() >= highscoreInfo.getFinishTime()) {
+                    l.add(i, highscoreInfo);
+                    return;
+                }
+            }
         }
     }
+
 
     /**
      * Adds a highscore to the list
@@ -77,5 +94,13 @@ public class HighscoreHandler {
 
     public int getTimeAtEndOfList() {
         return l.get(l.size() - 1).getFinishTime();
+    }
+
+    public boolean listFull() {
+        if (l.size() >= 10) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

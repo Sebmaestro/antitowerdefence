@@ -18,12 +18,13 @@ public class PopupNewHighscoreSetter extends JFrame {
 
         panel.setLayout(new FlowLayout());
 
-        textArea = new JTextArea("Congratulations! You have set a new highscore!" +"\n\n"+ "Please enter your name: ");
+        textArea = new JTextArea("Congratulations! You have set a new highscore!" +"\n\n"+ "Please enter your name:" +
+                "(MAX 10 CHARACTERS)");
         textArea.setFont(new Font(Font.SERIF, Font.BOLD, 16));
         textArea.setSize(new Dimension(200, 200));
         textArea.setEditable(false);
         textField = new JTextField();
-        textField.setPreferredSize(new Dimension(80, 30));
+        textField.setPreferredSize(new Dimension(100, 30));
         submit = new JButton("Submit");
 
         topPanel.add(textArea);
