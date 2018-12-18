@@ -220,6 +220,7 @@ public class Controller {
                 gameDone = false;
                 initGame();
                 setRegularTroopListener();
+                setTeleporterTroopListener();
                 g.resetGame();
                 gameWon = false;
                 handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
@@ -287,10 +288,20 @@ public class Controller {
         mainFrame.getButtonPanel().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                g.sendTroop();
+                g.sendRegularTroop();
 
             }
         }, "Regular");
+    }
+
+    public void setTeleporterTroopListener(){
+        mainFrame.getButtonPanel().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                g.sendTeleporterTroop();
+
+            }
+        }, "Teleport");
     }
 }
 

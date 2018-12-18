@@ -13,7 +13,7 @@ public class RegularTroop extends Troop {
         hp = 100;
         speed = 10;
         troopID = 0;
-        graphic = "src/resources/testlevel.xml";
+        graphic = "reg";
     }
 
     @Override
