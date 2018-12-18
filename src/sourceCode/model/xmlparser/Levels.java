@@ -20,6 +20,8 @@ public class Levels {
     private ArrayList<Position> quicksandPositions = new ArrayList<>();
     private ArrayList<Position> switchUpPositions = new ArrayList<>();
     private ArrayList<Position> switchDownPositions = new ArrayList<>();
+    private ArrayList<Position> allSwitchPositions = new ArrayList<>();
+
 
 
     public Levels(){
@@ -111,6 +113,14 @@ public class Levels {
 
     public ArrayList<Position> getSwitchDownPositions(){
         return switchDownPositions;
+    }
+
+    public void addAllSwitchPositions(ArrayList<Position> allSwitchPos){
+        allSwitchPositions = allSwitchPos;
+    }
+
+    public ArrayList<Position> getAllSwitchPositions(){
+        return allSwitchPositions;
     }
 
 

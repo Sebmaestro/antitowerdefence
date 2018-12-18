@@ -1,13 +1,17 @@
 package sourceCode.model;
 
-import sourceCode.view.MainFrame;
-import sourceCode.view.Screen;
-
-import java.awt.event.*;
-import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 public class KeyHandel implements MouseMotionListener, MouseListener{
 
+
+    public void mClick (MouseEvent e){
+        int x = e.getX();
+        int y = e.getY();
+        System.out.println("lax");
+    }
 
     public void mouseClicked(MouseEvent e) {
 
@@ -39,7 +43,6 @@ public class KeyHandel implements MouseMotionListener, MouseListener{
     }
 
     public void mouseMoved(MouseEvent e) {
-        Screen.msc = new Point((e.getX()) + ((MainFrame.size.width - Screen.myWidth/2) - (Screen.myWidth/2)),
-                (e.getY()) - ((MainFrame.size.height - (Screen.myHeight)) - (MainFrame.size.width - Screen.myWidth)/2));
+
     }
 }

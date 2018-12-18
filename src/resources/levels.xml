@@ -177,9 +177,9 @@
         <tile type="sourceCode.model.tile.Grass"/>
         <tile type="sourceCode.model.tile.Grass"/>
         <tile type="sourceCode.model.tile.Path"/>
-        <tile type="sourceCode.model.tile.Grass"/>
-        <tile type="sourceCode.model.tile.Grass"/>
-        <tile type="sourceCode.model.tile.Grass"/>
+        <tile type="sourceCode.model.tile.Switchup"/>
+        <tile type="sourceCode.model.tile.Switchdown"/>
+        <tile type="sourceCode.model.tile.Switchdown"/>
         <tile type="sourceCode.model.tile.Grass"/>
         <tile type="sourceCode.model.tile.Grass"/>
         <tile type="sourceCode.model.tile.Booster"/>

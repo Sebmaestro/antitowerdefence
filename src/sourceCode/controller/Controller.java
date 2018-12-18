@@ -1,20 +1,26 @@
 package sourceCode.controller;
 
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import sourceCode.model.*;
+import sourceCode.model.LaserPositions;
+import sourceCode.model.Position;
 import sourceCode.model.database.Database;
 import sourceCode.model.database.HighscoreHandler;
 import sourceCode.model.database.HighscoreInfo;
 import sourceCode.model.logic.Game;
 import sourceCode.model.xmlparser.Levels;
-import sourceCode.view.*;
+import sourceCode.view.MainFrame;
+import sourceCode.view.PopupNewHighscoreSetter;
+import sourceCode.view.PopupShowHighscores;
+import sourceCode.view.StartMenuFrame;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import static sourceCode.model.logic.Game.copyOff;
 
@@ -33,15 +39,14 @@ public class Controller {
     private StartMenuFrame start;
 
     private Game g;
-
     private boolean gameWon = false;
     private boolean gameDone = false;
     private boolean isPaused = false;
     private boolean restartPressed = false;
-
     private long elapsedSeconds;
 
     private ArrayList<LaserPositions> laserPosList;
+
 
     private ArrayList<Levels> levelList;
 
@@ -53,9 +58,9 @@ public class Controller {
         db = new Database();
         g = new Game();
         levelList = new ArrayList<>();
-
-
         start = new StartMenuFrame();
+
+
         setStartmenuQuitButtonListener();
         setMap1Listener();
         setMap2Listener();
@@ -69,6 +74,7 @@ public class Controller {
             protected Void doInBackground() throws Exception {
 
 
+                setSwitchListener();
                 gameLoop();
                 return null;
             }
@@ -93,6 +99,7 @@ public class Controller {
                     g.getOverlayimgArr().updateImage();
                     mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
                     mainFrame.getScreen().repaint();
+
 
                     try {
                         Thread.sleep(100);
@@ -126,6 +133,7 @@ public class Controller {
                             mainFrame.getGameMenu().setRestartNewGameText("New Game");
                             setPlayagainListener();
                             setQuitButtonListener();
+
                         }
                     } else if (restartPressed) {
 
@@ -178,6 +186,26 @@ public class Controller {
                 setStartmenuQuitButtonListener();
             }
         }, "play");
+    }
+
+    private void setSwitchListener(){
+        mainFrame.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                int mouseX = (e.getX()/55)-4;
+                int mouseY = (e.getY()/55)-1;
+                ArrayList <Position> allSwitches = g.getSwitchPos();
+
+                for (Position p:allSwitches) {
+
+                    if (mouseX == p.getX() && mouseY == p.getY()){
+
+                    }
+                }
+            }
+        });
+
     }
 
     private void setStartmenuQuitButtonListener() {

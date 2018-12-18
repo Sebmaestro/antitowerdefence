@@ -1,7 +1,6 @@
 package sourceCode.view;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -15,6 +14,7 @@ public class ButtonPanel extends JPanel {
         define();
     }
     public void define() {
+
         troop1 = new JButton("Regular - $100");
         troop2 = new JButton("Teleport - $700");
         teleportButton = new JButton("Set Teleport");
