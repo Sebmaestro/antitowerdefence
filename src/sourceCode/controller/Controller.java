@@ -384,6 +384,9 @@ public class Controller {
                         JOptionPane.YES_NO_OPTION);
 
                 if(choice == JOptionPane.YES_OPTION) {
+                    if(popupShowHighscores != null) {
+                        popupShowHighscores.dispose();
+                    }
                     mainFrame.dispose();
                     start = new StartMenuFrame();
                     setHighscoreListener();
