@@ -62,7 +62,6 @@ public class Game {
 
     public Game(){
 
-        System.out.println("hit då");
         levelsArrayList = new ArrayList<>();
         levelP2 = new LevelParser2();
         levelP2.xmlparser("src/Resources/levels.xml");
@@ -95,9 +94,6 @@ public class Game {
         for (Levels l:levelsArrayList) {
             if (l.getlevelName().equals(levelName)) {
                 currentLevelname = levelName;
-
-                System.out.println("så många gånger");
-
                 tiles = l.getMapTiles();
                 tilesCopy = copyOff(tiles);
 

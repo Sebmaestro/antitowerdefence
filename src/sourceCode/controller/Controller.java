@@ -135,7 +135,7 @@ public class Controller {
                                         mainFrame.getScreen().getLaser().setLasers();
                                         mainFrame.getScreen().drawLaser();
 
-                                        if (g.getGoalCounter() > 49) {
+                                        if (g.getGoalCounter() > 20) {
                                             if (!gameWon) {
                                                 if (handler.getList().isEmpty() || !handler.listFull()
                                                         || (handler.getTimeAtEndOfList() > finishTime)) {
@@ -174,16 +174,12 @@ public class Controller {
                             e.printStackTrace();
                         }
 
-                        //long elapsedTime = System.currentTimeMillis() - startTime;
-                        //elapsedSeconds = elapsedTime / 1000;
-                        //mainFrame.getButtonPanel().setTimer(elapsedSeconds);
                         if (!isPaused) {
                             mainFrame.getButtonPanel().setTimer(getElapsed());
                             getGameTime();//finishTime = (int)getElapsed();
                         }
 
                 }
-        System.out.println("ute ur while");
 
         if(restartPressed){
 
@@ -300,7 +296,7 @@ public class Controller {
                 g.setLevel("Level 1");
                 g.getOverlayimgArr().copyAllWalkables();
                 initMainframeAndSetListeners();
-                setAboutListener();
+                //setAboutListener();
                 setRestartListener();
                 setPauseListener();
                 mainFrame.getGameMenu().setRestartNewGameText("Restart");
@@ -441,7 +437,7 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null,
-                        "The goal is to get 50 troops to reach the goal alive as fast as possible.\n" +
+                        "The goal is to get 20 troops to reach the goal alive as fast as possible.\n" +
                                 "You can send troops by using the buttons on the bottom of the screen.\n" +
                                 "Sending a troop costs credits, the cost is displayed on the associated buttons.\n" +
                                 "You can view your available credits on the bottom of the screen.\n" +
@@ -454,29 +450,30 @@ public class Controller {
         mainFrame.getGameMenu().setRestartListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (!isPaused) {
+                    restartPressed = true;
+                    int choice = JOptionPane.showConfirmDialog(mainFrame,
+                            "Restart game?", "Confirm restart",
+                            JOptionPane.YES_NO_OPTION);
 
-                restartPressed = true;
-                int choice = JOptionPane.showConfirmDialog(mainFrame,
-                        "Restart game?", "Confirm restart",
-                        JOptionPane.YES_NO_OPTION);
-
-                if(choice == JOptionPane.YES_OPTION) {
-                    stopTimer();
-                    timer.cancel();
-                    gameDone = true;
-                    mainFrame.dispose();
-                    g = new Game();
-                    levelList = g.getLevelsArrayList();
-                    g.setLevel(currentGame);
-                    g.getOverlayimgArr().copyAllWalkables();
-                    initMainframeAndSetListeners();
-                    setAboutListener();
-                    setRestartListener();
-                    setPauseListener();
-                    mainFrame.getGameMenu().setRestartNewGameText("Restart");
-                    gameWon = false;
-                    g.resetGame();
-                    handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
+                    if (choice == JOptionPane.YES_OPTION) {
+                        stopTimer();
+                        timer.cancel();
+                        gameDone = true;
+                        mainFrame.dispose();
+                        g = new Game();
+                        levelList = g.getLevelsArrayList();
+                        g.setLevel(currentGame);
+                        g.getOverlayimgArr().copyAllWalkables();
+                        initMainframeAndSetListeners();
+                        //setAboutListener();
+                        setRestartListener();
+                        setPauseListener();
+                        mainFrame.getGameMenu().setRestartNewGameText("Restart");
+                        gameWon = false;
+                        g.resetGame();
+                        handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
+                    }
                 }
             }
         });

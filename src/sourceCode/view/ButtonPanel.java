@@ -55,7 +55,7 @@ public class ButtonPanel extends JPanel {
         moneyField.setText("Credits: $"+money);
     }
     public void setGoalCounter(int goalCounter) {
-        this.goalCounter.setText(goalCounter+"/50 troops in goal");
+        this.goalCounter.setText(goalCounter+"/20 troops in goal");
     }
     public void setTimer(Long time) {
         timer.setText("Time: "+time);
