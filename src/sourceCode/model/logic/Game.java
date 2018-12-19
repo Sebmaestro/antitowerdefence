@@ -28,8 +28,6 @@ import static sourceCode.model.troop.Direction.EAST;
 //mport sourceCode.model.xmlparser.LevelParser;
 
 public class Game {
-    //private Frame frame;
-    private Model model;
     private Tile[][] tiles;
     //private LevelParser levelP;
     private LevelParser2 levelP2;
@@ -45,39 +43,26 @@ public class Game {
     private BufferedImage[][] underlay, overlay;
     private final Object troopListLock = new Object();
     private final Object towerListLock = new Object();
-    private PopupShowHighscores popupShowHighscores;
-    private PopupNewHighscoreSetter newHighscore;
-    private Database db = new Database();
-    private HighscoreHandler handler;
-    private StartMenuFrame start;
     private ArrayList<Levels> levelsArrayList;
     private String currentLevelname;
     private boolean troopInTheList = false, teleporterInTheList = false;
 
 
 
-    int gameWon = 0;
     private Credit money = new Credit();
 
-    public Game(){
+    public Game(String s){
 
         levelsArrayList = new ArrayList<>();
-        //Startar en ny startmeny
-        //start = new StartMenuFrame();
 
         //Inläsning av leveln
         //levelP = new LevelParser();
         levelP2 = new LevelParser2();
-        levelP2.xmlparser("src/Resources/levels.xml");
+        levelP2.xmlparser(s);
         //tiles = readLevel("src/Resources/levels.xml");
 
 
         levelsArrayList = levelP2.getLevelsArrayList();
-
-
-
-
-        //Får alla positioner som vi behöver från kartan
     }
 
     public BufferedImage[][] getUnderlay() {
@@ -146,21 +131,6 @@ public class Game {
         }
     }
 
-    /*
-    public void init(){
-        //Loopar spelet
-        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-
-                gameLoop();
-                return null;
-            }
-        };
-        worker.execute();
-    }
-    */
-
     public OverlayImageArray getOverlayimgArr() {
         return overlayimgArr;
     }
@@ -213,48 +183,7 @@ public class Game {
     }
 
 
-    /*
-    public Frame setTheFrame(BufferedImage[][] underlay, BufferedImage[][] overlay){
-        frame = new Frame();
-        frame.addScreen();
-        frame.addButtonPanel();
-        frame.getScreen().setImages(underlay, overlay);
-        setRegularTroopListener();
-        frame.getScreen().createGameScreen();
 
-        return frame;
-    }
-    */
-
-    /*
-    public void gameLoop() {
-        double time = System.nanoTime();
-
-        while(true) {
-            try {
-                SwingUtilities.invokeAndWait(() -> {
-
-                    //frame.getButtonPanel().setMoneyField(money.getCredits());
-                    overlayimgArr.updateImage();
-                    //frame.getScreen().updateOverlay(copyOff(overlayimgArr.getTheWholeShit()));
-                    //frame.getScreen().repaint();
-
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    shootTroops();
-                    removeTroops();
-                    moveTroops();
-                });
-            } catch (InterruptedException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    */
 
     public void removeTroops(){
         Iterator<Troop> iter = troopList.iterator();
@@ -268,30 +197,7 @@ public class Game {
                         money.getGoalCredits();
                         goalCounter++;
 
-                        /*
-                        if(goalCounter<1) {
-                            goalCounter++;
-                            //frame.getButtonPanel().setGoalCounter(goalCounter);
-                        } else if (gameWon == 0){
-                            //Game is done
-                            gameWon = 1;
-                            popupShowHighscores = new PopupShowHighscores("Map2");
-                            newHighscore = new PopupNewHighscoreSetter();
-                            Database db = new Database();
-                            handler = new HighscoreHandler(db.getHighscores("Map2"));
-                            //setSubmitButtonListener();
-                            //setQuitButtonListener();
-                            popupShowHighscores.setColumns();
-                        */
 
-                            //handler.checkAndInsertHighscore(new HighscoreInfo("Thebiggest", 45));
-                            //handler.checkAndInsertHighscore(new HighscoreInfo("xgod", 10));
-                            //popupShowHighscores.showHighscores(handler.getList());
-                            //db.saveHighscores(handler.getList(), "Map2");
-                        //}
-
-                        //goalCounter++;
-                        // frame.getButtonPanel().setGoalCounter(goalCounter);
                     }
                 }
             }
@@ -341,15 +247,9 @@ public class Game {
                 }
                 for(Tower t: towers){
                     if(t.getToAttackList().size() >0) {
-                        //frame.getScreen().getLaser().setLaserPosition(t.getPosition(),
-                         //       t.getToAttack().get(0).getPosition());
-                        //frame.getScreen().drawLaser();
                         t.clearToAttackList();
                     }
                 }
-
-                //frame.getScreen().getLaser().setPositons(laserPositionList);
-                //frame.getScreen().getLaser().setLasers();
             }
         }
         return laserPositionList;
@@ -366,83 +266,6 @@ public class Game {
         }
         return copy;
     }
-
-
-    /*
-    public void setPlayagainListener() {
-        popupShowHighscores.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Kör igen
-            }
-        }, "play");
-    }
-
-    public void setMap1Listener() {
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Välj xml för första mappen och starta spelet
-            }
-        }, "map1");
-    }
-
-    public void setMap2Listener() {
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Välj xml för andra mappen och starta spelet
-            }
-        }, "map2");
-    }
-
-    public void setHighscoreListener() {
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Visa highscore
-            }
-        }, "highscore");
-    }
-
-    public void setSubmitButtonListener() {
-        newHighscore.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), 5));
-                popupShowHighscores.clear();
-                popupShowHighscores.setColumns();
-                popupShowHighscores.showHighscores(handler.getList());
-                db.saveHighscores(handler.getList(), "Map2");
-                newHighscore.dispose();
-            }
-        });
-    }
-
-    public void setQuitButtonListener() {
-        popupShowHighscores.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        }, "quit");
-    }
-
-    public void setRegularTroopListener(){
-        frame.getButtonPanel().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (money.getCredits() >= 100) {
-                    Troop reg = new RegularTroop(startPos, EAST);
-                    troopList.add(reg);
-                    money.buyNewTroop(reg);
-                }
-
-            }
-        }, "Regular");
-    }
-    */
-
 
     public void setUpTowers(ArrayList<Position> towerPosition){
         for(Position p: towerPosition){

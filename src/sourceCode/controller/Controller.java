@@ -63,10 +63,10 @@ public class Controller {
      *
      * @throws IOException
      */
-    public Controller() throws IOException {
 
+    public Controller(String s) throws IOException {
         db = new Database();
-        g = new Game();
+        g = new Game(s);
         levelList = new ArrayList<>();
 
 
