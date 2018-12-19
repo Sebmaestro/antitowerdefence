@@ -162,6 +162,7 @@ public class Controller {
                                         g.setLevel(g.getCurrentLevelname());
                                         mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
                                         gameDone = true;
+                                        timer.cancel();
                                         isPaused = false;
                                     }
                                     timerTicker = false;
@@ -425,6 +426,9 @@ public class Controller {
                     if(popupShowHighscores != null) {
                         popupShowHighscores.dispose();
                     }
+                    stopTimer();
+                    timer.cancel();
+                    gameDone = true;
                     mainFrame.dispose();
                     start = new StartMenuFrame();
                     setHighscoreListener();
