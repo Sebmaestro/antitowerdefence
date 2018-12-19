@@ -33,8 +33,8 @@ public class GameMenu extends JMenuBar{
         firstMenu = new JMenu("Menu");
         secondMenu = new JMenu("Help");
 
-        restart = new JMenuItem("New Game/Restart");
-        pause = new JMenuItem("Pause/Resume");
+        restart = new JMenuItem("Restart");
+        pause = new JMenuItem("Pause");
         quit = new JMenuItem("Quit");
 
         help = new JMenuItem("Help");
