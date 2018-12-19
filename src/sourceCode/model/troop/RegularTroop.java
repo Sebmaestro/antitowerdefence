@@ -11,7 +11,10 @@ public class RegularTroop extends Troop {
     public RegularTroop(Position p, Direction direction) {
         super(p, direction);
         hp = 100;
-        speed = 4;
+        ordinarySpeed = 2;
+        currentSpeed = ordinarySpeed;
+        fastSpeed = ordinarySpeed/2;
+        slowSpeed = ordinarySpeed*3;
         troopID = 0;
         graphic = "Regular";
     }

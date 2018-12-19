@@ -9,7 +9,7 @@ public class RegularTower extends Tower{
 
     public RegularTower (Position p){
         super (p);
-        damage = 5;
+        damage = 0;
         range = 1;
         attackPeriod = 1;
         towerID = 0;

@@ -20,19 +20,39 @@ public abstract class Troop extends Rectangle implements Unit{
 
     protected int troopID;
     int hp;
-    int speed;
+    int currentSpeed;
+    int untilMove;
     protected boolean alive;
     private boolean hasReachedGoal = false;
     private Direction direction;
+    int ordinarySpeed, fastSpeed, slowSpeed;
 
     Troop(Position p, Direction direction) {
         this.currentPosition = p;
         this.direction = direction;
+        this.untilMove = 0;
     }
 
 
     public Position getPosition() {
         return currentPosition;
+    }
+
+
+    public int getFastSpeed(){
+        return fastSpeed;
+    }
+
+    public int getSlowSpeed(){
+        return slowSpeed;
+    }
+
+    public int getCurrentSpeed(){
+        return currentSpeed;
+    }
+
+    public void setCurrentSpeed(int speed){
+        this.currentSpeed = speed;
     }
 
     public void setPosition(Position p){
@@ -58,6 +78,18 @@ public abstract class Troop extends Rectangle implements Unit{
         return hp > 0;
     }
 
+    public int getUntilMove(){
+        return untilMove;
+    }
+
+    public void incrementUntilMove(){
+        untilMove++;
+    }
+
+    public void clearUntilMove(){
+        untilMove = 0;
+    }
+
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
@@ -80,12 +112,12 @@ public abstract class Troop extends Rectangle implements Unit{
 
     public int getTroopID(){return troopID;}
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setOrdinarySpeed(int speed) {
+        this.currentSpeed = speed;
     }
 
-    public int getSpeed() {
-        return speed;
+    public int getOrdinarySpeed() {
+        return ordinarySpeed;
     }
 
     public String getGraphic() {

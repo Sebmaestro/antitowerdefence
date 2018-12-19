@@ -52,6 +52,7 @@ public class Game {
     private StartMenuFrame start;
     private ArrayList<Levels> levelsArrayList;
     private String currentLevelname;
+    private boolean troopInTheList = false, teleporterInTheList = false;
 
 
 
@@ -302,16 +303,19 @@ public class Game {
             if(troopList.size() > 0) {
                 for (Troop troop : troopList) {
 
-                    if(troop.getGraphic().equals("Regular") && (regularMove == troop.getSpeed())){
+                    if(troop.getGraphic().equals("Regular") && (troop.getUntilMove() == troop.getCurrentSpeed())){
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
                         troop.move(tiles);
-                        regularMove = 0;
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        troop.clearUntilMove();
                     }
-                    else if(troop.getGraphic().equals("Teleporter")){
+                    else if(troop.getGraphic().equals("Teleporter") && (troop.getUntilMove() == troop.getCurrentSpeed())){
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
                         troop.move(tiles);
-                        regularMove = 0;
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        troop.clearUntilMove();
                     }
+                    troop.incrementUntilMove();
                 }
             }
         }

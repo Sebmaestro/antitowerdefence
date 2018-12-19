@@ -17,7 +17,7 @@ public class Booster extends Tile {
     @Override
     public void landOn(Troop t) {
 
-        //t.setSpeed(20);
+        t.setCurrentSpeed(t.getFastSpeed());
     }
 
     @Override

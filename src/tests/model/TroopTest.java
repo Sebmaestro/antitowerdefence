@@ -44,13 +44,13 @@ public class TroopTest {
 
     @Test public void shouldHaveSpeed(){
         RegularTroop regTroop = new RegularTroop(new Position(1,1), NORTH);
-        assertEquals(regTroop.getSpeed(), 10);
+        assertEquals(regTroop.getOrdinarySpeed(), 2);
     }
 
     @Test public void shouldBeAbleToChangeSpeed(){
         Troop regTroop = new RegularTroop(new Position(1,1), NORTH);
-        regTroop.setSpeed(3);
-        assertEquals(regTroop.getSpeed(), 3);
+        regTroop.setCurrentSpeed(3);
+        assertEquals(regTroop.getCurrentSpeed(), 3);
     }
 
     @Test
