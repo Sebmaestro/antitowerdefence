@@ -11,6 +11,7 @@ public class TeleporterTroop extends Troop {
     private Position teleportEntry;
     private Position teleportExit;
     private boolean isCreatingTeleport;
+    int numberOfTeleportTiles;
 
     public TeleporterTroop(Position p, Direction direction) {
         super(p, direction);
@@ -35,6 +36,8 @@ public class TeleporterTroop extends Troop {
             return TyleType.TELEPORTEXIT;
         }
     }
+
+
 
     //public Troop getTroop() {
     //    return TeleporterTroop.this;

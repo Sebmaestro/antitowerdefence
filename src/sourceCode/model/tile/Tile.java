@@ -17,7 +17,8 @@ public abstract class Tile extends Rectangle implements Unit, LandOn {
     protected Position p;
     protected String graphic;
     protected int groundId;
-    protected Position startp;
+    protected Position startp, exitPosition;
+    protected Direction directionAtStart, directionAtExit;
 
     boolean isWalkable;
     boolean canBuildTower;
@@ -27,6 +28,7 @@ public abstract class Tile extends Rectangle implements Unit, LandOn {
     public Tile(Position p) {
         setBounds(235 + p.getX()*55,p.getY()*55,55,55);
         this.p = p;
+        exitPosition = p;
     }
 
 
@@ -48,6 +50,26 @@ public abstract class Tile extends Rectangle implements Unit, LandOn {
     }
 
     public Position getStart(){ return startp;}
+
+    public Direction getDirectionAtExit(){
+
+        return directionAtExit;
+    }
+    public Direction getDirectionAtStart(){
+        return directionAtStart;
+    }
+
+    public void setDirectionAtExit(Direction dir){
+        directionAtExit = dir;
+    }
+
+    public void setExitTPosition(Position p) {
+        exitPosition = p;
+    }
+
+    public void setDirectionAtStart(Direction dir){
+        directionAtStart = dir;
+    }
 
     /*
     public void clickOn() {

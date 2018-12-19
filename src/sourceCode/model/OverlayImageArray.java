@@ -1,5 +1,6 @@
 package sourceCode.model;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import sourceCode.model.tile.Path;
 import sourceCode.model.tile.Tile;
 import sourceCode.model.tower.Tower;
@@ -11,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by denni on 2018-12-13.
@@ -21,11 +23,17 @@ public class OverlayImageArray {
     private BufferedImage[][] theWholeShit;
     private ArrayList<Position> pathPositions, quicksandPosition, boosterPosition,
             regTroopPosition, telepTroopPosition, towerPositions, switchDownPosition,
-            switchUpPosition;
+            switchUpPosition, teleporterTile1Positons, teleporterTile2Positions;
+    private ArrayList<Position> switchUpPositionsCopy = new ArrayList<>();
+    private ArrayList<Position> quicksandPositionsCopy = new ArrayList<>();
+    private ArrayList<Position> booserPositionsCopy = new ArrayList<>();
+    private ArrayList<Position> pathPositionsCopy = new ArrayList<>();
+    private ArrayList<Position> switchDownPositionsCopy = new ArrayList<>();
+
     private BufferedImage path, regular, invisible, start, goal, tower, quicksand, booster,
-                            switchDown, switchUp, teleporter;
+                            switchDown, switchUp, teleporter, teleporterTile1, teleporterTile2;
     private int worldSize;
-    private Position startPos, goalPos;
+    private Position startPos, goalPos, startPosCopy, goalPosCopy;
     private ArrayList<Troop> regTroopList;
 
     public OverlayImageArray(int worldSize) {
@@ -33,6 +41,8 @@ public class OverlayImageArray {
         readImages();
         theWholeShit = new BufferedImage[10][10];
         regTroopPosition = new ArrayList<>();
+        teleporterTile1Positons = new ArrayList<>();
+        teleporterTile2Positions = new ArrayList<>();
 
         for(int i=0; i<worldSize; i++){
             for(int j=0; j<worldSize;j++){
@@ -56,6 +66,9 @@ public class OverlayImageArray {
             booster = ImageIO.read(new File("src/Resources/booster.png"));
             switchDown = ImageIO.read(new File("src/Resources/switch-down.png"));
             switchUp = ImageIO.read(new File("src/Resources/switch-up.png"));
+            teleporterTile1 = ImageIO.read(new File("src/Resources/teleporter1.png"));
+            teleporterTile2 = ImageIO.read(new File("src/Resources/teleporter2.png"));
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,6 +111,12 @@ public class OverlayImageArray {
             theWholeShit[p.getY()][p.getX()] = switchUp;
         }
 
+        if(teleporterTile1Positons.size() > 0) {
+            for (Position p : teleporterTile1Positons) {
+                theWholeShit[p.getY()][p.getX()] = teleporterTile1;
+            }
+        }
+
 
 
 
@@ -117,7 +136,6 @@ public class OverlayImageArray {
         this.switchUpPosition = switchUp;
         this.startPos = startPos;
         this.goalPos = goalPos;
-
     }
 
     public void changeSwitchUpToDown(Position p){
@@ -134,6 +152,45 @@ public class OverlayImageArray {
         if(found){
             switchUpPosition.remove(i);
             switchDownPosition.add(p);
+        }
+    }
+
+
+    public void copyAllWalkables(){
+        System.out.println("kopierar");
+        pathPositionsCopy = pathPositions;
+        booserPositionsCopy = boosterPosition;
+        quicksandPositionsCopy = quicksandPosition;
+        switchDownPositionsCopy = switchDownPosition;
+        switchUpPositionsCopy = switchUpPosition;
+        startPosCopy = startPos;
+        goalPosCopy = goalPos;
+    }
+
+    public void resetToOriginalWalkables(){
+        System.out.println("resets");
+        pathPositions = pathPositionsCopy;
+        boosterPosition = booserPositionsCopy;
+        quicksandPosition = quicksandPositionsCopy;
+        switchDownPosition = switchDownPositionsCopy;
+        switchUpPosition = switchUpPositionsCopy;
+        startPos = startPosCopy;
+        goalPos = goalPosCopy;
+    }
+
+    public void addTeleportPic(Position p){
+        int i = 0;
+        boolean found = false;
+        for(Position pos: pathPositions){
+            if(pos.getX() == p.getX() && pos.getY() == p.getY()){
+                found = true;
+                break;
+            }
+            i++;
+        }
+        if(found){
+            pathPositions.remove(i);
+            teleporterTile1Positons.add(p);
         }
     }
 

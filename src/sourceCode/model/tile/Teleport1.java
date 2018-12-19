@@ -1,20 +1,21 @@
 package sourceCode.model.tile;
 
 import sourceCode.model.Position;
+import sourceCode.model.troop.Direction;
 import sourceCode.model.troop.Troop;
 
 import static sourceCode.model.tile.TyleType.TELEPORTENTRY;
+import static sourceCode.model.troop.Direction.EAST;
 
 /**
  * Author: Sebastian Arledal c17sal
  */
-public class TeleportEntry extends Tile {
+public class Teleport1 extends Tile {
 
-    private Position exitPosition;
-
-    public TeleportEntry(Position p) {
+    public Teleport1(Position p) {
         super(p);
-        graphic = "teleportentry";
+        graphic = "src/Resources/teleporter1.png";
+        directionAtExit = EAST;
     }
 
     @Override
@@ -34,10 +35,9 @@ public class TeleportEntry extends Tile {
 
     @Override
     public void landOn(Troop t) {
-        t.setPosition(exitPosition);
-    }
 
-    public void setExitTpPosition(Position p) {
-        exitPosition = p;
+        t.setPosition(exitPosition);
+
+        t.setDirection(getDirectionAtExit());
     }
 }

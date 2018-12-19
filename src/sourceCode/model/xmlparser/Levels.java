@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public class Levels {
     private Tile[][] mapTiles;
     public String levelName;
-    private Position startPos;
-    private Position goalPos;
+    private Position startPos, startPosCopy;
+    private Position goalPos, goalPosCopy;
     private ArrayList<Position> pathPositions = new ArrayList<>();
     private ArrayList<Position> grassPositions = new ArrayList<>();
     private ArrayList<Position> towerZonePositions = new ArrayList<>();
@@ -24,8 +24,11 @@ public class Levels {
 
 
 
+
     public Levels(){
     }
+
+
 
     public void setLevelName(String str){
         levelName = str;

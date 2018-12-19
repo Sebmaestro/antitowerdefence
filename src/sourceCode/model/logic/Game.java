@@ -30,7 +30,7 @@ import static sourceCode.model.troop.Direction.EAST;
 public class Game {
     //private Frame frame;
     private Model model;
-    private Tile[][] tiles;
+    private Tile[][] tiles, tilesCopy;
     //private LevelParser levelP;
     private LevelParser2 levelP2;
     private ImageArray imgArr;
@@ -53,6 +53,7 @@ public class Game {
     private ArrayList<Levels> levelsArrayList;
     private String currentLevelname;
     private boolean troopInTheList = false, teleporterInTheList = false;
+    private int firstTime = 0;
 
 
 
@@ -62,11 +63,6 @@ public class Game {
     public Game(){
 
         levelsArrayList = new ArrayList<>();
-        //Startar en ny startmeny
-        //start = new StartMenuFrame();
-
-        //Inläsning av leveln
-        //levelP = new LevelParser();
         levelP2 = new LevelParser2();
         levelP2.xmlparser("src/Resources/levels.xml");
         //tiles = readLevel("src/Resources/levels.xml");
@@ -104,7 +100,10 @@ public class Game {
             if (l.getlevelName().equals(levelName)) {
                 currentLevelname = levelName;
 
+                System.out.println("så många gånger");
+
                 tiles = l.getMapTiles();
+                tilesCopy = tiles;
 
                 pathPosition = l.getPathPositions();
                 towerPosition = l.getTowerZonePositions();
@@ -117,13 +116,13 @@ public class Game {
                 startPos = l.getStartPos();
                 goalPos = l.getGoalPos();
 
-
                 //Skapar BufferedImageArrays från kartan, både underLay och overLay
                 imgArr = new ImageArray(l.getMapTiles());
                 imgArr.setTowerPics(towerPosition);
                 overlayimgArr = new OverlayImageArray(l.getMapTiles().length);
                 overlayimgArr.addPaths(pathPosition, quicksandPositions, boosterPositions,
                         switchDownPositions, switchUpPositions, startPos, goalPos);
+
 
                 //Kopierar dessa bilder för inskickning till frame
                 underlay = copyOff(imgArr.getTheWholeShit());
@@ -142,24 +141,11 @@ public class Game {
 
                 //Lägger till trupper på sätt plats i overlayImage
                 overlayimgArr.addRegularTroopList(troopList);
+
             }
         }
     }
 
-    /*
-    public void init(){
-        //Loopar spelet
-        SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-
-                gameLoop();
-                return null;
-            }
-        };
-        worker.execute();
-    }
-    */
 
     public OverlayImageArray getOverlayimgArr() {
         return overlayimgArr;
@@ -176,6 +162,46 @@ public class Game {
         }
     }
 
+    public void resetTile(){
+        tiles = tilesCopy;
+    }
+
+    public void teleport (){
+
+        synchronized (troopListLock) {
+            if (troopList.size() > 0) {
+                for(Troop troop: troopList){
+                    if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles()==0)){
+
+                        System.out.println("första tilen");
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport1(
+                                troop.getPosition());
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()]
+                                .setDirectionAtExit(troop.getDirection());
+                        overlayimgArr.addTeleportPic(troop.getPosition());
+
+                        troop.setTeleportEntry(troop.getPosition());
+                        troop.incrementNumberOfTeleportTiles();
+                    }
+                    else if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles()==1)){
+
+                        System.out.println("andra tilen");
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport1(
+                                troop.getPosition());
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].setDirectionAtExit(troop.getDirection());
+                        overlayimgArr.addTeleportPic(troop.getPosition());
+
+                        tiles[troop.getTeleportEntry().getY()][troop.getTeleportEntry().getX()]
+                                .setExitTPosition(troop.getPosition());
+
+
+                        troop.incrementNumberOfTeleportTiles();
+                    }
+                }
+            }
+        }
+    }
+
     public void sendRegularTroop() {
 
         if (money.getCredits() >= 100) {
@@ -187,7 +213,15 @@ public class Game {
 
     public void sendTeleporterTroop() {
 
-        if (money.getCredits() >= 700) {
+        boolean teleporterFound = false;
+
+        for (Troop troop: troopList){
+            if(troop.getGraphic().equals("Teleporter")){
+                teleporterFound = true;
+            }
+        }
+
+        if (money.getCredits() >= 700 && !teleporterFound) {
             Troop tel = new TeleporterTroop(startPos, EAST);
             troopList.add(tel);
             money.buyNewTroop(tel);
@@ -201,10 +235,6 @@ public class Game {
     public void resetGame() {
         goalCounter = 0;
         money.setCredits(5000);
-        //laserPositionList.clear();
-        //troopList.clear();
-        //towers.clear();
-        //resetTimer
     }
 
 
@@ -213,85 +243,32 @@ public class Game {
     }
 
 
-    /*
-    public Frame setTheFrame(BufferedImage[][] underlay, BufferedImage[][] overlay){
-        frame = new Frame();
-        frame.addScreen();
-        frame.addButtonPanel();
-        frame.getScreen().setImages(underlay, overlay);
-        setRegularTroopListener();
-        frame.getScreen().createGameScreen();
-
-        return frame;
-    }
-    */
-
-    /*
-    public void gameLoop() {
-        double time = System.nanoTime();
-
-        while(true) {
-            try {
-                SwingUtilities.invokeAndWait(() -> {
-
-                    //frame.getButtonPanel().setMoneyField(money.getCredits());
-                    overlayimgArr.updateImage();
-                    //frame.getScreen().updateOverlay(copyOff(overlayimgArr.getTheWholeShit()));
-                    //frame.getScreen().repaint();
-
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    shootTroops();
-                    removeTroops();
-                    moveTroops();
-                });
-            } catch (InterruptedException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    */
-
     public void removeTroops(){
         Iterator<Troop> iter = troopList.iterator();
         synchronized (troopListLock) {
             while(iter.hasNext()){
-                Troop reg = iter.next();
+                Troop troop = iter.next();
 
-                if(reg.isGoalReached() || !reg.isAlive()){
+                if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles() == 1) &&
+                        (!troop.isAlive())){
+                    tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport1(
+                            troop.getPosition());
+                    tiles[troop.getPosition().getY()][troop.getPosition().getX()].setDirectionAtExit(troop.getDirection());
+                    overlayimgArr.addTeleportPic(troop.getPosition());
+
+                    tiles[troop.getTeleportEntry().getY()][troop.getTeleportEntry().getX()]
+                            .setExitTPosition(troop.getPosition());
+
+
+                    troop.incrementNumberOfTeleportTiles();
+                }
+
+                if(troop.isGoalReached() || !troop.isAlive() || troop.getNumberOfTeleportTiles()==2){
                     iter.remove();
-                    if(reg.isGoalReached()) {
+                    if(troop.isGoalReached()) {
                         money.getGoalCredits();
                         goalCounter++;
 
-                        /*
-                        if(goalCounter<1) {
-                            goalCounter++;
-                            //frame.getButtonPanel().setGoalCounter(goalCounter);
-                        } else if (gameWon == 0){
-                            //Game is done
-                            gameWon = 1;
-                            popupShowHighscores = new PopupShowHighscores("Map2");
-                            newHighscore = new PopupNewHighscoreSetter();
-                            Database db = new Database();
-                            handler = new HighscoreHandler(db.getHighscores("Map2"));
-                            //setSubmitButtonListener();
-                            //setQuitButtonListener();
-                            popupShowHighscores.setColumns();
-                        */
-
-                            //handler.checkAndInsertHighscore(new HighscoreInfo("Thebiggest", 45));
-                            //handler.checkAndInsertHighscore(new HighscoreInfo("xgod", 10));
-                            //popupShowHighscores.showHighscores(handler.getList());
-                            //db.saveHighscores(handler.getList(), "Map2");
-                        //}
-
-                        //goalCounter++;
-                        // frame.getButtonPanel().setGoalCounter(goalCounter);
                     }
                 }
             }
@@ -341,15 +318,10 @@ public class Game {
                 }
                 for(Tower t: towers){
                     if(t.getToAttackList().size() >0) {
-                        //frame.getScreen().getLaser().setLaserPosition(t.getPosition(),
-                         //       t.getToAttack().get(0).getPosition());
-                        //frame.getScreen().drawLaser();
                         t.clearToAttackList();
                     }
                 }
 
-                //frame.getScreen().getLaser().setPositons(laserPositionList);
-                //frame.getScreen().getLaser().setLasers();
             }
         }
         return laserPositionList;
@@ -367,83 +339,7 @@ public class Game {
         return copy;
     }
 
-
-    /*
-    public void setPlayagainListener() {
-        popupShowHighscores.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Kör igen
-            }
-        }, "play");
-    }
-
-    public void setMap1Listener() {
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Välj xml för första mappen och starta spelet
-            }
-        }, "map1");
-    }
-
-    public void setMap2Listener() {
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Välj xml för andra mappen och starta spelet
-            }
-        }, "map2");
-    }
-
-    public void setHighscoreListener() {
-        start.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //Visa highscore
-            }
-        }, "highscore");
-    }
-
-    public void setSubmitButtonListener() {
-        newHighscore.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), 5));
-                popupShowHighscores.clear();
-                popupShowHighscores.setColumns();
-                popupShowHighscores.showHighscores(handler.getList());
-                db.saveHighscores(handler.getList(), "Map2");
-                newHighscore.dispose();
-            }
-        });
-    }
-
-    public void setQuitButtonListener() {
-        popupShowHighscores.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        }, "quit");
-    }
-
-    public void setRegularTroopListener(){
-        frame.getButtonPanel().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (money.getCredits() >= 100) {
-                    Troop reg = new RegularTroop(startPos, EAST);
-                    troopList.add(reg);
-                    money.buyNewTroop(reg);
-                }
-
-            }
-        }, "Regular");
-    }
-    */
-
-
+    
     public void setUpTowers(ArrayList<Position> towerPosition){
         for(Position p: towerPosition){
             towers.add(new RegularTower(p));

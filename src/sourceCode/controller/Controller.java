@@ -64,7 +64,6 @@ public class Controller {
      * @throws IOException
      */
     public Controller() throws IOException {
-
         db = new Database();
         g = new Game();
         levelList = new ArrayList<>();
@@ -185,8 +184,6 @@ public class Controller {
 
                 }
 
-
-
         if(restartPressed){
             initGame();
             setRegularTroopListener();
@@ -214,6 +211,17 @@ public class Controller {
         timer.scheduleAtFixedRate(tasker,0 , 100);
     }
 
+    private void setTeleportButton(){
+        mainFrame.getButtonPanel().addSetTeleportListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (!isPaused) {
+                    g.teleport();
+                }
+            }
+        });
+    }
+
 
     public void setNewGameListener() {
         mainFrame.getGameMenu().setRestartListener(new ActionListener() {
@@ -223,6 +231,7 @@ public class Controller {
                     popupShowHighscores.dispose();
                 }
                 initGame();
+                setTeleportButton();
                 setRegularTroopListener();
                 setTeleportTroopListener();
                 setMenuQuitListener();
@@ -318,6 +327,7 @@ public class Controller {
                 start.dispose();
                 levelList = g.getLevelsArrayList();
                 g.setLevel("Level 1");
+                g.getOverlayimgArr().copyAllWalkables();
                 initMainframeAndSetListeners();
                 setAboutListener();
                 setRestartListener();
@@ -337,6 +347,7 @@ public class Controller {
                 start.dispose();
                 levelList = g.getLevelsArrayList();
                 g.setLevel("Level 2");
+                g.getOverlayimgArr().copyAllWalkables();
                 initMainframeAndSetListeners();
                 setRestartListener();
                 setPauseListener();
@@ -482,6 +493,7 @@ public class Controller {
         mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
         gameDone = false;
         initGame();
+        setTeleportButton();
         setRegularTroopListener();
         setTeleportTroopListener();
         setMenuQuitListener();
