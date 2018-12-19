@@ -62,18 +62,14 @@ public class Game {
 
     public Game(){
 
+        System.out.println("hit då");
         levelsArrayList = new ArrayList<>();
         levelP2 = new LevelParser2();
         levelP2.xmlparser("src/Resources/levels.xml");
         //tiles = readLevel("src/Resources/levels.xml");
 
-
         levelsArrayList = levelP2.getLevelsArrayList();
 
-
-
-
-        //Får alla positioner som vi behöver från kartan
     }
 
     public BufferedImage[][] getUnderlay() {
@@ -103,7 +99,7 @@ public class Game {
                 System.out.println("så många gånger");
 
                 tiles = l.getMapTiles();
-                tilesCopy = tiles;
+                tilesCopy = copyOff(tiles);
 
                 pathPosition = l.getPathPositions();
                 towerPosition = l.getTowerZonePositions();
@@ -163,7 +159,19 @@ public class Game {
     }
 
     public void resetTile(){
-        tiles = tilesCopy;
+        tiles = copyOff(tilesCopy);
+    }
+
+    public static Tile[][] copyOff(Tile[][] original){
+
+        Tile[][] copy = new Tile[original.length][original.length];
+
+        for(int i=0; i<original.length; i++){
+            for(int j=0; j<original.length; j++){
+                copy[i][j] = original[i][j];
+            }
+        }
+        return copy;
     }
 
     public void teleport (){
@@ -173,7 +181,6 @@ public class Game {
                 for(Troop troop: troopList){
                     if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles()==0)){
 
-                        System.out.println("första tilen");
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport1(
                                 troop.getPosition());
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()]
@@ -185,7 +192,6 @@ public class Game {
                     }
                     else if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles()==1)){
 
-                        System.out.println("andra tilen");
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport1(
                                 troop.getPosition());
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()].setDirectionAtExit(troop.getDirection());
@@ -339,7 +345,7 @@ public class Game {
         return copy;
     }
 
-    
+
     public void setUpTowers(ArrayList<Position> towerPosition){
         for(Position p: towerPosition){
             towers.add(new RegularTower(p));

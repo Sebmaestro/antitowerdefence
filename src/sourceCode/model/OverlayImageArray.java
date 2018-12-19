@@ -157,7 +157,6 @@ public class OverlayImageArray {
 
 
     public void copyAllWalkables(){
-        System.out.println("kopierar");
         pathPositionsCopy = pathPositions;
         booserPositionsCopy = boosterPosition;
         quicksandPositionsCopy = quicksandPosition;
@@ -168,7 +167,6 @@ public class OverlayImageArray {
     }
 
     public void resetToOriginalWalkables(){
-        System.out.println("resets");
         pathPositions = pathPositionsCopy;
         boosterPosition = booserPositionsCopy;
         quicksandPosition = quicksandPositionsCopy;
