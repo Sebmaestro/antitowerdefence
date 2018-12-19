@@ -23,17 +23,17 @@ import java.util.ArrayList;
  * Created by denni on 2018-12-05.
  */
 public class LevelParser2 {
-    public static Position startPos;
-    public static Position goalPos;
-    public static ArrayList<Position> pathPositions;
-    public static ArrayList<Position> grassPositions;
-    public static ArrayList<Position> towerZonePositions;
-    public static ArrayList<Position> boosterPositions;
-    public static ArrayList<Position> quicksandPositions;
-    public static ArrayList<Position> switchUpPositions;
-    public static ArrayList<Position> switchDownPositions;
-    public static Tile[][] allTiles;
-    public static ArrayList<Levels> levelsArrayList;
+    private static Position startPos;
+    private static Position goalPos;
+    private static ArrayList<Position> pathPositions;
+    private static ArrayList<Position> grassPositions;
+    private static ArrayList<Position> towerZonePositions;
+    private static ArrayList<Position> boosterPositions;
+    private static ArrayList<Position> quicksandPositions;
+    private static ArrayList<Position> switchUpPositions;
+    private static ArrayList<Position> switchDownPositions;
+    private static Tile[][] allTiles;
+    private static ArrayList<Levels> levelsArrayList;
 
 
 

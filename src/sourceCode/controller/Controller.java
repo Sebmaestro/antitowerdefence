@@ -15,6 +15,7 @@ import sourceCode.view.*;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.util.Timer;
 
 import static sourceCode.model.logic.Game.copyOff;
 
@@ -49,9 +50,9 @@ public class Controller {
      *
      * @throws IOException
      */
-    public Controller() throws IOException {
+    public Controller(String s) throws IOException {
         db = new Database();
-        g = new Game();
+        g = new Game(s);
         levelList = new ArrayList<>();
 
 
@@ -60,6 +61,7 @@ public class Controller {
         setMap1Listener();
         setMap2Listener();
         setHighscoreListener();
+
     }
 
     private void initGame(){
@@ -81,26 +83,23 @@ public class Controller {
 
         gameDone = false;
         restartPressed = false;
+
+
         while(!gameDone) {
+
             try {
                 SwingUtilities.invokeAndWait(() -> {
 
                     if (!isPaused) {
 
                     }
+
+
                     mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
                     mainFrame.getButtonPanel().setMoneyField(g.getMoney());
                     g.getOverlayimgArr().updateImage();
                     mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
                     mainFrame.getScreen().repaint();
-
-                    /*
-                    try {
-                        Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    */
 
 
                     laserPosList = g.shootTroops();
@@ -148,6 +147,7 @@ public class Controller {
             elapsedSeconds = elapsedTime / 1000;
             mainFrame.getButtonPanel().setTimer(elapsedSeconds);
         }
+        //
         if(restartPressed){
 
             initGame();
