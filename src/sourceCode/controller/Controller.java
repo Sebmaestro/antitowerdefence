@@ -12,7 +12,7 @@ import sourceCode.view.MainFrame;
 import sourceCode.view.PopupNewHighscoreSetter;
 import sourceCode.view.PopupShowHighscores;
 import sourceCode.view.StartMenuFrame;
-
+import java.util.Timer;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +21,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.TimerTask;
+import java.util.*;
 
 import static sourceCode.model.logic.Game.copyOff;
 
@@ -48,18 +50,21 @@ public class Controller {
     private long startTime;
     private long elapsed;
     private int finishTime;
+    private long milliSeconds;
 
     private long elapsedSeconds;
-
     private ArrayList<LaserPositions> laserPosList;
-
     private ArrayList<Levels> levelList;
+    int timeTick;
+    Timer timer;
+    boolean timerTicker;
 
     /**
      *
      * @throws IOException
      */
     public Controller() throws IOException {
+
         db = new Database();
         g = new Game();
         levelList = new ArrayList<>();
@@ -73,6 +78,7 @@ public class Controller {
     }
 
     private void initGame(){
+
         //Loopar spelet
         SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
             @Override
@@ -87,86 +93,97 @@ public class Controller {
         worker.execute();
     }
 
+
+
     private void gameLoop() {
+        timeTick = 1;
         elapsed = 0;
         finishTime = 0;
+        milliSeconds = 0;
+        ActionListener taskPerformer;
+        int delay = 2000;
+        timerTicker = false;
+
+
+        scheduleTimeRate();
         startTimer();
-        //long startTime = System.currentTimeMillis();
 
         gameDone = false;
         restartPressed = false;
-        while(!gameDone) {
-            try {
-                SwingUtilities.invokeAndWait(() -> {
 
-                    if (!isPaused) {
-
-                        mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
-                        mainFrame.getButtonPanel().setMoneyField(g.getMoney());
-                        g.getOverlayimgArr().updateImage();
-                        mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
-                        mainFrame.getScreen().repaint();
+                while (!gameDone) {
 
                         try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
+                            SwingUtilities.invokeAndWait(() -> {
+
+                                if (!isPaused) {
+
+                                    if (timerTicker) {
+
+
+                                        mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
+                                        mainFrame.getButtonPanel().setMoneyField(g.getMoney());
+                                        g.getOverlayimgArr().updateImage();
+                                        mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
+                                        mainFrame.getScreen().repaint();
+
+                                        laserPosList = g.shootTroops();
+                                        g.removeTroops();
+                                        g.moveTroops();
+                                        mainFrame.getScreen().getLaser().setPositons(laserPosList);
+                                        mainFrame.getScreen().getLaser().setLasers();
+                                        mainFrame.getScreen().drawLaser();
+
+                                        if (g.getGoalCounter() > 4) {
+                                            if (!gameWon) {
+                                                if (handler.getList().isEmpty() || !handler.listFull()
+                                                        || (handler.getTimeAtEndOfList() > finishTime)) {
+                                                    newHighscore = new PopupNewHighscoreSetter();
+                                                    setSubmitButtonListener();
+                                                }
+
+                                                popupShowHighscores = new PopupShowHighscores("Highscores!");
+                                                popupShowHighscores.setColumns();
+                                                popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
+                                                popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
+                                                gameWon = true;
+                                                gameDone = true;
+                                                mainFrame.getGameMenu().setRestartNewGameText("New Game");
+                                                setNewGameListener();
+                                                setPlayagainListener();
+                                                setQuitButtonListener();
+                                            }
+                                        }
+                                    }
+
+                                    if (restartPressed) {
+                                        mainFrame.dispose();
+                                        levelList = g.getLevelsArrayList();
+                                        g.setLevel(g.getCurrentLevelname());
+                                        mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
+                                        gameDone = true;
+                                        isPaused = false;
+                                    }
+                                    timerTicker = false;
+                                }
+                                // }
+                            });
+
+
+                        } catch (InterruptedException | InvocationTargetException e) {
                             e.printStackTrace();
                         }
 
-
-                        laserPosList = g.shootTroops();
-                        g.removeTroops();
-                        g.moveTroops();
-                        mainFrame.getScreen().getLaser().setPositons(laserPosList);
-                        mainFrame.getScreen().getLaser().setLasers();
-                        mainFrame.getScreen().drawLaser();
-
-                        if (g.getGoalCounter() > 4) {
-                            if (!gameWon) {
-                                if (handler.getList().isEmpty() || !handler.listFull()
-                                        || (handler.getTimeAtEndOfList() > finishTime)) {
-                                    newHighscore = new PopupNewHighscoreSetter();
-                                    setSubmitButtonListener();
-                                }
-
-                                popupShowHighscores = new PopupShowHighscores("Highscores!");
-                                popupShowHighscores.setColumns();
-                                popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
-                                popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
-                                gameWon = true;
-                                gameDone = true;
-                                mainFrame.getGameMenu().setRestartNewGameText("New Game");
-                                setNewGameListener();
-                                setPlayagainListener();
-                                setQuitButtonListener();
-                            }
+                        //long elapsedTime = System.currentTimeMillis() - startTime;
+                        //elapsedSeconds = elapsedTime / 1000;
+                        //mainFrame.getButtonPanel().setTimer(elapsedSeconds);
+                        if (!isPaused) {
+                            mainFrame.getButtonPanel().setTimer(getElapsed());
+                            getGameTime();//finishTime = (int)getElapsed();
                         }
-                    }
 
-                    if(restartPressed){
-                        mainFrame.dispose();
-                        levelList = g.getLevelsArrayList();
-                        g.setLevel(g.getCurrentLevelname());
-                        mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
-                        gameDone = true;
-                        isPaused = false;
-                    }
-                });
+                }
 
-
-
-            } catch (InterruptedException | InvocationTargetException e) {
-                e.printStackTrace();
-            }
-
-            //long elapsedTime = System.currentTimeMillis() - startTime;
-            //elapsedSeconds = elapsedTime / 1000;
-            //mainFrame.getButtonPanel().setTimer(elapsedSeconds);
-            if(!isPaused) {
-                mainFrame.getButtonPanel().setTimer(getElapsed());
-                getGameTime();//finishTime = (int)getElapsed();
-            }
-        }
 
 
         if(restartPressed){
@@ -183,6 +200,20 @@ public class Controller {
             mainFrame.getGameMenu().setRestartNewGameText("Restart");
         }
     }
+
+    private void scheduleTimeRate() {
+        timer = new Timer();
+        TimerTask tasker = new TimerTask() {
+            @Override
+            public void run() {
+                timerTicker = true;
+            }
+        };
+
+        timer.scheduleAtFixedRate(tasker,0 , 100);
+    }
+
+
     public void setNewGameListener() {
         mainFrame.getGameMenu().setRestartListener(new ActionListener() {
             @Override
@@ -266,6 +297,12 @@ public class Controller {
     public long getElapsed(){
 
             return ((elapsed + System.currentTimeMillis() - startTime)/1000);
+    }
+
+    public long getElapsedMilliSeconds(){
+
+        milliSeconds = ((elapsed + System.currentTimeMillis() - startTime));
+        return milliSeconds;
     }
     public void getGameTime(){
 

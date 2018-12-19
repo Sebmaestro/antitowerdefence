@@ -15,7 +15,7 @@ public class TeleporterTroop extends Troop {
     public TeleporterTroop(Position p, Direction direction) {
         super(p, direction);
         hp = 40;
-        speed = 10;
+        speed = 8;
         isCreatingTeleport = false;
         troopID = 1;
         graphic = "Teleporter";

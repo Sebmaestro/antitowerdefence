@@ -38,10 +38,10 @@ public class Game {
     private ArrayList<Position> pathPosition, towerPosition, quicksandPositions,
             boosterPositions, switchUpPositions, switchDownPositions, allSwitchPositions;
     private Position startPos, goalPos;
-    private ArrayList<Troop> regularTroops;
+    private ArrayList<Troop> troopList;
     private ArrayList<Tower> towers;
     private ArrayList<LaserPositions> laserPositionList;
-    private int goalCounter = 0;
+    private int goalCounter = 0, regularMove = 0, teleporterMove = 0;
     private BufferedImage[][] underlay, overlay;
     private final Object troopListLock = new Object();
     private final Object towerListLock = new Object();
@@ -132,7 +132,7 @@ public class Game {
                 //setTheFrame(underlay, overlay);
 
                 //Skapar listor för torn, trupper och lasers
-                regularTroops = new ArrayList<>();
+                troopList = new ArrayList<>();
                 towers = new ArrayList<>();
                 laserPositionList = new ArrayList<>();
 
@@ -140,7 +140,7 @@ public class Game {
                 setUpTowers(towerPosition);
 
                 //Lägger till trupper på sätt plats i overlayImage
-                overlayimgArr.addRegularTroopList(regularTroops);
+                overlayimgArr.addRegularTroopList(troopList);
             }
         }
     }
@@ -179,7 +179,7 @@ public class Game {
 
         if (money.getCredits() >= 100) {
             Troop reg = new RegularTroop(startPos, EAST);
-            regularTroops.add(reg);
+            troopList.add(reg);
             money.buyNewTroop(reg);
         }
     }
@@ -188,7 +188,7 @@ public class Game {
 
         if (money.getCredits() >= 700) {
             Troop tel = new TeleporterTroop(startPos, EAST);
-            regularTroops.add(tel);
+            troopList.add(tel);
             money.buyNewTroop(tel);
         }
     }
@@ -201,7 +201,7 @@ public class Game {
         goalCounter = 0;
         money.setCredits(5000);
         //laserPositionList.clear();
-        //regularTroops.clear();
+        //troopList.clear();
         //towers.clear();
         //resetTimer
     }
@@ -256,7 +256,7 @@ public class Game {
     */
 
     public void removeTroops(){
-        Iterator<Troop> iter = regularTroops.iterator();
+        Iterator<Troop> iter = troopList.iterator();
         synchronized (troopListLock) {
             while(iter.hasNext()){
                 Troop reg = iter.next();
@@ -299,14 +299,19 @@ public class Game {
 
     public void moveTroops(){
         synchronized (troopListLock) {
-            if(regularTroops.size() > 0) {
-                for (Troop reg : regularTroops) {
+            if(troopList.size() > 0) {
+                for (Troop troop : troopList) {
 
-                    tiles[reg.getPosition().getY()][reg.getPosition().getX()].landOn(reg);
-                    reg.move(tiles);
-
-                    //System.out.println(reg.getHp());
-
+                    if(troop.getGraphic().equals("Regular") && (regularMove == troop.getSpeed())){
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        troop.move(tiles);
+                        regularMove = 0;
+                    }
+                    else if(troop.getGraphic().equals("Teleporter")){
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        troop.move(tiles);
+                        regularMove = 0;
+                    }
                 }
             }
         }
@@ -319,7 +324,7 @@ public class Game {
             if(towers.size() > 0) {
                 for (Tower tower : towers) {
                     int i = 0;
-                    for (Troop t : regularTroops) {
+                    for (Troop t : troopList) {
                         if (tower.canReachTroop(t)) {
                             if (i == 0) {
                                 i++;
@@ -425,7 +430,7 @@ public class Game {
             public void actionPerformed(ActionEvent e) {
                 if (money.getCredits() >= 100) {
                     Troop reg = new RegularTroop(startPos, EAST);
-                    regularTroops.add(reg);
+                    troopList.add(reg);
                     money.buyNewTroop(reg);
                 }
 

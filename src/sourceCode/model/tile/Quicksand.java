@@ -26,7 +26,8 @@ public class Quicksand extends Tile {
 
     @Override
     public void landOn(Troop t) {
-        t.setSpeed(5);
+
+        //t.setSpeed(5);
     }
 
     @Override

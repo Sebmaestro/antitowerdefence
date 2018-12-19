@@ -23,7 +23,9 @@ public class Path extends Tile {
 
     @Override
     public void landOn(Troop t) {
-        t.setSpeed(10);
+
+
+        //t.setSpeed(10);
     }
 
     @Override
