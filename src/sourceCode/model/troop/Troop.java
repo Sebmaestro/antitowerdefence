@@ -15,7 +15,9 @@ public abstract class Troop extends Rectangle implements Unit{
     protected String graphic;
     private Position currentPosition;
     private Position nextPosition;
+    private Position teleportEntry, teleportExit;
     public Position east, south, west, north;
+    int numberOfTeleportTiles;
 
 
     protected int troopID;
@@ -31,6 +33,7 @@ public abstract class Troop extends Rectangle implements Unit{
         this.currentPosition = p;
         this.direction = direction;
         this.untilMove = 0;
+        this.numberOfTeleportTiles = 0;
     }
 
 
@@ -126,6 +129,28 @@ public abstract class Troop extends Rectangle implements Unit{
 
     //For Teleporter troop only
     public abstract TyleType clickOn();
+
+    public void incrementNumberOfTeleportTiles(){
+        numberOfTeleportTiles++;
+    }
+    public int getNumberOfTeleportTiles(){
+        return numberOfTeleportTiles;
+    }
+
+    public void setTeleportEntry(Position p){
+        this.teleportEntry = p;
+    }
+
+    public Position getTeleportEntry(){
+        return teleportEntry;
+    }
+
+    public void setTeleportExit(Position p){
+        this.teleportExit = p;
+    }
+    public Position getTeleportExit(){
+        return teleportExit;
+    }
 
     private void checkIfGoal(Tile[][] tileMap){
 

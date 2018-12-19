@@ -10,17 +10,11 @@ public class Main {
         if(args.length == 0){
             SwingUtilities.invokeLater(() -> {
                 try {
-                    new Controller("src/Resources/levels.xml");
+                    new Controller();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
-        } else {
-            try {
-                new Controller(args[0]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

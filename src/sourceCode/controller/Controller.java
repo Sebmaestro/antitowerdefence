@@ -45,9 +45,7 @@ public class Controller {
     private boolean gameWon = false;
     private boolean gameDone = false;
     private boolean isPaused = false;
-    private boolean restartPressed = false;
-    private boolean newGamePressed = false;
-    private boolean newGameButtonActive = false;
+    private boolean restartPressed;
     private int paused = 0;
     private long startTime;
     private long elapsed;
@@ -60,15 +58,15 @@ public class Controller {
     int timeTick;
     Timer timer;
     boolean timerTicker;
+    String currentGame;
 
     /**
      *
      * @throws IOException
      */
-
-    public Controller(String s) throws IOException {
+    public Controller() throws IOException {
         db = new Database();
-        g = new Game(s);
+        g = new Game();
         levelList = new ArrayList<>();
 
 
@@ -89,13 +87,13 @@ public class Controller {
 
                 setSwitchListener();
                 gameLoop();
+
                 return null;
             }
         };
         worker.execute();
+
     }
-
-
 
     private void gameLoop() {
         timeTick = 1;
@@ -105,16 +103,14 @@ public class Controller {
         ActionListener taskPerformer;
         int delay = 2000;
         timerTicker = false;
+        currentGame = g.getCurrentLevelname();
 
 
         scheduleTimeRate();
         startTimer();
 
         gameDone = false;
-        gameWon = false;
         restartPressed = false;
-        newGamePressed = false;
-        newGameButtonActive = false;
 
                 while (!gameDone) {
 
@@ -139,7 +135,7 @@ public class Controller {
                                         mainFrame.getScreen().getLaser().setLasers();
                                         mainFrame.getScreen().drawLaser();
 
-                                        if (g.getGoalCounter() > 4) {
+                                        if (g.getGoalCounter() > 49) {
                                             if (!gameWon) {
                                                 if (handler.getList().isEmpty() || !handler.listFull()
                                                         || (handler.getTimeAtEndOfList() > finishTime)) {
@@ -153,9 +149,7 @@ public class Controller {
                                                 popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
                                                 gameWon = true;
                                                 gameDone = true;
-                                                newGameButtonActive = true;
                                                 mainFrame.getGameMenu().setRestartNewGameText("New Game");
-                                                setNewGameListener();
                                                 setPlayagainListener();
                                                 setQuitButtonListener();
                                             }
@@ -163,10 +157,9 @@ public class Controller {
                                     }
 
                                     if (restartPressed) {
-                                        mainFrame.dispose();
-                                        levelList = g.getLevelsArrayList();
-                                        g.setLevel(g.getCurrentLevelname());
-                                        mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
+                                        System.out.println("restartar");
+
+                                        timer.cancel();
                                         gameDone = true;
                                         timer.cancel();
                                         isPaused = false;
@@ -190,23 +183,13 @@ public class Controller {
                         }
 
                 }
-
-
+        System.out.println("ute ur while");
 
         if(restartPressed){
-            initGame();
-            setRegularTroopListener();
-            setTeleportTroopListener();
-            setMenuQuitListener();
-            setAboutListener();
-            setHelpListener();
-            setRestartListener();
-            setPauseListener();
-            g.resetGame();
-            handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
-            mainFrame.getGameMenu().setRestartNewGameText("Restart");
-        }
 
+
+
+        }
     }
 
     private void scheduleTimeRate() {
@@ -221,40 +204,17 @@ public class Controller {
         timer.scheduleAtFixedRate(tasker,0 , 100);
     }
 
-
-    public void setNewGameListener() {
-        mainFrame.getGameMenu().setRestartListener(new ActionListener() {
+    private void setTeleportButton(){
+        mainFrame.getButtonPanel().addSetTeleportListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(popupShowHighscores != null) {
-                    popupShowHighscores.dispose();
+                if (!isPaused) {
+                    g.teleport();
                 }
-                if(newHighscore != null) {
-                    newHighscore.dispose();
-                }
-                newGamePressed = true;
-                mainFrame.dispose();
-                gameDone = true;
-                gameWon = false;
-                stopTimer();
-                timer.cancel();
-                initGame();
-                g.resetGame();
-                levelList = g.getLevelsArrayList();
-                g.setLevel(g.getCurrentLevelname());
-                mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
-                isPaused = false;
-                mainFrame.getGameMenu().setRestartNewGameText("Restart");
-                setRegularTroopListener();
-                setTeleportTroopListener();
-                setMenuQuitListener();
-                setAboutListener();
-                setHelpListener();
-                setRestartListener();
-                setPauseListener();
             }
         });
     }
+
 
     private void setPlayagainListener() {
         popupShowHighscores.addActionListener(new ActionListener() {
@@ -335,8 +295,10 @@ public class Controller {
             @Override
             public void actionPerformed(ActionEvent e) {
                 start.dispose();
+                g = new Game();
                 levelList = g.getLevelsArrayList();
                 g.setLevel("Level 1");
+                g.getOverlayimgArr().copyAllWalkables();
                 initMainframeAndSetListeners();
                 setAboutListener();
                 setRestartListener();
@@ -356,6 +318,7 @@ public class Controller {
                 start.dispose();
                 levelList = g.getLevelsArrayList();
                 g.setLevel("Level 2");
+                g.getOverlayimgArr().copyAllWalkables();
                 initMainframeAndSetListeners();
                 setRestartListener();
                 setPauseListener();
@@ -459,6 +422,8 @@ public class Controller {
         });
     }
 
+
+
     private void setAboutListener() {
         mainFrame.getGameMenu().setAboutListener(new ActionListener() {
             @Override
@@ -489,11 +454,29 @@ public class Controller {
         mainFrame.getGameMenu().setRestartListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(popupShowHighscores != null) {
-                    popupShowHighscores.dispose();
-                }
-                if (!newGamePressed && !newGameButtonActive) {
-                    restartPressed = true;
+
+                restartPressed = true;
+                int choice = JOptionPane.showConfirmDialog(mainFrame,
+                        "Restart game?", "Confirm restart",
+                        JOptionPane.YES_NO_OPTION);
+
+                if(choice == JOptionPane.YES_OPTION) {
+                    stopTimer();
+                    timer.cancel();
+                    gameDone = true;
+                    mainFrame.dispose();
+                    g = new Game();
+                    levelList = g.getLevelsArrayList();
+                    g.setLevel(currentGame);
+                    g.getOverlayimgArr().copyAllWalkables();
+                    initMainframeAndSetListeners();
+                    setAboutListener();
+                    setRestartListener();
+                    setPauseListener();
+                    mainFrame.getGameMenu().setRestartNewGameText("Restart");
+                    gameWon = false;
+                    g.resetGame();
+                    handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
                 }
             }
         });
@@ -503,6 +486,7 @@ public class Controller {
         mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
         gameDone = false;
         initGame();
+        setTeleportButton();
         setRegularTroopListener();
         setTeleportTroopListener();
         setMenuQuitListener();
