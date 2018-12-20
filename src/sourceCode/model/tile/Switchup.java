@@ -23,15 +23,6 @@ public class Switchup extends Tile{
         return true;
     }
 
-    @Override
-    public String graphicChange() {
-        return null;
-    }
-
-    @Override
-    public boolean canBuildTower() {
-        return false;
-    }
 
     @Override
     public void landOn(Troop t) {

@@ -13,17 +13,6 @@ public class Path extends Tile {
     public Path(Position p) {
         super(p);
         graphic = "src/resources/path.png";
-        groundId = 1;
-    }
-
-    @Override
-    public boolean canBuildTower() {
-        return false;
-    }
-
-    @Override
-    public void landOn(Troop t) {
-        t.setCurrentSpeed(t.getOrdinarySpeed());
     }
 
     @Override
@@ -32,8 +21,7 @@ public class Path extends Tile {
     }
 
     @Override
-    public String graphicChange() {
-        //Ej färdig
-        return null;
+    public void landOn(Troop t) {
+        t.setCurrentSpeed(t.getOrdinarySpeed());
     }
 }

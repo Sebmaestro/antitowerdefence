@@ -20,6 +20,8 @@ public class Credit {
             credits = credits - 100;
         } else if (t instanceof TeleporterTroop) {
             credits = credits - 700;
+        } else {
+            credits = credits - 300;
         }
     }
 

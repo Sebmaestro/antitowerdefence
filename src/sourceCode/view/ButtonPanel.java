@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class ButtonPanel extends JPanel {
-    private JButton troop1, troop2, teleportButton;
+    private JButton troop1, troop2, troop3, teleportButton;
     private JTextField moneyField;
     private JTextField goalCounter;
     private JTextField timer;
@@ -17,6 +17,7 @@ public class ButtonPanel extends JPanel {
 
         troop1 = new JButton("Regular - $100");
         troop2 = new JButton("Teleport - $700");
+        troop3 = new JButton("Tank - $300");
         teleportButton = new JButton("Set Teleport");
         moneyField = new JTextField();
         moneyField.setPreferredSize(new Dimension(120,30));
@@ -34,6 +35,7 @@ public class ButtonPanel extends JPanel {
         add(teleportButton);
         add(troop1);
         add(troop2);
+        add(troop3);
         add(goalCounter);
 
         add(timer);
@@ -44,6 +46,8 @@ public class ButtonPanel extends JPanel {
             troop1.addActionListener(e);
         } else if (troop.equals("Teleport")) {
             troop2.addActionListener(e);
+        } else {
+            troop3.addActionListener(e);
         }
     }
 

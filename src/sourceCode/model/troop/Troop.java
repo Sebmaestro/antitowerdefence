@@ -4,24 +4,23 @@ import sourceCode.model.Position;
 import sourceCode.model.tile.Tile;
 import sourceCode.model.tile.TyleType;
 import sourceCode.model.Unit;
-import sourceCode.view.Screen;
 
 import java.awt.*;
 
 
-public abstract class Troop extends Rectangle implements Unit{
+public abstract class Troop implements Unit{
 
 
     protected String graphic;
     private Position currentPosition;
-    private Position nextPosition;
-    public Position east, south, west, north;
+    //private Position nextPosition;
+    private Position east, south, west, north;
 
 
-    protected int troopID;
+    int troopID;
     int hp;
     int currentSpeed;
-    int untilMove;
+    private int untilMove;
     protected boolean alive;
     private boolean hasReachedGoal = false;
     private Direction direction;
@@ -102,20 +101,6 @@ public abstract class Troop extends Rectangle implements Unit{
         hp = hp - damage;
     }
 
-    public void initHp() {
-        //Sätts förmodligen i subklassens konstruktor
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public int getTroopID(){return troopID;}
-
-    public void setOrdinarySpeed(int speed) {
-        this.currentSpeed = speed;
-    }
-
     public int getOrdinarySpeed() {
         return ordinarySpeed;
     }
@@ -124,8 +109,9 @@ public abstract class Troop extends Rectangle implements Unit{
         return graphic;
     }
 
+
     //For Teleporter troop only
-    public abstract TyleType clickOn();
+    //public abstract TyleType clickOn();
 
     private void checkIfGoal(Tile[][] tileMap){
 

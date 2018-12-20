@@ -3,20 +3,17 @@ package sourceCode.model.troop;
 import sourceCode.model.Position;
 import sourceCode.model.tile.TyleType;
 
-/**
- * Author: Sebastian Arledal c17sal
- */
-public class RegularTroop extends Troop {
+public class TankTroop extends Troop {
 
-    public RegularTroop(Position p, Direction direction) {
+    public TankTroop(Position p, Direction direction) {
         super(p, direction);
-        hp = 100;
-        ordinarySpeed = 2;
+        hp = 300;
+        ordinarySpeed = 6;
         currentSpeed = ordinarySpeed;
         fastSpeed = ordinarySpeed/2;
         slowSpeed = ordinarySpeed*3;
-        troopID = 0;
-        graphic = "Regular";
+        //troopID = 0;
+        graphic = "Tank";
     }
 
     /*
@@ -25,8 +22,4 @@ public class RegularTroop extends Troop {
         return null;
     }
     */
-
-    //public Troop getTroop() {
-      //  return RegularTroop.this;
-    //}
 }

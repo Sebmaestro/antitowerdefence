@@ -8,6 +8,7 @@ import sourceCode.model.tile.*;
 import sourceCode.model.tower.RegularTower;
 import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.RegularTroop;
+import sourceCode.model.troop.TankTroop;
 import sourceCode.model.troop.TeleporterTroop;
 import sourceCode.model.troop.Troop;
 import sourceCode.model.xmlparser.LevelParser2;
@@ -155,6 +156,14 @@ public class Game {
         }
     }
 
+    public void sendTankTroop() {
+        if (money.getCredits() >= 300) {
+            Troop tank = new TankTroop(startPos, EAST);
+            troopList.add(tank);
+            money.buyNewTroop(tank);
+        }
+    }
+
     public void sendTeleporterTroop() {
 
         if (money.getCredits() >= 700) {
@@ -216,6 +225,11 @@ public class Game {
                         troop.clearUntilMove();
                     }
                     else if(troop.getGraphic().equals("Teleporter") && (troop.getUntilMove() == troop.getCurrentSpeed())){
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        troop.move(tiles);
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        troop.clearUntilMove();
+                    } else if (troop.getGraphic().equals("Tank") && (troop.getUntilMove() == troop.getCurrentSpeed())) {
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
                         troop.move(tiles);
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);

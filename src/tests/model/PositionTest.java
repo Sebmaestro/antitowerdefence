@@ -1,3 +1,4 @@
+/*
 package tests.model;
 
 import sourceCode.model.Position;
@@ -97,3 +98,4 @@ public class PositionTest {
     }
 
 }
+*/

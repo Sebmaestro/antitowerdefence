@@ -23,7 +23,7 @@ public class OverlayImageArray {
             regTroopPosition, telepTroopPosition, towerPositions, switchDownPosition,
             switchUpPosition;
     private BufferedImage path, regular, invisible, start, goal, tower, quicksand, booster,
-                            switchDown, switchUp, teleporter;
+                            switchDown, switchUp, teleporter, tank;
     private int worldSize;
     private Position startPos, goalPos;
     private ArrayList<Troop> regTroopList;
@@ -56,6 +56,7 @@ public class OverlayImageArray {
             booster = ImageIO.read(new File("src/Resources/booster.png"));
             switchDown = ImageIO.read(new File("src/Resources/switch-down.png"));
             switchUp = ImageIO.read(new File("src/Resources/switch-up.png"));
+            tank = ImageIO.read(new File("src/Resources/tank.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -164,6 +165,8 @@ public class OverlayImageArray {
                 }
                 else if(reg.getGraphic().equals("Teleporter")){
                     theWholeShit[reg.getPosition().getY()][reg.getPosition().getX()] = teleporter;
+                } else if (reg.getGraphic().equals("Tank")){
+                    theWholeShit[reg.getPosition().getY()][reg.getPosition().getX()] = tank;
                 }
             }
         }catch (NullPointerException e){}

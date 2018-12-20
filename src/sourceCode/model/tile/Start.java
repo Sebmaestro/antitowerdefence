@@ -13,22 +13,11 @@ public class Start extends Tile {
     public Start(Position p) {
         super(p);
         graphic = "src/resources/start.png";
-        groundId = 3;
     }
 
     @Override
     public boolean canWalk() {
         return true;
-    }
-
-    @Override
-    public String graphicChange() {
-        return null;
-    }
-
-    @Override
-    public boolean canBuildTower() {
-        return false;
     }
 
     @Override

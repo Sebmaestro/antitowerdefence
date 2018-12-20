@@ -20,18 +20,9 @@ public class Quicksand extends Tile {
     }
 
     @Override
-    public boolean canBuildTower() {
-        return false;
-    }
-
-    @Override
     public void landOn(Troop t) {
 
         t.setCurrentSpeed(t.getSlowSpeed());
     }
 
-    @Override
-    public String graphicChange() {
-        return null;
-    }
 }

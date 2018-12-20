@@ -196,6 +196,7 @@ public class Controller {
         if(restartPressed){
             initGame();
             setRegularTroopListener();
+            setTankTroopListener();
             setTeleportTroopListener();
             setMenuQuitListener();
             setAboutListener();
@@ -246,6 +247,7 @@ public class Controller {
                 isPaused = false;
                 mainFrame.getGameMenu().setRestartNewGameText("Restart");
                 setRegularTroopListener();
+                setTankTroopListener();
                 setTeleportTroopListener();
                 setMenuQuitListener();
                 setAboutListener();
@@ -421,6 +423,17 @@ public class Controller {
         }, "Regular");
     }
 
+    private void setTankTroopListener() {
+        mainFrame.getButtonPanel().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!isPaused) {
+                    g.sendTankTroop();
+                }
+            }
+        }, "Tank");
+    }
+
     private void setTeleportTroopListener(){
         mainFrame.getButtonPanel().addActionListener(new ActionListener() {
             @Override
@@ -504,6 +517,7 @@ public class Controller {
         gameDone = false;
         initGame();
         setRegularTroopListener();
+        setTankTroopListener();
         setTeleportTroopListener();
         setMenuQuitListener();
         setAboutListener();

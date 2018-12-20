@@ -24,6 +24,7 @@ public class TeleporterTroop extends Troop {
         graphic = "Teleporter";
     }
 
+    /*
     @Override
     public TyleType clickOn() {
         if (!isCreatingTeleport) {
@@ -35,7 +36,7 @@ public class TeleporterTroop extends Troop {
             return TyleType.TELEPORTEXIT;
         }
     }
-
+*/
     //public Troop getTroop() {
     //    return TeleporterTroop.this;
     //}
