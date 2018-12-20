@@ -3,7 +3,6 @@ package sourceCode.model.tile;
 import sourceCode.model.Position;
 import sourceCode.model.troop.Direction;
 import sourceCode.model.troop.Troop;
-
 import static sourceCode.model.troop.Direction.SOUTH;
 
 /**
@@ -22,15 +21,6 @@ public class Switchdown extends Tile{
         return true;
     }
 
-    @Override
-    public String graphicChange() {
-        return null;
-    }
-
-    @Override
-    public boolean canBuildTower() {
-        return false;
-    }
 
     @Override
     public void landOn(Troop t) {

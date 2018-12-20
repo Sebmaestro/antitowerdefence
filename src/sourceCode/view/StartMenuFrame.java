@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Author: Sebastian Arledal
+ */
 public class StartMenuFrame extends JFrame {
     private JButton highscores;
     private JButton map1;
@@ -37,15 +40,26 @@ public class StartMenuFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     *
+     *
+     * @param e - e
+     * @param s - s
+     */
     public void addActionListener(ActionListener e, String s) {
-        if (s.equals("map1")) {
-            map1.addActionListener(e);
-        } else if (s.equals("map2")) {
-            map2.addActionListener(e);
-        } else if (s.equals("highscore")){
-            highscores.addActionListener(e);
-        } else {
-            quit.addActionListener(e);
+        switch (s) {
+            case "map1":
+                map1.addActionListener(e);
+                break;
+            case "map2":
+                map2.addActionListener(e);
+                break;
+            case "highscore":
+                highscores.addActionListener(e);
+                break;
+            default:
+                quit.addActionListener(e);
+                break;
         }
     }
 }

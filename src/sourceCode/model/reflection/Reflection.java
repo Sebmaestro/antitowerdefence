@@ -1,7 +1,6 @@
 package sourceCode.model.reflection;
 
 import sourceCode.model.Position;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
@@ -11,7 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 public class Reflection {
     private Class<?> klass;
     private Object newKlass;
-    Position p;
+    private Position p;
 
     public Reflection(String className, Position p) {
         try {
@@ -26,7 +25,6 @@ public class Reflection {
         try {
             Constructor<?> con = klass.getConstructor(Position.class);
             newKlass = con.newInstance(p);
-            //newKlass = klass.newInstance();
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }

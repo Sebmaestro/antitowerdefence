@@ -1,8 +1,6 @@
 package sourceCode.model;
 
 import sourceCode.model.tile.Tile;
-
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,18 +12,11 @@ import java.util.ArrayList;
  */
 public class ImageArray {
 
-    private BufferedImage allPics;
-    Tile[][] allTiles;
     private BufferedImage[][] theWholeShit;
 
     public ImageArray(Tile[][] allTiles) {
 
         theWholeShit = new BufferedImage[10][10];
-
-        allPics = new BufferedImage(55, 55, BufferedImage.TYPE_INT_RGB);
-        this.allTiles = allTiles;
-
-
 
         for(int i=0; i<allTiles.length; i++){
             for(int j=0; j<allTiles.length;j++){
@@ -38,8 +29,6 @@ public class ImageArray {
 
             }
         }
-
-
     }
 
     public void setTowerPics(ArrayList<Position> towerpositions){
@@ -55,15 +44,7 @@ public class ImageArray {
 
     }
 
-
-    public BufferedImage getAllPics(){
-        return allPics;
-    }
-
     public BufferedImage[][] getTheWholeShit(){
         return theWholeShit;
     }
-
-
-
 }

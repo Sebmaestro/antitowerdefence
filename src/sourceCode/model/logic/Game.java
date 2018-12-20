@@ -2,73 +2,44 @@ package sourceCode.model.logic;
 
 import sourceCode.model.*;
 import sourceCode.model.credit.Credit;
-import sourceCode.model.database.Database;
-import sourceCode.model.database.HighscoreHandler;
 import sourceCode.model.tile.*;
 import sourceCode.model.tower.RegularTower;
 import sourceCode.model.tower.Tower;
 import sourceCode.model.troop.RegularTroop;
+import sourceCode.model.troop.TankTroop;
 import sourceCode.model.troop.TeleporterTroop;
 import sourceCode.model.troop.Troop;
-import sourceCode.model.xmlparser.LevelParser2;
+import sourceCode.model.xmlparser.LevelParser;
 import sourceCode.model.xmlparser.Levels;
-import sourceCode.view.PopupNewHighscoreSetter;
-import sourceCode.view.PopupShowHighscores;
-import sourceCode.view.StartMenuFrame;
-
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import static sourceCode.model.troop.Direction.EAST;
 
-//mport sourceCode.model.xmlparser.LevelParser;
-
+/**
+ * Dennis Karlman / Simon Lundkvist / Sebastian Arledal / David Eriksson
+ */
 public class Game {
-    //private Frame frame;
-    private Model model;
-    private Tile[][] tiles, tilesCopy;
-    //private LevelParser levelP;
-    private LevelParser2 levelP2;
-    private ImageArray imgArr;
+    private Tile[][] tiles;
     private OverlayImageArray overlayimgArr;
-    private ArrayList<Position> pathPosition, towerPosition, quicksandPositions,
-            boosterPositions, switchUpPositions, switchDownPositions, allSwitchPositions;
-    private Position startPos, goalPos;
+    private ArrayList<Position> allSwitchPositions;
+    private Position startPos;
     private ArrayList<Troop> troopList;
     private ArrayList<Tower> towers;
     private ArrayList<LaserPositions> laserPositionList;
-    private int goalCounter = 0, regularMove = 0, teleporterMove = 0;
+    private int goalCounter = 0;
     private BufferedImage[][] underlay, overlay;
     private final Object troopListLock = new Object();
     private final Object towerListLock = new Object();
-    private PopupShowHighscores popupShowHighscores;
-    private PopupNewHighscoreSetter newHighscore;
-    private Database db = new Database();
-    private HighscoreHandler handler;
-    private StartMenuFrame start;
     private ArrayList<Levels> levelsArrayList;
     private String currentLevelname;
-    private boolean troopInTheList = false, teleporterInTheList = false;
-    private int firstTime = 0;
-
-
-
-    int gameWon = 0;
     private Credit money = new Credit();
 
-    public Game(){
-
+    public Game(String s){
         levelsArrayList = new ArrayList<>();
-        levelP2 = new LevelParser2();
-        levelP2.xmlparser("src/Resources/levels.xml");
-        //tiles = readLevel("src/Resources/levels.xml");
-
+        LevelParser levelP2 = new LevelParser();
+        LevelParser.xmlparser(s);
         levelsArrayList = levelP2.getLevelsArrayList();
-
     }
 
     public BufferedImage[][] getUnderlay() {
@@ -85,55 +56,41 @@ public class Game {
         return money.getCredits();
     }
 
-    public ArrayList<Levels> getLevelsArrayList() {
-        return levelsArrayList;
-    }
-
-
     public void setLevel(String levelName) {
         for (Levels l:levelsArrayList) {
             if (l.getlevelName().equals(levelName)) {
                 currentLevelname = levelName;
                 tiles = l.getMapTiles();
-                tilesCopy = copyOff(tiles);
 
-                pathPosition = l.getPathPositions();
-                towerPosition = l.getTowerZonePositions();
-                quicksandPositions = l.getQuicksandPositions();
-                boosterPositions = l.getBoosterPositions();
-                switchUpPositions = l.getSwitchUpPositions();
-                switchDownPositions = l.getSwitchDownPositions();
+                ArrayList<Position> pathPosition = l.getPathPositions();
+                ArrayList<Position> towerPosition = l.getTowerZonePositions();
+                ArrayList<Position> quicksandPositions = l.getQuicksandPositions();
+                ArrayList<Position> boosterPositions = l.getBoosterPositions();
+                ArrayList<Position> switchUpPositions = l.getSwitchUpPositions();
+                ArrayList<Position> switchDownPositions = l.getSwitchDownPositions();
                 allSwitchPositions = l.getAllSwitchPositions();
 
                 startPos = l.getStartPos();
-                goalPos = l.getGoalPos();
+                Position goalPos = l.getGoalPos();
 
-                //Skapar BufferedImageArrays från kartan, både underLay och overLay
-                imgArr = new ImageArray(l.getMapTiles());
+                ImageArray imgArr = new ImageArray(l.getMapTiles());
                 imgArr.setTowerPics(towerPosition);
                 overlayimgArr = new OverlayImageArray(l.getMapTiles().length);
                 overlayimgArr.addPaths(pathPosition, quicksandPositions, boosterPositions,
                         switchDownPositions, switchUpPositions, startPos, goalPos);
 
 
-                //Kopierar dessa bilder för inskickning till frame
                 underlay = copyOff(imgArr.getTheWholeShit());
                 overlay = copyOff(overlayimgArr.getTheWholeShit());
 
-                //Skapar en frame med BufferedImageArrays
-                //setTheFrame(underlay, overlay);
 
-                //Skapar listor för torn, trupper och lasers
                 troopList = new ArrayList<>();
                 towers = new ArrayList<>();
                 laserPositionList = new ArrayList<>();
 
-                //Sätter tornen på rätt plats
                 setUpTowers(towerPosition);
 
-                //Lägger till trupper på sätt plats i overlayImage
                 overlayimgArr.addRegularTroopList(troopList);
-
             }
         }
     }
@@ -154,22 +111,6 @@ public class Game {
         }
     }
 
-    public void resetTile(){
-        tiles = copyOff(tilesCopy);
-    }
-
-    public static Tile[][] copyOff(Tile[][] original){
-
-        Tile[][] copy = new Tile[original.length][original.length];
-
-        for(int i=0; i<original.length; i++){
-            for(int j=0; j<original.length; j++){
-                copy[i][j] = original[i][j];
-            }
-        }
-        return copy;
-    }
-
     public void teleport (){
 
         synchronized (troopListLock) {
@@ -177,7 +118,7 @@ public class Game {
                 for(Troop troop: troopList){
                     if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles()==0)){
 
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport1(
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport(
                                 troop.getPosition());
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()]
                                 .setDirectionAtExit(troop.getDirection());
@@ -188,7 +129,7 @@ public class Game {
                     }
                     else if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles()==1)){
 
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport1(
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport(
                                 troop.getPosition());
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()].setDirectionAtExit(troop.getDirection());
                         overlayimgArr.addTeleportPic(troop.getPosition());
@@ -210,6 +151,14 @@ public class Game {
             Troop reg = new RegularTroop(startPos, EAST);
             troopList.add(reg);
             money.buyNewTroop(reg);
+        }
+    }
+
+    public void sendTankTroop() {
+        if (money.getCredits() >= 300) {
+            Troop tank = new TankTroop(startPos, EAST);
+            troopList.add(tank);
+            money.buyNewTroop(tank);
         }
     }
 
@@ -252,8 +201,8 @@ public class Game {
                 Troop troop = iter.next();
 
                 if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles() == 1) &&
-                        (!troop.isAlive())){
-                    tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport1(
+                        (troop.isAlive())){
+                    tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport(
                             troop.getPosition());
                     tiles[troop.getPosition().getY()][troop.getPosition().getX()].setDirectionAtExit(troop.getDirection());
                     overlayimgArr.addTeleportPic(troop.getPosition());
@@ -264,7 +213,7 @@ public class Game {
                     troop.incrementNumberOfTeleportTiles();
                 }
 
-                if(troop.isGoalReached() || !troop.isAlive() || troop.getNumberOfTeleportTiles()==2){
+                if(troop.isGoalReached() || troop.isAlive() || troop.getNumberOfTeleportTiles()==2){
                     iter.remove();
                     if(troop.isGoalReached()) {
                         money.getGoalCredits();
@@ -288,6 +237,11 @@ public class Game {
                         troop.clearUntilMove();
                     }
                     else if(troop.getGraphic().equals("Teleporter") && (troop.getUntilMove() == troop.getCurrentSpeed())){
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        troop.move(tiles);
+                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        troop.clearUntilMove();
+                    } else if (troop.getGraphic().equals("Tank") && (troop.getUntilMove() == troop.getCurrentSpeed())) {
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
                         troop.move(tiles);
                         tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
@@ -333,32 +287,20 @@ public class Game {
         BufferedImage[][] copy = new BufferedImage[original.length][original.length];
 
         for(int i=0; i<original.length; i++){
+            /*
             for(int j=0; j<original.length; j++){
                 copy[i][j] = original[i][j];
             }
+            */
+            System.arraycopy(original[i], 0, copy[i], 0, original.length);
         }
         return copy;
     }
 
 
-    public void setUpTowers(ArrayList<Position> towerPosition){
+    private void setUpTowers(ArrayList<Position> towerPosition){
         for(Position p: towerPosition){
             towers.add(new RegularTower(p));
         }
     }
-
-    private BufferedImage getImage(String imagePath){
-        System.out.println(imagePath);
-        BufferedImage img;
-        File file = new File(imagePath);
-        try{
-            img = ImageIO.read(file);
-        }catch (IllegalArgumentException | IOException e){
-            System.out.println(e);
-            img = null;
-        }
-        return img;
-    }
-
-
 }

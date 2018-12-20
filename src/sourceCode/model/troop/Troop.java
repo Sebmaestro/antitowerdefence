@@ -2,28 +2,24 @@ package sourceCode.model.troop;
 
 import sourceCode.model.Position;
 import sourceCode.model.tile.Tile;
-import sourceCode.model.tile.TyleType;
 import sourceCode.model.Unit;
-import sourceCode.view.Screen;
 
-import java.awt.*;
-
-
-public abstract class Troop extends Rectangle implements Unit{
+/**
+ * Author: Dennis karlman
+ */
+public abstract class Troop implements Unit{
 
 
     protected String graphic;
     private Position currentPosition;
-    private Position nextPosition;
-    private Position teleportEntry, teleportExit;
-    public Position east, south, west, north;
-    int numberOfTeleportTiles;
+    private Position teleportEntry;
+    private Position east, south, west, north;
+    private int numberOfTeleportTiles;
 
-
-    protected int troopID;
+    int troopID;
     int hp;
     int currentSpeed;
-    int untilMove;
+    private int untilMove;
     protected boolean alive;
     private boolean hasReachedGoal = false;
     private Direction direction;
@@ -71,14 +67,14 @@ public abstract class Troop extends Rectangle implements Unit{
 
     /**
      * Returns the boolean that tells us if goal is reached or not
-     * @return
+     * @return -
      */
     public boolean isGoalReached() {
         return hasReachedGoal;
     }
 
     public boolean isAlive() {
-        return hp > 0;
+        return hp <= 0;
     }
 
     public int getUntilMove(){
@@ -105,20 +101,6 @@ public abstract class Troop extends Rectangle implements Unit{
         hp = hp - damage;
     }
 
-    public void initHp() {
-        //Sätts förmodligen i subklassens konstruktor
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public int getTroopID(){return troopID;}
-
-    public void setOrdinarySpeed(int speed) {
-        this.currentSpeed = speed;
-    }
-
     public int getOrdinarySpeed() {
         return ordinarySpeed;
     }
@@ -126,9 +108,6 @@ public abstract class Troop extends Rectangle implements Unit{
     public String getGraphic() {
         return graphic;
     }
-
-    //For Teleporter troop only
-    public abstract TyleType clickOn();
 
     public void incrementNumberOfTeleportTiles(){
         numberOfTeleportTiles++;
@@ -143,13 +122,6 @@ public abstract class Troop extends Rectangle implements Unit{
 
     public Position getTeleportEntry(){
         return teleportEntry;
-    }
-
-    public void setTeleportExit(Position p){
-        this.teleportExit = p;
-    }
-    public Position getTeleportExit(){
-        return teleportExit;
     }
 
     private void checkIfGoal(Tile[][] tileMap){
@@ -287,5 +259,4 @@ public abstract class Troop extends Rectangle implements Unit{
         }
 
     }
-
 }

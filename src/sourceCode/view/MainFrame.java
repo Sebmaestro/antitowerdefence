@@ -2,20 +2,23 @@ package sourceCode.view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
+/**
+ * Author: Simon Lundkvist /Dennis Karlman
+ */
 public class MainFrame extends JFrame{
 
-    public static String title = "Mammaspel";
-    public static Dimension size = new Dimension(1080,700);
+    private static Dimension size = new Dimension(1080,700);
     private BufferedImage[][] underlay, overlay;
     private Screen screen;
     private ButtonPanel buttonPanel;
     private GameMenu menuBar;
+
     public MainFrame(BufferedImage[][] underlay, BufferedImage[][] overlay) {
         this.underlay = underlay;
         this.overlay = overlay;
+        String title = "Mammaspel";
         setTitle(title);
         setSize(size);
         setResizable(false);
@@ -29,14 +32,12 @@ public class MainFrame extends JFrame{
         initFrame();
     }
 
-    public MainFrame initFrame(){
+    private void initFrame(){
         addScreen();
         addButtonPanel();
         addMenuBar();
         getScreen().setImages(underlay, overlay);
         getScreen().createGameScreen();
-
-        return this;
     }
 
     public ButtonPanel getButtonPanel(){
@@ -47,44 +48,19 @@ public class MainFrame extends JFrame{
         return this.menuBar;
     }
 
-    public void addScreen(){
-        add(screen, BorderLayout.CENTER);
-    }
-    public void addButtonPanel() {
-        add(buttonPanel, BorderLayout.SOUTH);
-    }
-    public void addMenuBar() {
-        setJMenuBar(menuBar.createMenuBar());
-    }
-    private void init(){
-
-        //screen = new Screen();
-
-        //add(screen, BorderLayout.CENTER);
-
-    }
-
     public Screen getScreen(){
         return screen;
     }
 
-    public void setRestartListener(ActionListener actionListener){
-        menuBar.setRestartListener(actionListener);
+    private void addScreen(){
+        add(screen, BorderLayout.CENTER);
     }
 
-    public void setPauseListener(ActionListener actionListener){
-        menuBar.setPauseListener(actionListener);
+    private void addButtonPanel() {
+        add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    public void setQuitListener(ActionListener actionListener){
-        menuBar.setQuitListener(actionListener);
-    }
-
-    public void setHelpListener(ActionListener actionListener){
-        menuBar.setHelpListener(actionListener);
-    }
-
-    public void setAboutListener(ActionListener actionListener){
-        menuBar.setAboutListener(actionListener);
+    private void addMenuBar() {
+        setJMenuBar(menuBar.createMenuBar());
     }
 }

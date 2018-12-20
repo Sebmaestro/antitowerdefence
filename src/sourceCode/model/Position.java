@@ -2,6 +2,9 @@ package sourceCode.model;
 
 import java.util.Objects;
 
+/**
+ * Author: Simon Lundkvist/Sebastian Arledal
+ */
 public class Position {
     private int x;
     private int y;
@@ -73,18 +76,14 @@ public class Position {
     public Position getPosToSouthWest() { return new Position(x-1, y-1);}
     /**
      * Returns true if
-     * @param obj
+     * @param obj - obj
      * @return boolean
      */
     @Override
     public boolean equals(Object obj) {
-        if ((obj instanceof Position) &&
-                this.getX() == ((Position)obj).getX() &&
-                this.getY() == ((Position)obj).getY())
-        {
-            return true;
-        }
-        return false;
+        return (obj instanceof Position) &&
+                this.getX() == ((Position) obj).getX() &&
+                this.getY() == ((Position) obj).getY();
     }
 
     /**

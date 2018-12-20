@@ -1,9 +1,5 @@
 package sourceCode.view;
 
-import sourceCode.model.ImageArray;
-import sourceCode.model.OverlayImageArray;
-import sourceCode.model.tile.Tile;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,30 +8,25 @@ import java.awt.image.BufferedImage;
  * Created by denni on 2018-12-13.
  */
 
-public class Overlay extends JLayeredPane {
+class Overlay extends JLayeredPane {
     private BufferedImage[][] overlayImg;
 
-
-    public Overlay(){
-
-    }
-
-    public Overlay(BufferedImage[][] overlayImg) {
+    Overlay(BufferedImage[][] overlayImg) {
         this.overlayImg = overlayImg;
         define();
     }
 
-    public void define() {
+    private void define() {
     }
 
-    public void updateOverlay(BufferedImage[][] overlayImg) {
+    void updateOverlay(BufferedImage[][] overlayImg) {
         this.overlayImg = overlayImg;
 
     }
 
 
 
-    public void draw(Graphics g) {
+    void draw(Graphics g) {
         Graphics2D graphics2D = (Graphics2D) g;
         for(int i=0; i<overlayImg.length; i++ ){
             for( int j=0; j<overlayImg.length; j++){

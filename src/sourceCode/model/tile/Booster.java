@@ -25,13 +25,4 @@ public class Booster extends Tile {
         return true;
     }
 
-    @Override
-    public boolean canBuildTower() {
-        return false;
-    }
-
-    @Override
-    public String graphicChange() {
-        return null;
-    }
 }

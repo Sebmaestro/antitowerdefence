@@ -13,7 +13,6 @@ public class Goal extends Tile {
     public Goal(Position p) {
         super(p);
         graphic = "src/resources/goal.png";
-        groundId = 4;
     }
 
     @Override
@@ -23,17 +22,8 @@ public class Goal extends Tile {
 
 
     @Override
-    public boolean canBuildTower() {
-        return false;
-    }
-
-    @Override
     public void landOn(Troop t) {
         t.setGoalReached();
     }
 
-    @Override
-    public String graphicChange() {
-        return null;
-    }
 }

@@ -1,34 +1,28 @@
 package sourceCode.model.tower;
+
 import sourceCode.model.Position;
 import sourceCode.model.troop.Troop;
-import sourceCode.view.Screen;
-import sourceCode.model.troop.Troop;
-
 import sourceCode.model.Unit;
-
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
-public abstract class Tower extends Rectangle implements Unit {
+/**
+ * Author: Dennis karlman
+ */
+public abstract class Tower implements Unit {
 
-    public String Graphic;
-    protected int damage;
-    protected int towerID;
-    protected double range;
-    protected double attackPeriod;
-    protected Troop target;
+    int damage;
+    double range;
+    double attackPeriod;
     protected Position p;
-    protected ArrayList<Troop> toAttack;
+    private ArrayList<Troop> toAttack;
 
-    public Tower(Position p) {
+    Tower(Position p) {
         this.p = p;
         toAttack = new ArrayList<>();
     }
 
-    public void draw(Graphics g){
-       // g.drawImage(Screen.tileset_tower[getTowerID()],x,y,width,height, null);
-
+    public Position getPosition() {
+        return p;
     }
 
     public void addToAttackList(Troop t) {
@@ -43,62 +37,55 @@ public abstract class Tower extends Rectangle implements Unit {
         toAttack.clear();
     }
 
-    public int getTowerID(){return towerID;}
-
-    public void attack(Troop t) {
+    private void attack(Troop t) {
         t.receiveDamage(damage);
     }
 
-    public int getAttackDamage(){
-        return damage;
-    }
-
     public boolean canReachTroop(Troop t) {
+        Troop target;
         if(p.getPosToEast().equals(t.getPosition())){
-            this.target = t;
+            target = t;
             attack(target);
             return true;
         }
         else if(p.getPosToSouthEast().equals(t.getPosition())){
-            this.target = t;
+            target = t;
             attack(target);
             return true;
         }
         else if(p.getPosToSouth().equals(t.getPosition())){
-            this.target = t;
+            target = t;
             attack(target);
             return true;
         }
         else if(p.getPosToSouthWest().equals(t.getPosition())){
-            this.target = t;
+            target = t;
             attack(target);
             return true;
         }
         else if(p.getPosToWest().equals(t.getPosition())){
-            this.target = t;
+            target = t;
             attack(target);
             return true;
         }
         else if(p.getPosToNorthWest().equals(t.getPosition())){
-            this.target = t;
+            target = t;
             attack(target);
             return true;
         }
         else if(p.getPosToNorth().equals(t.getPosition())){
-            this.target = t;
+            target = t;
             attack(target);
             return true;
         }
         else if(p.getPosToNorthEast().equals(t.getPosition())){
-            this.target = t;
+            target = t;
             attack(target);
             return true;
         } else {
             return false;
         }
-
     }
-
 }
 
 

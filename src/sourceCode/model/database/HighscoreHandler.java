@@ -1,6 +1,5 @@
 package sourceCode.model.database;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -97,10 +96,6 @@ public class HighscoreHandler {
     }
 
     public boolean listFull() {
-        if (l.size() >= 10) {
-            return true;
-        } else {
-            return false;
-        }
+        return l.size() >= 10;
     }
 }

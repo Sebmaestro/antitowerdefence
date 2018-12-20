@@ -30,12 +30,4 @@ public class TowerTest {
         RegularTroop regTroop = new RegularTroop(new Position(10, 10), WEST);
         assertFalse(rt.canReachTroop(regTroop));
     }
-
-    @Test
-    public void towerShouldDamageTroopWhenShooting() {
-        Tower rt = new RegularTower(new Position(1, 1));
-        RegularTroop regTroop = new RegularTroop(new Position(2,2), EAST);
-        rt.attack(regTroop);
-        assertEquals(99, regTroop.getHp());
-    }
 }

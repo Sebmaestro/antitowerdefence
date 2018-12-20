@@ -3,13 +3,14 @@ package tests.model;
 import org.junit.*;
 import sourceCode.model.Position;
 import sourceCode.model.troop.RegularTroop;
-import sourceCode.model.troop.TeleporterTroop;
 import sourceCode.model.troop.Troop;
 
 import static org.junit.Assert.*;
-import static sourceCode.model.tile.TyleType.*;
 import static sourceCode.model.troop.Direction.*;
 
+/**
+ * Author: Sebastian Arledal
+ */
 public class TroopTest {
 
     public TroopTest() {
@@ -20,19 +21,6 @@ public class TroopTest {
     public void shouldBeAbleToCreateTroop() {
         RegularTroop regTroop = new RegularTroop(new Position(1,1), NORTH);
         assertNotNull(regTroop);
-    }
-
-    @Test
-    public void shouldHaveFullHP(){
-        RegularTroop regTroop = new RegularTroop(new Position(1,1), NORTH);
-        assertEquals(regTroop.getHp(), 100);
-    }
-
-    @Test
-    public void shouldBeAbleToTakeDamage(){
-        RegularTroop regTroop = new RegularTroop(new Position(1,1), NORTH);
-        regTroop.receiveDamage(70);
-        assertEquals(regTroop.getHp(), 30);
     }
 
     @Test
@@ -77,18 +65,5 @@ public class TroopTest {
         Troop regTroop = new RegularTroop(new Position(1,1), EAST);
         regTroop.setGoalReached();
         assertTrue(regTroop.isGoalReached());
-    }
-
-    @Test
-    public void teleporterShouldReturnCorrectTeleTile() {
-        Troop tp = new TeleporterTroop(new Position(1,1), WEST);
-        assertEquals(TELEPORTENTRY, tp.clickOn());
-    }
-
-    @Test
-    public void teleporterShouldReturnExitAfterSecondClick() {
-        Troop tp = new TeleporterTroop(new Position(1,1), WEST);
-        tp.clickOn();
-        assertEquals(TELEPORTEXIT, tp.clickOn());
     }
 }

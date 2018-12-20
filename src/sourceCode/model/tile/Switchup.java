@@ -3,9 +3,7 @@ package sourceCode.model.tile;
 import sourceCode.model.Position;
 import sourceCode.model.troop.Direction;
 import sourceCode.model.troop.Troop;
-
 import static sourceCode.model.troop.Direction.NORTH;
-
 
 /**
  * Created by denni on 2018-12-17.
@@ -23,15 +21,6 @@ public class Switchup extends Tile{
         return true;
     }
 
-    @Override
-    public String graphicChange() {
-        return null;
-    }
-
-    @Override
-    public boolean canBuildTower() {
-        return false;
-    }
 
     @Override
     public void landOn(Troop t) {

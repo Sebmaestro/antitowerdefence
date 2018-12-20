@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 public class PopupNewHighscoreSetter extends JFrame {
     private JButton submit;
     private JTextField textField;
-    private JTextArea textArea;
+
     public PopupNewHighscoreSetter() {
         super("New Highscore!");
         setSize(400, 250);
@@ -18,13 +18,13 @@ public class PopupNewHighscoreSetter extends JFrame {
 
         panel.setLayout(new FlowLayout());
 
-        textArea = new JTextArea("Congratulations! You have set a new highscore!" +"\n\n"+ "Please enter your name:" +
-                "(MAX 10 CHARACTERS)");
+        JTextArea textArea = new JTextArea("Congratulations! You have set a new highscore!" + "\n\n" + "Please enter your name:" +
+                "(MAX 18 CHARACTERS)");
         textArea.setFont(new Font(Font.SERIF, Font.BOLD, 16));
         textArea.setSize(new Dimension(200, 200));
         textArea.setEditable(false);
         textField = new JTextField();
-        textField.setPreferredSize(new Dimension(100, 30));
+        textField.setPreferredSize(new Dimension(180, 30));
         submit = new JButton("Submit");
 
         topPanel.add(textArea);
@@ -34,7 +34,6 @@ public class PopupNewHighscoreSetter extends JFrame {
         add(topPanel);
         add(panel);
 
-        //setLocationRelativeTo(null);
         getRootPane().setDefaultButton(submit);
 
         setVisible(true);

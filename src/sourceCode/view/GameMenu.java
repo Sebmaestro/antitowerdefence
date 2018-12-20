@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 
 /**
- * Created by David on 2018-12-14.
+ * Created by David Eriksson / Simon Lundkvist
  */
 public class GameMenu extends JMenuBar{
 
@@ -14,27 +14,20 @@ public class GameMenu extends JMenuBar{
     private JMenuItem help;
     private JMenuItem about;
 
-    private JMenuBar menu, menu2;
-    private JMenu firstMenu;
-    private JMenu secondMenu;
 
-
-
-
-    public GameMenu(){
-        menu = createMenuBar();
+    GameMenu(){
+        createMenuBar();
     }
 
+    JMenuBar createMenuBar() {
 
-    public JMenuBar createMenuBar() {
+        JMenuBar menu2 = new JMenuBar();
 
-        menu2 = new JMenuBar();
+        JMenu firstMenu = new JMenu("Menu");
+        JMenu secondMenu = new JMenu("Help");
 
-        firstMenu = new JMenu("Menu");
-        secondMenu = new JMenu("Help");
-
-        restart = new JMenuItem("New Game/Restart");
-        pause = new JMenuItem("Pause/Resume");
+        restart = new JMenuItem("New Game");
+        pause = new JMenuItem("Pause");
         quit = new JMenuItem("Quit");
 
         help = new JMenuItem("Help");
@@ -76,6 +69,7 @@ public class GameMenu extends JMenuBar{
     public void setRestartNewGameText(String str) {
         restart.setText(str);
     }
+
     public void setPauseText(String str) {
         pause.setText(str);
     }

@@ -1,48 +1,44 @@
 package sourceCode.model;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import sourceCode.model.tile.Path;
-import sourceCode.model.tile.Tile;
-import sourceCode.model.tower.Tower;
-import sourceCode.model.troop.RegularTroop;
 import sourceCode.model.troop.Troop;
-
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by denni on 2018-12-13.
  */
 public class OverlayImageArray {
-    private BufferedImage allPics;
-    Tile[][] allTiles;
     private BufferedImage[][] theWholeShit;
-    private ArrayList<Position> pathPositions, quicksandPosition, boosterPosition,
-            regTroopPosition, telepTroopPosition, towerPositions, switchDownPosition,
-            switchUpPosition, teleporterTile1Positons, teleporterTile2Positions;
-    private ArrayList<Position> switchUpPositionsCopy = new ArrayList<>();
-    private ArrayList<Position> quicksandPositionsCopy = new ArrayList<>();
-    private ArrayList<Position> booserPositionsCopy = new ArrayList<>();
-    private ArrayList<Position> pathPositionsCopy = new ArrayList<>();
-    private ArrayList<Position> switchDownPositionsCopy = new ArrayList<>();
+    private ArrayList<Position> pathPositions;
+    private ArrayList<Position> quicksandPosition;
+    private ArrayList<Position> boosterPosition;
+    private ArrayList<Position> switchDownPosition;
+    private ArrayList<Position> switchUpPosition;
+    private ArrayList<Position> teleporterTile1Positons;
 
-    private BufferedImage path, regular, invisible, start, goal, tower, quicksand, booster,
-                            switchDown, switchUp, teleporter, teleporterTile1, teleporterTile2;
-    private int worldSize;
-    private Position startPos, goalPos, startPosCopy, goalPosCopy;
+    private BufferedImage path;
+    private BufferedImage regular;
+    private BufferedImage invisible;
+    private BufferedImage start;
+    private BufferedImage goal;
+    private BufferedImage quicksand;
+    private BufferedImage booster;
+    private BufferedImage switchDown;
+    private BufferedImage switchUp;
+    private BufferedImage teleporter;
+    private BufferedImage teleporterTile1;
+    private BufferedImage tank;
+    private Position startPos;
+    private Position goalPos;
     private ArrayList<Troop> regTroopList;
 
     public OverlayImageArray(int worldSize) {
-        this.worldSize = worldSize;
         readImages();
         theWholeShit = new BufferedImage[10][10];
-        regTroopPosition = new ArrayList<>();
         teleporterTile1Positons = new ArrayList<>();
-        teleporterTile2Positions = new ArrayList<>();
 
         for(int i=0; i<worldSize; i++){
             for(int j=0; j<worldSize;j++){
@@ -61,14 +57,13 @@ public class OverlayImageArray {
             invisible = ImageIO.read(new File("src/Resources/invisible.png"));
             start = ImageIO.read(new File("src/Resources/start.png"));
             goal = ImageIO.read(new File("src/Resources/goal.png"));
-            tower = ImageIO.read(new File("src/Resources/tower.png"));
             quicksand = ImageIO.read(new File("src/Resources/quicksand.png"));
             booster = ImageIO.read(new File("src/Resources/booster.png"));
             switchDown = ImageIO.read(new File("src/Resources/switch-down.png"));
             switchUp = ImageIO.read(new File("src/Resources/switch-up.png"));
             teleporterTile1 = ImageIO.read(new File("src/Resources/teleporter1.png"));
-            teleporterTile2 = ImageIO.read(new File("src/Resources/teleporter2.png"));
 
+            tank = ImageIO.read(new File("src/Resources/tank.png"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -83,15 +78,9 @@ public class OverlayImageArray {
         this.regTroopList = regTroopList;
     }
 
-    public void addTeleportTroopList(ArrayList<Position> troopPositions){
 
-    }
 
-    public void addTowerZones(ArrayList<Position> towerListPositions){
-        towerPositions = towerListPositions;
-    }
-
-    public void clearThePath(){
+    private void clearThePath(){
         for(Position p :pathPositions){
             theWholeShit[p.getY()][p.getX()] = path;
         }
@@ -153,27 +142,6 @@ public class OverlayImageArray {
             switchUpPosition.remove(i);
             switchDownPosition.add(p);
         }
-    }
-
-
-    public void copyAllWalkables(){
-        pathPositionsCopy = pathPositions;
-        booserPositionsCopy = boosterPosition;
-        quicksandPositionsCopy = quicksandPosition;
-        switchDownPositionsCopy = switchDownPosition;
-        switchUpPositionsCopy = switchUpPosition;
-        startPosCopy = startPos;
-        goalPosCopy = goalPos;
-    }
-
-    public void resetToOriginalWalkables(){
-        pathPositions = pathPositionsCopy;
-        boosterPosition = booserPositionsCopy;
-        quicksandPosition = quicksandPositionsCopy;
-        switchDownPosition = switchDownPositionsCopy;
-        switchUpPosition = switchUpPositionsCopy;
-        startPos = startPosCopy;
-        goalPos = goalPosCopy;
     }
 
     public void addTeleportPic(Position p){
@@ -245,18 +213,20 @@ public class OverlayImageArray {
         try {
             for (Troop reg : regTroopList) {
 
-                if(reg.getGraphic().equals("Regular")) {
-                    theWholeShit[reg.getPosition().getY()][reg.getPosition().getX()] = regular;
-                }
-                else if(reg.getGraphic().equals("Teleporter")){
-                    theWholeShit[reg.getPosition().getY()][reg.getPosition().getX()] = teleporter;
+                switch (reg.getGraphic()) {
+                    case "Regular":
+                        theWholeShit[reg.getPosition().getY()][reg.getPosition().getX()] = regular;
+                        break;
+                    case "Teleporter":
+                        theWholeShit[reg.getPosition().getY()][reg.getPosition().getX()] = teleporter;
+                        break;
+                    case "Tank":
+                        theWholeShit[reg.getPosition().getY()][reg.getPosition().getX()] = tank;
+                        break;
                 }
             }
-        }catch (NullPointerException e){}
+        }catch (NullPointerException ignored){}
     }
-
-
-
 
     public BufferedImage[][] getTheWholeShit(){
         return theWholeShit;

@@ -13,7 +13,6 @@ import java.util.List;
 public class Database {
 
     private Connection con;
-    private ResultSet rs;
     private Statement s;
 
     /**
@@ -117,7 +116,7 @@ public class Database {
         }
         List<HighscoreInfo> highscores = new ArrayList<HighscoreInfo>();
         try {
-            rs = s.executeQuery(sql);
+            ResultSet rs = s.executeQuery(sql);
             while(rs.next()) {
                 highscores.add(new HighscoreInfo(rs.getString(1),
                         rs.getInt(2)));
