@@ -246,6 +246,7 @@ public class Controller {
                 popupShowHighscores.dispose();
             }
             start.dispose();
+            g = new Game(xmlName);
             g.setLevel("Level 1");
             initMainframeAndSetListeners();
             setRestartListener();
@@ -266,6 +267,7 @@ public class Controller {
                 popupShowHighscores.dispose();
             }
             start.dispose();
+            g = new Game(xmlName);
             g.setLevel("Level 2");
             initMainframeAndSetListeners();
             setRestartListener();
