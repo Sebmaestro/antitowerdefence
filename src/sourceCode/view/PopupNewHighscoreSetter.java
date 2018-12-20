@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Author: Sebastian Arledal
+ */
 public class PopupNewHighscoreSetter extends JFrame {
     private JButton submit;
     private JTextField textField;

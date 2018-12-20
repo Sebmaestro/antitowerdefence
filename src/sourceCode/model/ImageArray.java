@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by denni on 2018-12-13.
+ * Created by denni and simon on 2018-12-13.
  */
 public class ImageArray {
 

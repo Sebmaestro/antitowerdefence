@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Created by denni on 2018-12-13.
+ * Created by denni and simon on 2018-12-13.
  */
 
 class Overlay extends JLayeredPane {

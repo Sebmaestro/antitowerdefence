@@ -7,6 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Author: Sebastian Arledal
+ */
 public class PopupShowHighscores extends JFrame {
 
     private JTextArea idArea1;
