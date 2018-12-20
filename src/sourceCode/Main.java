@@ -11,7 +11,7 @@ public class Main {
         if(args.length == 0){
             SwingUtilities.invokeLater(() -> new Controller("src/resources/levels.xml"));
         } else {
-            new Controller(args[0]);
+            SwingUtilities.invokeLater(() -> new Controller(args[0]));
         }
     }
 }
