@@ -3,16 +3,16 @@
     <xs:element name="levels">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="level" minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="level" minOccurs="2" maxOccurs="2">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="map" minOccurs="0" maxOccurs="1">
+                            <xs:element name="map" minOccurs="1" maxOccurs="1">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element name="row" minOccurs="1" maxOccurs="10">
+                                        <xs:element name="row" minOccurs="10" maxOccurs="10">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element name="tile" minOccurs="0" maxOccurs="10">
+                                                    <xs:element name="tile" minOccurs="10" maxOccurs="10">
                                                         <xs:complexType>
                                                             <xs:attribute name="type" type="xs:string"/>
                                                         </xs:complexType>
