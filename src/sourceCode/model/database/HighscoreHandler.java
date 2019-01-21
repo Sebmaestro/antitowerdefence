@@ -91,10 +91,18 @@ public class HighscoreHandler {
         l.add(highscoreInfo);
     }
 
+    /**
+     * Gets finishtime of the last element in list
+     * @return listelement.time
+     */
     public int getTimeAtEndOfList() {
         return l.get(l.size() - 1).getFinishTime();
     }
 
+    /**
+     * Gets true/false depending on if list is full
+     * @return boolean - true or false
+     */
     public boolean listFull() {
         return l.size() >= 10;
     }
