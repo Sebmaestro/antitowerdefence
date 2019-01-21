@@ -29,11 +29,10 @@ public class SchemaTest {
 
         String schemaLang = "http://www.w3.org/2001/XMLSchema";
         SchemaFactory factory = SchemaFactory.newInstance(schemaLang);
-        File testFile = new File("/Users/David/IdeaProjects/Javagrupp7/" +
-                "antitowerdefence/src/resources/levels.xml");
+        File testFile = new File("src/resources/levels.xml");
 
-        Schema schema = factory.newSchema(new StreamSource("/Users/David/" +
-                "IdeaProjects/Javagrupp7/antitowerdefence/src/resources/schema.xsd"));
+        Schema schema = factory.newSchema(new StreamSource("" +
+                "src/resources/schema.xsd"));
         Validator validator = schema.newValidator();
         CustomHandler errorHandler = new CustomHandler();
         validator.setErrorHandler(errorHandler);
