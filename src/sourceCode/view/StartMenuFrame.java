@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 
 /**
  * Author: Sebastian Arledal
+ * 2019-01-21
+ *
+ * Startmenuframe to be the first menu that pops up
  */
 public class StartMenuFrame extends JFrame {
     private JButton highscores;
@@ -13,6 +16,9 @@ public class StartMenuFrame extends JFrame {
     private JButton map2;
     private JButton quit;
 
+    /**
+     * Constructor: Creates new Startmenuframe
+     */
     public StartMenuFrame() {
         super("Anti Towerdefence");
 
@@ -41,10 +47,9 @@ public class StartMenuFrame extends JFrame {
     }
 
     /**
-     *
-     *
-     * @param e - e
-     * @param s - s
+     * Add actionlisteners for buttons based on input string
+     * @param e - actionlistener
+     * @param s - Button string
      */
     public void addActionListener(ActionListener e, String s) {
         switch (s) {
