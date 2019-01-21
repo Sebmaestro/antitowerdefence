@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by denni and simon on 2018-12-13.
+ * Created by Dennis and Simon on 2018-12-13.
+ * 2019-01-21
  */
 public class OverlayImageArray {
     private BufferedImage[][] theWholeShit;
@@ -35,6 +36,10 @@ public class OverlayImageArray {
     private Position goalPos;
     private ArrayList<Troop> regTroopList;
 
+    /**
+     * Constructor: creates a new OverlayImageArray
+     * @param worldSize - an int of the levels size
+     */
     public OverlayImageArray(int worldSize) {
         readImages();
         theWholeShit = new BufferedImage[10][10];
@@ -48,6 +53,9 @@ public class OverlayImageArray {
 
     }
 
+    /**
+     * Reads all the images from the resources
+     */
     private void readImages(){
 
         try {
@@ -72,14 +80,18 @@ public class OverlayImageArray {
     }
 
 
-
-
+    /**
+     * sets an ArrayList<Troop>
+     * @param regTroopList - an ArrayList<Troop> to be set
+     */
     public void addRegularTroopList(ArrayList<Troop> regTroopList){
         this.regTroopList = regTroopList;
     }
 
 
-
+    /**
+     * clears the path for visible areas of the overlaying image
+     */
     private void clearThePath(){
         for(Position p :pathPositions){
             theWholeShit[p.getY()][p.getX()] = path;
@@ -106,15 +118,21 @@ public class OverlayImageArray {
             }
         }
 
-
-
-
-
         theWholeShit[goalPos.getY()][goalPos.getX()] = goal;
         theWholeShit[startPos.getY()][startPos.getX()] = start;
 
     }
 
+    /**
+     * adds all the positions that should be drawn on the overlaying image
+     * @param pathPositions - ArrayList with pathPositions
+     * @param quicksandPositions - ArrayList with quicksandPositions
+     * @param boosterPositions - ArrayList with boosterPositions
+     * @param switchDown - ArrayList with switchDownPositions
+     * @param switchUp - ArrayList with switchUpPositions
+     * @param startPos - ArrayList with startPositions
+     * @param goalPos - ArrayList with goalPositions
+     */
     public void addPaths(ArrayList<Position> pathPositions, ArrayList<Position> quicksandPositions,
                          ArrayList<Position> boosterPositions, ArrayList<Position> switchDown,
                          ArrayList<Position> switchUp, Position startPos, Position goalPos){
@@ -127,6 +145,10 @@ public class OverlayImageArray {
         this.goalPos = goalPos;
     }
 
+    /**
+     * changes the switchTile from an up- to downSwitch
+     * @param p - the position of the switchDownTile to be changed
+     */
     public void changeSwitchUpToDown(Position p){
         int i = 0;
         boolean found = false;
@@ -144,6 +166,10 @@ public class OverlayImageArray {
         }
     }
 
+    /**
+     * Adds a teleportTile to a certain position
+     * @param p - a Positon for the teleportTile
+     */
     public void addTeleportPic(Position p){
         int i = 0;
         int j = 0;
@@ -191,6 +217,10 @@ public class OverlayImageArray {
         }
     }
 
+    /**
+     * changes the switchTile from a down- to an upSwitch
+     * @param p - the position of the switchDownTile to be changed
+     */
     public void changeSwitchDownToUp(Position p){
         int j = 0;
         boolean found = false;
@@ -207,6 +237,10 @@ public class OverlayImageArray {
         }
     }
 
+    /**
+     * Clears the overlaying image
+     * and updates it with the latest information.
+     */
     public void updateImage(){
         clearThePath();
 
@@ -228,6 +262,10 @@ public class OverlayImageArray {
         }catch (NullPointerException ignored){}
     }
 
+    /**
+     * gets the while overlaying image as a BufferedImage[][]
+     * @return theWholeShit - an BufferedImage[][]
+     */
     public BufferedImage[][] getTheWholeShit(){
         return theWholeShit;
     }

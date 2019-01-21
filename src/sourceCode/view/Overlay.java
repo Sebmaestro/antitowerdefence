@@ -11,21 +11,34 @@ import java.awt.image.BufferedImage;
 class Overlay extends JLayeredPane {
     private BufferedImage[][] overlayImg;
 
+    /**
+     * Constructor: creates new Overlay
+     * @param overlayImg - a BufferedImage[][]
+     */
     Overlay(BufferedImage[][] overlayImg) {
         this.overlayImg = overlayImg;
         define();
     }
 
+    /**
+     * Does not do anything in particular
+     */
     private void define() {
     }
 
+    /**
+     * updates the overlayImg
+     * @param overlayImg - a BufferedImage[][] to be updated
+     */
     void updateOverlay(BufferedImage[][] overlayImg) {
         this.overlayImg = overlayImg;
 
     }
 
-
-
+    /**
+     * Draws the overlaying image correctly on the screen.
+     * @param g - a Graphics.
+     */
     void draw(Graphics g) {
         Graphics2D graphics2D = (Graphics2D) g;
         for(int i=0; i<overlayImg.length; i++ ){

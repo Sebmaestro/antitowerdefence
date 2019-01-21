@@ -48,7 +48,7 @@ public class Laser extends JLayeredPane{
 
     /**
      * Draws the lasers on the right places of the screen and then clears
-     * the laserList. 
+     * the laserList.
      * @param g - a Graphics
      */
     void draw(Graphics g){
