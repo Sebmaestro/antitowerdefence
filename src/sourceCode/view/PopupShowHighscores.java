@@ -9,6 +9,9 @@ import java.util.List;
 
 /**
  * Author: Sebastian Arledal
+ * 2019-01-21
+ *
+ * The highscore frame
  */
 public class PopupShowHighscores extends JFrame {
 
@@ -23,6 +26,10 @@ public class PopupShowHighscores extends JFrame {
     private JButton playAgain;
     private JButton quit;
 
+    /**
+     * Constructor: creates new highscore frame
+     * @param s - Name of frame
+     */
     public PopupShowHighscores(String s) {
         super(s);
         setSize(380, 500);
@@ -35,11 +42,12 @@ public class PopupShowHighscores extends JFrame {
         add(buildButtonPanel(), BorderLayout.SOUTH);
         setVisible(true);
 
-        //highscore1.setBackground(Color.DARK_GRAY);
-        //highscore2.setBackground(Color.DARK_GRAY);
-
     }
 
+    /**
+     * Builds first panel for map1
+     * @return highscore1 - panel
+     */
     private JPanel buildHighscorePanel1() {
         JPanel highscore1 = new JPanel();
         highscore1.setLayout(new BorderLayout());
@@ -60,6 +68,10 @@ public class PopupShowHighscores extends JFrame {
         return highscore1;
     }
 
+    /**
+     * Builds second panel for map2
+     * @return highscore2 - panel
+     */
     private JPanel buildHighscorePanel2() {
         JPanel highscore2 = new JPanel();
         highscore2.setLayout(new BorderLayout());
@@ -80,6 +92,10 @@ public class PopupShowHighscores extends JFrame {
         return highscore2;
     }
 
+    /**
+     * Creates buttonpanel for frame
+     * @return buttonPanel - the panel
+     */
     private JPanel buildButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout());
@@ -93,6 +109,9 @@ public class PopupShowHighscores extends JFrame {
         return buttonPanel;
     }
 
+    /**
+     * Sets columns for highscore
+     */
     public void setColumns() {
         idArea1.append("ID\n\n");
         playerArea1.append("PLAYER\n\n");
@@ -103,6 +122,11 @@ public class PopupShowHighscores extends JFrame {
         timeArea2.append("TIME\n\n");
     }
 
+    /**
+     * Appends highscores to the highscore frame
+     * @param list - List with highscores
+     * @param map - current map
+     */
     public void showHighscores(List<HighscoreInfo> list, String map) {
         if (map.equals("map1")) {
             for (int i = 0; i < list.size(); i++) {
@@ -129,6 +153,10 @@ public class PopupShowHighscores extends JFrame {
         }
     }
 
+    /**
+     * Clears the highscore
+     * @param map - current map
+     */
     public void clear(String map) {
         if (map.equals("map1")) {
             idArea1.setText(null);
@@ -141,6 +169,11 @@ public class PopupShowHighscores extends JFrame {
         }
     }
 
+    /**
+     * adds actionlisteners to quit and play again buttons
+     * @param e - actionlistener
+     * @param s - Button name
+     */
     public void addActionListener(ActionListener e, String s) {
         if (s.equals("quit")) {
             quit.addActionListener(e);

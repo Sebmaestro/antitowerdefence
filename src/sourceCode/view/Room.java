@@ -5,7 +5,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * Created by denni and Simon on 2018-12-04.
+ * Created by denni and Simon
+ * 2019-01-21
+ *
+ * Class room
  */
 class Room extends JLayeredPane {
 
