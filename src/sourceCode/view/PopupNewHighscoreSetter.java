@@ -6,11 +6,17 @@ import java.awt.event.ActionListener;
 
 /**
  * Author: Sebastian Arledal
+ * 2019-01-21
+ *
+ * Frame to set a new highscore
  */
 public class PopupNewHighscoreSetter extends JFrame {
     private JButton submit;
     private JTextField textField;
 
+    /**
+     * Creates new highscore setter
+     */
     public PopupNewHighscoreSetter() {
         super("New Highscore!");
         setSize(400, 250);
@@ -42,10 +48,18 @@ public class PopupNewHighscoreSetter extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Add actionlistener to submit button
+     * @param e - actionlistener
+     */
     public void addActionListener(ActionListener e) {
         submit.addActionListener(e);
     }
 
+    /**
+     * Gets the text the user inputs
+     * @return textstring
+     */
     public String getTextfieldInfo() {
         return textField.getText();
     }
