@@ -148,8 +148,8 @@
         <tile type="sourceCode.model.tile.Booster"/>
         <tile type="sourceCode.model.tile.Booster"/>
         <tile type="sourceCode.model.tile.Booster"/>
-	   <tile type="sourceCode.model.tile.Grass"/>            
-	</row>
+        <tile type="sourceCode.model.tile.Grass"/>
+      </row>
       <row>
         <tile type="sourceCode.model.tile.Grass"/>
         <tile type="sourceCode.model.tile.Grass"/>
