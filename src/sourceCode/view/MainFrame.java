@@ -6,6 +6,9 @@ import java.awt.image.BufferedImage;
 
 /**
  * Author: Simon Lundkvist /Dennis Karlman
+ * 2019-01-21
+ * Class to represent the main frame of the game that contains
+ * all of the components
  */
 public class MainFrame extends JFrame{
 
@@ -15,6 +18,11 @@ public class MainFrame extends JFrame{
     private ButtonPanel buttonPanel;
     private GameMenu menuBar;
 
+    /**
+     * Constructor: initializes the mainframe and its fields
+     * @param underlay A 2D Array of BufferedImages that will represent the static part of the level
+     * @param overlay A 2D Array of BufferedImages that will represent the dynamic parts of the level
+     */
     public MainFrame(BufferedImage[][] underlay, BufferedImage[][] overlay) {
         this.underlay = underlay;
         this.overlay = overlay;
@@ -32,6 +40,9 @@ public class MainFrame extends JFrame{
         initFrame();
     }
 
+    /**
+     * initFrame: initializes the frame
+     */
     private void initFrame(){
         addScreen();
         addButtonPanel();
@@ -40,26 +51,47 @@ public class MainFrame extends JFrame{
         getScreen().createGameScreen();
     }
 
+    /**
+     * getButtonPanel: getter for the button panel
+     * @return the button panel
+     */
     public ButtonPanel getButtonPanel(){
         return this.buttonPanel;
     }
 
+    /**
+     * getGameMenu: getter for the game menu
+     * @return the game menu
+     */
     public GameMenu getGameMenu() {
         return this.menuBar;
     }
 
+    /**
+     * getScreen: getter for the screen
+     * @return the screen
+     */
     public Screen getScreen(){
         return screen;
     }
 
+    /**
+     * addScreen: adds the screen to the main frame
+     */
     private void addScreen(){
         add(screen, BorderLayout.CENTER);
     }
 
+    /**
+     * addButtonPanel: adds the button panel to the main frame
+     */
     private void addButtonPanel() {
         add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * addMenuBar: adds the menu bar to the main frame
+     */
     private void addMenuBar() {
         setJMenuBar(menuBar.createMenuBar());
     }

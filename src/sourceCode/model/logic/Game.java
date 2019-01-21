@@ -18,6 +18,7 @@ import static sourceCode.model.troop.Direction.EAST;
 
 /**
  * Dennis Karlman / Simon Lundkvist / Sebastian Arledal / David Eriksson
+ * 2019-01-21
  */
 public class Game {
     private Tile[][] tiles;
