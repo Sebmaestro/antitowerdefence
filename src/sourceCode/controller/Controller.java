@@ -21,6 +21,8 @@ import static sourceCode.model.logic.Game.copyOff;
 
 /**
  * Author: Sebastian Arledal / Dennis Karlman / Simon Lundkvist / David Eriksson
+ *
+ * Class: Controller
  */
 public class Controller {
     private MainFrame mainFrame;
@@ -50,7 +52,7 @@ public class Controller {
     private String xmlName;
 
     /**
-     *
+     * Constructor
      */
     public Controller(String s) {
         xmlName = s;
@@ -183,7 +185,9 @@ public class Controller {
             if (start != null) {
                 start.dispose();
             }
-            timer.cancel();
+            if (timer != null) {
+                timer.cancel();
+            }
             start = new StartMenuFrame();
             popupShowHighscores.dispose();
             setHighscoreListener();
