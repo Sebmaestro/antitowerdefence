@@ -4,6 +4,9 @@ import java.util.Objects;
 
 /**
  * Author: Simon Lundkvist/Sebastian Arledal
+ * 2019-01-21
+ *
+ * Position class to hold positions
  */
 public class Position {
     private int x;
@@ -20,16 +23,16 @@ public class Position {
     }
 
     /**
-     * Returns x
-     * @return x
+     * Get x position
+     * @return x - x coordinate
      */
     public int getX() {
         return x;
     }
 
     /**
-     * Returns y
-     * @return y
+     * Get y position
+     * @return y - y coordinate
      */
     public int getY() {
         return y;
@@ -67,17 +70,34 @@ public class Position {
         return new Position(x+1, y);
     }
 
+    /**
+     * Returns position to northwest
+     * @return position
+     */
     public Position getPosToNorthWest() { return new Position(x-1, y+1); }
 
+    /**
+     * Returns position to northeast
+     * @return position
+     */
     public Position getPosToNorthEast() { return new Position(x+1, y+1); }
 
+    /**
+     * Returns position to southeast
+     * @return position
+     */
     public Position getPosToSouthEast() { return new Position(x+1,y-1); }
 
-    public Position getPosToSouthWest() { return new Position(x-1, y-1);}
     /**
-     * Returns true if
+     * Returns position to southwest
+     * @return position
+     */
+    public Position getPosToSouthWest() { return new Position(x-1, y-1);}
+
+    /**
+     * Checks if obj is instance of position and equals a certain position
      * @param obj - obj
-     * @return boolean
+     * @return boolean - true or false
      */
     @Override
     public boolean equals(Object obj) {
