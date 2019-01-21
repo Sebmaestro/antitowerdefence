@@ -25,6 +25,12 @@ public abstract class Troop implements Unit{
     private Direction direction;
     int ordinarySpeed, fastSpeed, slowSpeed;
 
+    /**
+     * Constructor: Will initialize the Troop
+     * @param p - the Position of the troop to start on
+     * @param direction - The Direction the troop should
+     *                  have from start
+     */
     Troop(Position p, Direction direction) {
         this.currentPosition = p;
         this.direction = direction;
@@ -33,27 +39,50 @@ public abstract class Troop implements Unit{
     }
 
 
+    /**
+     * Gets the positions of the Troop
+     * @return currentPosition - a position
+     */
     public Position getPosition() {
         return currentPosition;
     }
 
-
+    /**
+     * gets the fast speed of the troop
+     * @return fastSpeed - an int
+     */
     public int getFastSpeed(){
         return fastSpeed;
     }
 
+    /**
+     * gets the slow speed of the troop
+     * @return slowspeed - an int
+     */
     public int getSlowSpeed(){
         return slowSpeed;
     }
 
+    /**
+     * gets the current speed of the troop
+     * @return currentSpeed - an int
+     */
     public int getCurrentSpeed(){
         return currentSpeed;
     }
 
+    /**
+     * sets the currentSpeed
+     * @param speed - the speed
+     */
     public void setCurrentSpeed(int speed){
         this.currentSpeed = speed;
     }
 
+    /**
+     * sets the position of the Troop
+     * @param p - the position
+     */
     public void setPosition(Position p){
         currentPosition = p;
     }
@@ -67,63 +96,119 @@ public abstract class Troop implements Unit{
 
     /**
      * Returns the boolean that tells us if goal is reached or not
-     * @return -
+     * @return hasReachedGoal
      */
     public boolean isGoalReached() {
         return hasReachedGoal;
     }
 
+    /**
+     * returns true if the Troops hp is 0 or below that
+     * @return
+     */
     public boolean isAlive() {
         return hp <= 0;
     }
 
+    /**
+     * Gets untilMove - an int that decides the rate of which the troops move
+     * @return untilMove - an int
+     */
     public int getUntilMove(){
         return untilMove;
     }
 
+    /**
+     * Increments untilMove
+     */
     public void incrementUntilMove(){
         untilMove++;
     }
 
+    /**
+     * Sets untilMove to zero
+     */
     public void clearUntilMove(){
         untilMove = 0;
     }
 
+    /**
+     * Sets the Troops direction
+     * @param direction - the Direction to set
+     */
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
 
+    /**
+     * Gets the direction of the Troop
+     * @return direction - A Direction
+     */
     public Direction getDirection() {
         return direction;
     }
 
+    /**
+     * Deals damage to the Troop
+     * @param damage - an int that reflects the damage to be dealt
+     */
     public void receiveDamage(int damage) {
         hp = hp - damage;
     }
 
+    /**
+     * gets the ordinaryspeed of the Troop
+     * @return ordinarySpeed - an int
+     */
     public int getOrdinarySpeed() {
         return ordinarySpeed;
     }
 
+    /**
+     * gets the String that contains the desciption that connects this
+     * object to the correct image.
+     * @return graphic - A String
+     */
     public String getGraphic() {
         return graphic;
     }
 
+    /**
+     * Since each teleporter only can lay down two teleporterTiles, this
+     * increments if the teleporter lays down one of those.
+     */
     public void incrementNumberOfTeleportTiles(){
         numberOfTeleportTiles++;
     }
+
+    /**
+     * gets the number of TeleportTiles that exists within the game
+     * @return
+     */
     public int getNumberOfTeleportTiles(){
         return numberOfTeleportTiles;
     }
 
+    /**
+     * Sets the position of the first teleportTile
+     * @param p - the position for the first teleportTile
+     */
     public void setTeleportEntry(Position p){
         this.teleportEntry = p;
     }
 
+    /**
+     * returns the position for the first teleportTile
+     * @return teleportEntry - a Position
+     */
     public Position getTeleportEntry(){
         return teleportEntry;
     }
 
+    /**
+     * checks if the goal is near the current position of the Troop
+     * @param tileMap - all the level's tiles
+     */
     private void checkIfGoal(Tile[][] tileMap){
 
         if(tileMap[east.getY()][east.getX()].getGraphic().equals("src/resources/goal.png")){
@@ -145,7 +230,11 @@ public abstract class Troop implements Unit{
 
     }
 
-
+    /**
+     * The algorithm for the Troops movement. The troop always checks if
+     * there's a goal nearby before it walks. 
+     * @param tileMap - all the level's tiles.
+     */
     public void move(Tile[][] tileMap){
 
         if(isGoalReached()){
