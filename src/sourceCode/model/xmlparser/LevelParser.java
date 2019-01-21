@@ -19,10 +19,17 @@ import java.util.ArrayList;
 
 /**
  * Created by denni and simon and Sebastian on 2018-12-05.
+ * 2019-01-21
+ * Class representing the level parser that parses an XML file
+ * representing the levels and stores the information.
  */
 public class LevelParser {
     private static ArrayList<Levels> levelsArrayList;
 
+    /**
+     * xmlparser: parses an xml file and stores the data
+     * @param input path to the xml-file
+     */
     public static void xmlparser(String input){
         Levels level;
         levelsArrayList = new ArrayList<>();
@@ -121,6 +128,10 @@ public class LevelParser {
         }
     }
 
+    /**
+     * getLevelsArrayList: getter for the ArrayList of levels
+     * @return ArrayList of levels
+     */
     public ArrayList<Levels> getLevelsArrayList(){
         return levelsArrayList;
     }
