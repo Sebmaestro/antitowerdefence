@@ -232,7 +232,7 @@ public abstract class Troop implements Unit{
 
     /**
      * The algorithm for the Troops movement. The troop always checks if
-     * there's a goal nearby before it walks. 
+     * there's a goal nearby before it walks.
      * @param tileMap - all the level's tiles.
      */
     public void move(Tile[][] tileMap){
