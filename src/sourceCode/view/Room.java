@@ -23,7 +23,7 @@ class Room extends JLayeredPane {
 
     /**
      * Draws the underLay on the right places on the screen, creating the
-     * background image of the Level that the player sees. 
+     * background image of the Level that the player sees.
      * @param g - a Graphics
      */
     void draw(Graphics g){
