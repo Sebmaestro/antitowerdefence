@@ -21,6 +21,7 @@ import static sourceCode.model.logic.Game.copyOff;
 
 /**
  * Author: Sebastian Arledal / Dennis Karlman / Simon Lundkvist / David Eriksson
+ * 2019-01-21
  *
  * Class: Controller
  */
@@ -52,7 +53,7 @@ public class Controller {
     private String xmlName;
 
     /**
-     * Constructor
+     * Constructor: Initializes some objects and startmenu
      */
     public Controller(String s) {
         xmlName = s;
@@ -67,6 +68,9 @@ public class Controller {
         setHighscoreListener();
     }
 
+    /**
+     * Creates a swingworker and initializes the game
+     */
     private void initGame(){
         SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
             @Override
@@ -80,6 +84,10 @@ public class Controller {
         worker.execute();
     }
 
+    /**
+     * The core gameloop of the program. Handles how troops and towers will interact
+     * with each other, kill troops, refresh ui, etc
+     */
     private void gameLoop() {
         elapsed = 0;
         finishTime = 0;
@@ -157,6 +165,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Creates a timer that is used to have a ticking time in the game
+     */
     private void scheduleTimeRate() {
         timer = new Timer();
         TimerTask tasker = new TimerTask() {
@@ -169,6 +180,9 @@ public class Controller {
         timer.scheduleAtFixedRate(tasker,0 , 100);
     }
 
+    /**
+     * Sets listener for teleport button
+     */
     private void setTeleportButton(){
         mainFrame.getButtonPanel().addSetTeleportListener(e -> {
             if (!isPaused) {
@@ -177,6 +191,9 @@ public class Controller {
         });
     }
 
+    /**
+     * Sets listener for startmenu button
+     */
     private void setStartMenuListener() {
         popupShowHighscores.addActionListener(e -> {
             if (mainFrame != null){
@@ -197,6 +214,9 @@ public class Controller {
         }, "play");
     }
 
+    /**
+     * Sets listener for switchpanel
+     */
     private void setSwitchListener(){
         mainFrame.addMouseListener(new MouseAdapter() {
             @Override
@@ -218,29 +238,47 @@ public class Controller {
 
     }
 
+    /**
+     * Sets listener for the quit button in the startmenu
+     */
     private void setStartmenuQuitButtonListener() {
         start.addActionListener(e -> System.exit(0), "quit");
     }
 
+    /**
+     * Start the time for the timer
+     */
     private void startTimer(){
         startTime = System.currentTimeMillis();
     }
 
+    /**
+     * Stop the time for the timer
+     */
     private void stopTimer(){
         elapsed = elapsed + System.currentTimeMillis() - startTime;
     }
 
+    /**
+     * Gets the elapsed time
+     * @return elapsedtime - the time that has gone
+     */
     private long getElapsed(){
 
             return ((elapsed + System.currentTimeMillis() - startTime)/1000);
     }
 
+    /**
+     * Gets the time when player has finished the game
+     */
     private void getGameTime(){
 
         finishTime = (int)getElapsed();
     }
 
-
+    /**
+     * Set listener for the map1 button
+     */
     private void setMap1Listener() {
         start.addActionListener(e -> {
             if (newHighscore != null) {
@@ -262,6 +300,9 @@ public class Controller {
         }, "map1");
     }
 
+    /**
+     * Sets listener for the map2 button
+     */
     private void setMap2Listener() {
         start.addActionListener(e -> {
             if (newHighscore != null) {
@@ -283,6 +324,9 @@ public class Controller {
         }, "map2");
     }
 
+    /**
+     * Set listener for highscore button
+     */
     private void setHighscoreListener() {
         start.addActionListener(e -> {
             popupShowHighscores = new PopupShowHighscores("Highscore");
@@ -295,6 +339,9 @@ public class Controller {
         }, "highscore");
     }
 
+    /**
+     * Set listener for submit button when entering a new highscore
+     */
     private void setSubmitButtonListener() {
         newHighscore.addActionListener(e -> {
             handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), finishTime));
@@ -310,6 +357,9 @@ public class Controller {
         });
     }
 
+    /**
+     * Sets listener for highscores quit button
+     */
     private void setQuitButtonListener() {
         popupShowHighscores.addActionListener(e -> System.exit(0), "quit");
     }
@@ -323,6 +373,9 @@ public class Controller {
         }, "Regular");
     }
 
+    /**
+     * Sets listener for the tank troop button
+     */
     private void setTankTroopListener() {
         mainFrame.getButtonPanel().addActionListener(e -> {
             if(!isPaused) {
@@ -331,6 +384,9 @@ public class Controller {
         }, "Tank");
     }
 
+    /**
+     * Sets listener for teleport troop button
+     */
     private void setTeleportTroopListener(){
         mainFrame.getButtonPanel().addActionListener(e -> {
             if(!isPaused) {
@@ -340,6 +396,9 @@ public class Controller {
         }, "Teleport");
     }
 
+    /**
+     * Sets listener for quit button in the menu
+     */
     private void setMenuQuitListener() {
         mainFrame.getGameMenu().setQuitListener(e -> {
             int choice = JOptionPane.showConfirmDialog(mainFrame,
@@ -363,6 +422,9 @@ public class Controller {
         });
     }
 
+    /**
+     * Sets listener for the about button in menu
+     */
     private void setAboutListener() {
         mainFrame.getGameMenu().setAboutListener(e -> JOptionPane.showMessageDialog(null,
                 "Made by:\n" +
@@ -371,6 +433,9 @@ public class Controller {
 
     }
 
+    /**
+     * Sets listener for the help button in menu
+     */
     private void setHelpListener() {
         mainFrame.getGameMenu().setHelpListener(e -> JOptionPane.showMessageDialog(null,
                 "The goal is to get 20 troops to reach the goal alive as fast as possible.\n" +
@@ -380,6 +445,9 @@ public class Controller {
                         "Every troop that reaches the goal alive will grant you credits."));
     }
 
+    /**
+     * Sets listener for the restart button in menu
+     */
     private void setRestartListener() {
         mainFrame.getGameMenu().setRestartListener(e -> {
             if (!isPaused) {
@@ -413,6 +481,9 @@ public class Controller {
         });
     }
 
+    /**
+     * Help method to make code more readable. Initializes the mainframe and sets some listeners
+     */
     private void initMainframeAndSetListeners() {
         mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());
         gameDone = false;
@@ -425,6 +496,10 @@ public class Controller {
         setAboutListener();
         setHelpListener();
     }
+
+    /**
+     * Sets listener for pause button
+     */
     private void setPauseListener(){
         mainFrame.getGameMenu().setPauseListener(e -> {
             if (paused == 0) {
