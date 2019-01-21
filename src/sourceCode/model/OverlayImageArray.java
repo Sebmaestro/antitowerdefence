@@ -48,22 +48,23 @@ public class OverlayImageArray {
 
     }
 
+
     private void readImages(){
 
         try {
-            path = ImageIO.read(new File("src/Resources/path.png"));
-            regular = ImageIO.read(new File("src/Resources/regular.png"));
-            teleporter = ImageIO.read(new File("src/Resources/teleporter.png"));
-            invisible = ImageIO.read(new File("src/Resources/invisible.png"));
-            start = ImageIO.read(new File("src/Resources/start.png"));
-            goal = ImageIO.read(new File("src/Resources/goal.png"));
-            quicksand = ImageIO.read(new File("src/Resources/quicksand.png"));
-            booster = ImageIO.read(new File("src/Resources/booster.png"));
-            switchDown = ImageIO.read(new File("src/Resources/switch-down.png"));
-            switchUp = ImageIO.read(new File("src/Resources/switch-up.png"));
-            teleporterTile1 = ImageIO.read(new File("src/Resources/teleporter1.png"));
+            path = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/path.png"));
+            regular = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/regular.png"));
+            teleporter = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/teleporter.png"));
+            invisible = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/invisible.png"));
+            start = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/start.png"));
+            goal = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/goal.png"));
+            quicksand = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/quicksand.png"));
+            booster = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/booster.png"));
+            switchDown = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/switch-down.png"));
+            switchUp = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/switch-up.png"));
+            teleporterTile1 = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/teleporter1.png"));
 
-            tank = ImageIO.read(new File("src/Resources/tank.png"));
+            tank = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/tank.png"));
 
         } catch (IOException e) {
             e.printStackTrace();

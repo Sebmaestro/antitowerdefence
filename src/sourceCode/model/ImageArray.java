@@ -36,7 +36,7 @@ public class ImageArray {
 
         for(Position p: towerpositions){
             try {
-                theWholeShit[p.getY()][p.getX()] = ImageIO.read(new File("src/Resources/tower.png"));
+                theWholeShit[p.getY()][p.getX()] = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/tower.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
