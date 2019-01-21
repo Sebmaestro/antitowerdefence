@@ -35,6 +35,10 @@ public class Game {
     private String currentLevelname;
     private Credit money = new Credit();
 
+    /**
+     * Constructor: Will initialize the Game
+     * @param s - String that holds the xml-string
+     */
     public Game(String s){
         levelsArrayList = new ArrayList<>();
         LevelParser levelP2 = new LevelParser();
@@ -42,20 +46,40 @@ public class Game {
         levelsArrayList = levelP2.getLevelsArrayList();
     }
 
+    /**
+     * Gets a bufferedImage-array that paints the map
+     * @return underlay - an BufferedImage[][]
+     */
     public BufferedImage[][] getUnderlay() {
         return underlay;
     }
 
+    /**
+     * Gets a bufferedImage-array that paints the troops
+     * @return overlay - an BufferedImage[][]
+     */
     public BufferedImage[][] getOverlay() {
         return overlay;
     }
 
+    /**
+     * gets all the positions of the Switches
+     * @return allSwitchPositions - an ArrayList<Position>
+     */
     public ArrayList <Position> getSwitchPos(){ return allSwitchPositions; }
 
+    /**
+     * Gets the number of credits
+     * @return money.getCredits() - an int
+     */
     public int getMoney() {
         return money.getCredits();
     }
 
+    /**
+     * Method that sets the level.
+     * @param levelName - The level to be played
+     */
     public void setLevel(String levelName) {
         for (Levels l:levelsArrayList) {
             if (l.getlevelName().equals(levelName)) {
@@ -83,7 +107,6 @@ public class Game {
                 underlay = copyOff(imgArr.getTheWholeShit());
                 overlay = copyOff(overlayimgArr.getTheWholeShit());
 
-
                 troopList = new ArrayList<>();
                 towers = new ArrayList<>();
                 laserPositionList = new ArrayList<>();
@@ -96,10 +119,18 @@ public class Game {
     }
 
 
+    /**
+     * method that returns the current OverlayImageArray
+     * @return overlayimgArr - an OverlayImageArray
+     */
     public OverlayImageArray getOverlayimgArr() {
         return overlayimgArr;
     }
 
+    /**
+     * Changes the switch tile and image to the opposite.
+     * @param p - the position of the switch to be changed
+     */
     public void changeSwitch(Position p){
         if (tiles[p.getY()][p.getX()].getGraphic().equals("src/Resources/switch-down.png")){
             tiles[p.getY()][p.getX()] = new Switchup(p);
@@ -111,6 +142,9 @@ public class Game {
         }
     }
 
+    /**
+     * Lets the player create teleportTiles.
+     */
     public void teleport (){
 
         synchronized (troopListLock) {
@@ -145,6 +179,9 @@ public class Game {
         }
     }
 
+    /**
+     * Adds a RegularTroop to the the game
+     */
     public void sendRegularTroop() {
 
         if (money.getCredits() >= 100) {
@@ -154,6 +191,9 @@ public class Game {
         }
     }
 
+    /**
+     * adds a TankTroop to the game
+     */
     public void sendTankTroop() {
         if (money.getCredits() >= 300) {
             Troop tank = new TankTroop(startPos, EAST);
@@ -162,6 +202,9 @@ public class Game {
         }
     }
 
+    /**
+     * adds a TeleporterTroop to the game
+     */
     public void sendTeleporterTroop() {
 
         boolean teleporterFound = false;
@@ -179,21 +222,39 @@ public class Game {
         }
     }
 
+    /**
+     * returns a int with the correct number of Troops that has
+     * reached goal
+     * @return goalCounter - an int
+     */
     public int getGoalCounter() {
         return goalCounter;
     }
 
+    /**
+     * Sets the goalCounter to zero and sets the credits to 5000
+     */
     public void resetGame() {
         goalCounter = 0;
         money.setCredits(5000);
     }
 
 
+    /**
+     * Gets the current Level Name
+     * @return currentLevelname
+     */
     public String getCurrentLevelname() {
         return currentLevelname;
     }
 
 
+    /**
+     * method that remove Troops if they has reached goal, is not alive
+     * or if it's a teleportTroop that has layed down its second teleport-
+     * tile. Does also increase the money and goalCounter when troops
+     * reaches goal.
+     */
     public void removeTroops(){
         Iterator<Troop> iter = troopList.iterator();
         synchronized (troopListLock) {
@@ -225,6 +286,9 @@ public class Game {
         }
     }
 
+    /**
+     * Moves the troops that is in the game.
+     */
     public void moveTroops(){
         synchronized (troopListLock) {
             if(troopList.size() > 0) {
@@ -254,6 +318,10 @@ public class Game {
     }
 
 
+    /**
+     * Returns an ArrayList with positions to be drawn as laserbeams
+     * @return laserPositions - an ArrayList<LaserPositions>
+     */
     public ArrayList<LaserPositions> shootTroops() {
         synchronized (towerListLock) {
             laserPositionList.clear();
@@ -282,6 +350,11 @@ public class Game {
         return laserPositionList;
     }
 
+    /**
+     * creates a copy of the BufferedImage[][] to avoid eventual pointers
+     * @param original - the BufferedImage[][] to be copied
+     * @return copy - a BufferedImage[][]
+     */
     public static BufferedImage[][] copyOff(BufferedImage[][] original){
 
         BufferedImage[][] copy = new BufferedImage[original.length][original.length];
@@ -298,6 +371,11 @@ public class Game {
     }
 
 
+    /**
+     * positions the towers to the map
+     * @param towerPosition - an ArrayList<Position> of all the towers
+     *                      positions
+     */
     private void setUpTowers(ArrayList<Position> towerPosition){
         for(Position p: towerPosition){
             towers.add(new RegularTower(p));
