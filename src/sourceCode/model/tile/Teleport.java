@@ -18,7 +18,7 @@ public class Teleport extends Tile {
      */
     public Teleport(Position p) {
         super(p);
-        graphic = "src/Resources/teleporter1.png";
+        graphic = "/teleporter1.png";
         directionAtExit = EAST;
     }
 

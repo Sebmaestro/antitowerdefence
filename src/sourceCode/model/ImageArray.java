@@ -22,7 +22,7 @@ public class ImageArray {
             for(int j=0; j<allTiles.length;j++){
 
                 try {
-                    theWholeShit[i][j] = ImageIO.read(new File(allTiles[i][j].getGraphic()));
+                    theWholeShit[i][j] = ImageIO.read(ImageArray.class.getResourceAsStream(allTiles[i][j].getGraphic()));
                 } catch (IOException | NullPointerException e) {
                     e.printStackTrace();
                 }
@@ -36,7 +36,7 @@ public class ImageArray {
 
         for(Position p: towerpositions){
             try {
-                theWholeShit[p.getY()][p.getX()] = ImageIO.read(new File("src/Resources/tower.png"));
+                theWholeShit[p.getY()][p.getX()] = ImageIO.read(ImageArray.class.getResourceAsStream("/tower.png"));
             } catch (IOException e) {
                 e.printStackTrace();
             }

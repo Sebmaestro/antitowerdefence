@@ -17,7 +17,7 @@ public class Quicksand extends Tile {
      */
     public Quicksand(Position p) {
         super(p);
-        graphic = "src/Resources/quicksand.png";
+        graphic = "/quicksand.png";
     }
 
     /**

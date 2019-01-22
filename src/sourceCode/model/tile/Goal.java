@@ -19,7 +19,7 @@ public class Goal extends Tile {
      */
     public Goal(Position p) {
         super(p);
-        graphic = "src/resources/goal.png";
+        graphic = "/goal.png";
     }
 
     /**

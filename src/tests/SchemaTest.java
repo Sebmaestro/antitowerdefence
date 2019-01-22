@@ -8,6 +8,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Author: David Eriksson
@@ -29,7 +30,7 @@ public class SchemaTest {
 
         String schemaLang = "http://www.w3.org/2001/XMLSchema";
         SchemaFactory factory = SchemaFactory.newInstance(schemaLang);
-        File testFile = new File("src/resources/levels.xml");
+        InputStream testFile = SchemaTest.class.getResourceAsStream("/levels.xml");
 
         Schema schema = factory.newSchema(new StreamSource("" +
                 "src/resources/schema.xsd"));

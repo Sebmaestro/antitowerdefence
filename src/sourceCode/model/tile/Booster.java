@@ -18,7 +18,7 @@ public class Booster extends Tile {
      */
     public Booster(Position p) {
         super(p);
-        graphic = "src/Resources/booster.png";
+        graphic = "/booster.png";
     }
 
     /**

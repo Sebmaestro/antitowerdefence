@@ -16,7 +16,7 @@ public class Start extends Tile {
      */
     public Start(Position p) {
         super(p);
-        graphic = "src/resources/start.png";
+        graphic = "/start.png";
     }
 
     /**

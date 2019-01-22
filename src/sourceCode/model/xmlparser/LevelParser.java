@@ -15,6 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 /**
@@ -37,7 +38,7 @@ public class LevelParser {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder builder = factory.newDocumentBuilder();
-            FileInputStream fis = new FileInputStream(input);
+            InputStream fis = LevelParser.class.getResourceAsStream(input);
             InputSource is = new InputSource(fis);
             Document doc = builder.parse(is);
             NodeList levelList = doc.getElementsByTagName("level");

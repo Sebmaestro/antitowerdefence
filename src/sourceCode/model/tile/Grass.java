@@ -19,7 +19,7 @@ public class Grass extends Tile {
      */
     public Grass(Position p) {
         super(p);
-        graphic = "src/resources/grass.png";
+        graphic = "/grass.png";
     }
 
     /**

@@ -133,11 +133,11 @@ public class Game {
      * @param p - the position of the switch to be changed
      */
     public void changeSwitch(Position p){
-        if (tiles[p.getY()][p.getX()].getGraphic().equals("src/Resources/switch-down.png")){
+        if (tiles[p.getY()][p.getX()].getGraphic().equals("/switch-down.png")){
             tiles[p.getY()][p.getX()] = new Switchup(p);
             overlayimgArr.changeSwitchDownToUp(p);
         }
-        else if(tiles[p.getY()][p.getX()].getGraphic().equals("src/Resources/switch-up.png")){
+        else if(tiles[p.getY()][p.getX()].getGraphic().equals("/switch-up.png")){
             tiles[p.getY()][p.getX()] = new Switchdown(p);
             overlayimgArr.changeSwitchUpToDown(p);
         }
