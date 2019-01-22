@@ -24,7 +24,7 @@ public class ImageArray {
                 try {
                     theWholeShit[i][j] = ImageIO.read(ImageArray.class.getResourceAsStream(allTiles[i][j].getGraphic()));
                 } catch (IOException | NullPointerException e) {
-                    e.printStackTrace();
+                    System.out.println(e.getMessage());
                 }
 
             }
@@ -38,7 +38,7 @@ public class ImageArray {
             try {
                 theWholeShit[p.getY()][p.getX()] = ImageIO.read(ImageArray.class.getResourceAsStream("/tower.png"));
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
         }
 
