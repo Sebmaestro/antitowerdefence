@@ -125,7 +125,7 @@ public class LevelParser {
             }
         }
         catch (ParserConfigurationException | IOException | SAXException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

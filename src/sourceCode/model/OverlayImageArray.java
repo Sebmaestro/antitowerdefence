@@ -75,7 +75,7 @@ public class OverlayImageArray {
             tank = ImageIO.read(OverlayImageArray.class.getResourceAsStream("/tank.png"));
 
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
     }

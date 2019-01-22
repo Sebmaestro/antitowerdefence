@@ -154,7 +154,7 @@ public class Controller {
                 });
 
             } catch (InterruptedException | InvocationTargetException e) {
-                e.printStackTrace();
+                mainFrame.notifyUser(e.getMessage());
             }
 
             if (!isPaused) {

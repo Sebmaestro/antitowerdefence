@@ -37,7 +37,7 @@ public class Reflection {
             Constructor<?> con = klass.getConstructor(Position.class);
             newKlass = con.newInstance(p);
         } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
