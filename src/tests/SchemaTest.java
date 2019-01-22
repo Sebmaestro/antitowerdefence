@@ -31,9 +31,8 @@ public class SchemaTest {
         String schemaLang = "http://www.w3.org/2001/XMLSchema";
         SchemaFactory factory = SchemaFactory.newInstance(schemaLang);
         InputStream testFile = SchemaTest.class.getResourceAsStream("/levels.xml");
-
-        Schema schema = factory.newSchema(new StreamSource("" +
-                "src/resources/schema.xsd"));
+        InputStream istream = SchemaTest.class.getResourceAsStream("/schema.xsd");
+        Schema schema = factory.newSchema(new StreamSource(istream));
         Validator validator = schema.newValidator();
         CustomHandler errorHandler = new CustomHandler();
         validator.setErrorHandler(errorHandler);
