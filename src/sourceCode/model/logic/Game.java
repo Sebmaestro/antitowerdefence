@@ -14,6 +14,8 @@ import sourceCode.model.xmlparser.Levels;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
+
 import static sourceCode.model.troop.Direction.EAST;
 
 /**
@@ -98,6 +100,10 @@ public class Game {
                 startPos = l.getStartPos();
                 Position goalPos = l.getGoalPos();
 
+
+                towers = new ArrayList<>();
+                setUpTowers(towerPosition);
+
                 ImageArray imgArr = new ImageArray(l.getMapTiles());
                 imgArr.setTowerPics(towerPosition);
                 overlayimgArr = new OverlayImageArray(l.getMapTiles().length);
@@ -109,10 +115,10 @@ public class Game {
                 overlay = copyOff(overlayimgArr.getTheWholeShit());
 
                 troopList = new ArrayList<>();
-                towers = new ArrayList<>();
+
                 laserPositionList = new ArrayList<>();
 
-                setUpTowers(towerPosition);
+
 
                 overlayimgArr.addRegularTroopList(troopList);
             }
@@ -378,8 +384,21 @@ public class Game {
      *                      positions
      */
     private void setUpTowers(ArrayList<Position> towerPosition){
-        for(Position p: towerPosition){
-            towers.add(new RegularTower(p));
+        Random rand = new Random();
+        Iterator<Position> iter = towerPosition.iterator();
+        while(iter.hasNext()){
+            Position p = iter.next();
+
+            int n = rand.nextInt(2);
+
+            if(n == 1) {
+                towers.add(new RegularTower(p));
+            }
+            else{
+
+               iter.remove();
+            }
+
         }
     }
 }
