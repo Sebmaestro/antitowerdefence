@@ -17,7 +17,7 @@ public class Path extends Tile {
      */
     public Path(Position p) {
         super(p);
-        graphic = "src/resources/path.png";
+        graphic = "/path.png";
     }
 
     /**

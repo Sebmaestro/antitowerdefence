@@ -13,13 +13,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException, SAXException {
 
-        SchemaTest schema = new SchemaTest();
-        if (schema.validation()) {
+       // SchemaTest schema = new SchemaTest();
+        //if (schema.validation()) {
             if (args.length == 0) {
-                SwingUtilities.invokeLater(() -> new Controller("src/resources/levels.xml"));
+                SwingUtilities.invokeLater(() -> new Controller("/levels.xml"));
             } else {
                 SwingUtilities.invokeLater(() -> new Controller(args[0]));
             }
-        }
+        //}
     }
 }

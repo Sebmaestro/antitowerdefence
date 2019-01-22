@@ -17,7 +17,7 @@ public class Towerzone extends Tile {
      */
     public Towerzone(Position p) {
         super(p);
-        graphic = "src/resources/towerzone.png";
+        graphic = "/towerzone.png";
     }
 
     /**

@@ -19,7 +19,7 @@ public class Switchdown extends Tile{
      */
     public Switchdown(Position p) {
         super(p);
-        graphic = "src/Resources/switch-down.png";
+        graphic = "/switch-down.png";
         dir = SOUTH;
     }
 

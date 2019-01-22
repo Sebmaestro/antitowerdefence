@@ -19,7 +19,7 @@ public class Switchup extends Tile{
      */
     public Switchup(Position p){
         super(p);
-        graphic = "src/Resources/switch-up.png";
+        graphic = "/switch-up.png";
         dir = NORTH;
     }
 
