@@ -42,6 +42,9 @@ public class Reflection {
      * Gets the current tile as an object
      * @return newKlass - the object
      * @throws InvocationTargetException - Exception when invocation goes wrong
+     * @throws NoSuchMethodException - Exception when method call fails
+     * @throws InstantiationException - Exception when instantiation fails
+     * @throws IllegalAccessException - Exception when access is denied
      */
     public Object getTile() throws InvocationTargetException,
             NoSuchMethodException, InstantiationException,
