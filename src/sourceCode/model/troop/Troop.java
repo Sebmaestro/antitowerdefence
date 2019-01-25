@@ -325,7 +325,7 @@ public abstract class Troop implements Unit{
 
         if(direction == Direction.NORTH){
 
-            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("src/resources/start.png")) {
+            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("/start.png")) {
                 checkIfGoal(tileMap);
             }
 
