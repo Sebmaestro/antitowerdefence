@@ -39,10 +39,8 @@ public class SchemaTest {
         validator.validate(new StreamSource(testFile));
 
         if (errorHandler.isValid()){
-            System.out.println("Xmlfile IS valid :)");
             return true;
         } else {
-            System.out.println("Xmlfile NOT valid");
             return false;
         }
 
