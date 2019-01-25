@@ -40,10 +40,6 @@ public class MainFrame extends JFrame{
         initFrame();
     }
 
-    public void notifyUser(String s) {
-        JOptionPane.showMessageDialog(null, s);
-    }
-
     /**
      * initFrame: initializes the frame
      */

@@ -23,15 +23,17 @@ public class SchemaTest {
     /**
      * validation: Validates the xml-file using the schema.
      * @return true if xml-file is valid and false if it is not.
-     * @throws SAXException
-     * @throws IOException
+     * @throws SAXException - Exception when parsing with SAX
+     * @throws IOException - Exception when reading from IO
      */
     public boolean validation () throws SAXException, IOException {
 
         String schemaLang = "http://www.w3.org/2001/XMLSchema";
         SchemaFactory factory = SchemaFactory.newInstance(schemaLang);
-        InputStream testFile = SchemaTest.class.getResourceAsStream("/levels.xml");
-        InputStream istream = SchemaTest.class.getResourceAsStream("/schema.xsd");
+        InputStream testFile = SchemaTest.class.getResourceAsStream(
+                "/levels.xml");
+        InputStream istream = SchemaTest.class.getResourceAsStream(
+                "/schema.xsd");
         Schema schema = factory.newSchema(new StreamSource(istream));
         Validator validator = schema.newValidator();
         CustomHandler errorHandler = new CustomHandler();
@@ -59,8 +61,8 @@ public class SchemaTest {
 
         /**
          * Sets isValid to false if exception is caught.
-         * @param exception
-         * @throws SAXException
+         * @param exception -
+         * @throws SAXException - Exception when parsing with SAX
          */
         @Override
         public void warning(SAXParseException exception) throws SAXException {
@@ -70,8 +72,8 @@ public class SchemaTest {
 
         /**
          * Sets isValid to false if exception is caught.
-         * @param exception
-         * @throws SAXException
+         * @param exception -
+         * @throws SAXException - Exception when parsing with SAX
          */
         @Override
         public void error(SAXParseException exception) throws SAXException {
@@ -81,11 +83,11 @@ public class SchemaTest {
 
         /**
          * Sets isValid to false if exception is caught.
-         * @param exception
-         * @throws SAXException
+         * @param exception -
+         * @throws SAXException - Exception when parsing with SAX
          */
         @Override
-        public void fatalError(SAXParseException exception) throws SAXException {
+        public void fatalError(SAXParseException exception) {
             this.isValid = false;
             System.out.println(exception);
         }

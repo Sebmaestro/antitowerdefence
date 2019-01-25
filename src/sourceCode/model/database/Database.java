@@ -17,37 +17,33 @@ public class Database {
 
     /**
      * Constructor: Will initialize the database
+     * @throws SQLException - Exception with sql
+     * @throws ClassNotFoundException - Exception when class is not found
      */
-    public Database() {
+    public Database() throws SQLException, ClassNotFoundException {
         getDriver();
         connectToDatabase();
     }
 
     /**
      * Connects to the database
+     * @throws SQLException - Exception with sql
      */
-    private void connectToDatabase() {
-        try {
-            String username = "v135h18g7";
-            String password = "9mY6HZRCjRo0Fa2k";
-            String database = "jdbc:mysql://mysql.cs.umu.se/";
-            this.con = DriverManager.getConnection(database, username, password);
-            s = con.createStatement();
-            s.executeUpdate("USE v135h18g7");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+    private void connectToDatabase() throws SQLException {
+        String username = "v135h18g7";
+        String password = "9mY6HZRCjRo0Fa2k";
+        String database = "jdbc:mysql://mysql.cs.umu.se/";
+        this.con = DriverManager.getConnection(database, username, password);
+        s = con.createStatement();
+        s.executeUpdate("USE v135h18g7");
     }
 
     /**
      * Gets the driver
+     * @throws ClassNotFoundException - Exception when class is not found
      */
-    private void getDriver() {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
+    private void getDriver() throws ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
     }
 
     /**
@@ -55,8 +51,10 @@ public class Database {
      *
      * @param highscores - Object holding the score info
      * @param table - What database table to save info to
+     * @throws SQLException - Exception with sql
      */
-    public void saveHighscores(List<HighscoreInfo> highscores, String table) {
+    public void saveHighscores(List<HighscoreInfo> highscores, String table)
+                                throws SQLException {
         String sqlDelete;
         String sqlInsert;
         switch (table) {
@@ -77,21 +75,17 @@ public class Database {
                 break;
         }
 
-        try {
-            con.setAutoCommit(false);
-            con.createStatement().execute(sqlDelete);
-            for (int i = 0; i < highscores.size(); i++) {
-                PreparedStatement p = con.prepareStatement(sqlInsert);
-                p.setInt(1, i+1);
-                p.setString(2, highscores.get(i).getPlayer());
-                //p.setString(3, highscores.get(i).getMap());
-                p.setInt(3, highscores.get(i).getFinishTime());
-                p.executeUpdate();
-            }
-            con.commit();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        con.setAutoCommit(false);
+        con.createStatement().execute(sqlDelete);
+        for (int i = 0; i < highscores.size(); i++) {
+            PreparedStatement p = con.prepareStatement(sqlInsert);
+            p.setInt(1, i+1);
+            p.setString(2, highscores.get(i).getPlayer());
+            //p.setString(3, highscores.get(i).getMap());
+            p.setInt(3, highscores.get(i).getFinishTime());
+            p.executeUpdate();
         }
+        con.commit();
     }
 
     /**
@@ -99,8 +93,9 @@ public class Database {
      *
      * @param table - What database table to get info from
      * @return highscores - The list containing the database info
+     * @throws SQLException - Exception with sql
      */
-    public List<HighscoreInfo> getHighscores(String table) {
+    public List<HighscoreInfo> getHighscores(String table) throws SQLException {
         String sql = null;
 
         switch (table) {
@@ -115,14 +110,10 @@ public class Database {
                 break;
         }
         List<HighscoreInfo> highscores = new ArrayList<HighscoreInfo>();
-        try {
-            ResultSet rs = s.executeQuery(sql);
-            while(rs.next()) {
-                highscores.add(new HighscoreInfo(rs.getString(1),
-                        rs.getInt(2)));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ResultSet rs = s.executeQuery(sql);
+        while(rs.next()) {
+            highscores.add(new HighscoreInfo(rs.getString(1),
+                    rs.getInt(2)));
         }
         return highscores;
     }

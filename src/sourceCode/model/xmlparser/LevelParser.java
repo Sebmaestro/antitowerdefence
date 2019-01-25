@@ -16,6 +16,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 /**
@@ -29,103 +30,118 @@ public class LevelParser {
 
     /**
      * xmlparser: parses an xml file and stores the data
-     * @param input path to the xml-file
+     *
+     * @param input - path to the xml-file
+     * @throws ClassNotFoundException - Exception when class could not be found
+     * @throws NoSuchMethodException - Exception when methods cant be found
+     * @throws InstantiationException - Exception with instantiation
+     * @throws IllegalAccessException - Exception with illegal access
+     * @throws InvocationTargetException - Exception with invocation
+     * @throws ParserConfigurationException - Exception with parse configuration
+     * @throws IOException - Exception when reading IO
+     * @throws SAXException - Exception with SAX parsing
      */
-    public static void xmlparser(String input){
+    public static void xmlparser(String input) throws ClassNotFoundException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException,
+            InvocationTargetException, ParserConfigurationException,
+            IOException, SAXException {
         Levels level;
         levelsArrayList = new ArrayList<>();
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        try {
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            InputStream fis = LevelParser.class.getResourceAsStream(input);
-            InputSource is = new InputSource(fis);
-            Document doc = builder.parse(is);
-            NodeList levelList = doc.getElementsByTagName("level");
-            NodeList rowList = doc.getElementsByTagName("row");
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        InputStream fis = LevelParser.class.getResourceAsStream(input);
+        InputSource is = new InputSource(fis);
+        Document doc = builder.parse(is);
+        NodeList levelList = doc.getElementsByTagName("level");
+        NodeList rowList = doc.getElementsByTagName("row");
 
-            int k=0;
+        int k=0;
 
-            for (int q = 0; q < levelList.getLength(); q++) {
-                Tile[][] allTiles = new Tile[10][10];
-                ArrayList<Position> pathPositions = new ArrayList<>();
-                ArrayList<Position> grassPositions = new ArrayList<>();
-                ArrayList<Position> towerZonePositions = new ArrayList<>();
-                ArrayList<Position> boosterPositions = new ArrayList<>();
-                ArrayList<Position> quicksandPositions = new ArrayList<>();
-                ArrayList<Position> switchUpPositions = new ArrayList<>();
-                ArrayList<Position> switchDownPositions = new ArrayList<>();
-                ArrayList<Position> allSwitchPositions = new ArrayList<>();
+        for (int q = 0; q < levelList.getLength(); q++) {
+            Tile[][] allTiles = new Tile[10][10];
+            ArrayList<Position> pathPositions = new ArrayList<>();
+            ArrayList<Position> grassPositions = new ArrayList<>();
+            ArrayList<Position> towerZonePositions = new ArrayList<>();
+            ArrayList<Position> boosterPositions = new ArrayList<>();
+            ArrayList<Position> quicksandPositions = new ArrayList<>();
+            ArrayList<Position> switchUpPositions = new ArrayList<>();
+            ArrayList<Position> switchDownPositions = new ArrayList<>();
+            ArrayList<Position> allSwitchPositions = new ArrayList<>();
 
-                level = new Levels();
-                Node s = levelList.item(q);
-                if (s.getNodeType() == Node.ELEMENT_NODE) {
-                    Element levelName = (Element) s;
-                   level.setLevelName(levelName.getAttribute("name"));
-                }
+            level = new Levels();
+            Node s = levelList.item(q);
+            if (s.getNodeType() == Node.ELEMENT_NODE) {
+                Element levelName = (Element) s;
+               level.setLevelName(levelName.getAttribute("name"));
+            }
 
-                if(q==1){
-                    k=10*q;
-                }
+            if(q==1){
+                k=10*q;
+            }
 
-                for (int i = 0 ; i < 10; i++) {
-                    int tileNr = 0;
-                    Node r = rowList.item(i+k);
-                    if (r.getNodeType() == Node.ELEMENT_NODE) {
-                        Element row = (Element) r;
-                        NodeList tiles = row.getChildNodes();
-                        for (int j = 0; j < tiles.getLength(); j++) {
+            for (int i = 0 ; i < 10; i++) {
+                int tileNr = 0;
+                Node r = rowList.item(i+k);
+                if (r.getNodeType() == Node.ELEMENT_NODE) {
+                    Element row = (Element) r;
+                    NodeList tiles = row.getChildNodes();
+                    for (int j = 0; j < tiles.getLength(); j++) {
 
-                            Node t = tiles.item(j);
-                            if (t.getNodeType() == Node.ELEMENT_NODE) {
+                        Node t = tiles.item(j);
+                        if (t.getNodeType() == Node.ELEMENT_NODE) {
 
-                                Element tile = (Element) t;
-                                Position position = new Position(tileNr, (i));
+                            Element tile = (Element) t;
+                            Position position = new Position(tileNr, (i));
 
-                                Reflection reflection = new Reflection(tile.getAttribute("type"), position);
-                                Object obj = reflection.getTile();
+                            Reflection reflection = new Reflection(
+                                    tile.getAttribute("type"), position);
+                            Object obj = reflection.getTile();
 
-                                if (obj instanceof Path) {
-                                    pathPositions.add(((Path) obj).getPosition());
-                                } else if (obj instanceof Goal) {
-                                    Position goalPos = ((Goal) obj).getPosition();
-                                    level.addgoalPos(goalPos);
-                                } else if (obj instanceof Start) {
-                                    Position startPos = ((Start) obj).getPosition();
-                                    level.addstartPos(startPos);
-                                } else if (obj instanceof Towerzone) {
-                                    towerZonePositions.add(((Towerzone) obj).getPosition());
-                                } else if (obj instanceof Booster) {
-                                    boosterPositions.add(((Booster) obj).getPosition());
-                                } else if (obj instanceof Quicksand) {
-                                    quicksandPositions.add(((Quicksand) obj).getPosition());
-                                } else if (obj instanceof Switchdown) {
-                                    switchDownPositions.add(((Switchdown) obj).getPosition());
-                                    allSwitchPositions.add(((Switchdown) obj).getPosition());
-                                } else if (obj instanceof Switchup) {
-                                    switchUpPositions.add(((Switchup) obj).getPosition());
-                                    allSwitchPositions.add(((Switchup) obj).getPosition());
-                                }
-                                allTiles[i][tileNr] = (Tile) obj;
-                                tileNr++;
+                            if (obj instanceof Path) {
+                                pathPositions.add(((Path) obj).getPosition());
+                            } else if (obj instanceof Goal) {
+                                Position goalPos = ((Goal) obj).getPosition();
+                                level.addgoalPos(goalPos);
+                            } else if (obj instanceof Start) {
+                                Position startPos = ((Start) obj).getPosition();
+                                level.addstartPos(startPos);
+                            } else if (obj instanceof Towerzone) {
+                                towerZonePositions.add(((Towerzone) obj).
+                                        getPosition());
+                            } else if (obj instanceof Booster) {
+                                boosterPositions.add(((Booster) obj).
+                                        getPosition());
+                            } else if (obj instanceof Quicksand) {
+                                quicksandPositions.add(((Quicksand) obj).
+                                        getPosition());
+                            } else if (obj instanceof Switchdown) {
+                                switchDownPositions.add(((Switchdown) obj).
+                                        getPosition());
+                                allSwitchPositions.add(((Switchdown) obj).
+                                        getPosition());
+                            } else if (obj instanceof Switchup) {
+                                switchUpPositions.add(((Switchup) obj).
+                                        getPosition());
+                                allSwitchPositions.add(((Switchup) obj).
+                                        getPosition());
                             }
+                            allTiles[i][tileNr] = (Tile) obj;
+                            tileNr++;
                         }
                     }
                 }
-                level.addPathPositions(pathPositions);
-                level.addGrassPositions(grassPositions);
-                level.addTowerZonePositions(towerZonePositions);
-                level.addBoosterPositions(boosterPositions);
-                level.addQuicksandPositions(quicksandPositions);
-                level.addSwitchUpPositions(switchUpPositions);
-                level.addSwitchDownPositions(switchDownPositions);
-                level.addAllSwitchPositions(allSwitchPositions);
-                level.addLevels(allTiles);
-                levelsArrayList.add(level);
             }
-        }
-        catch (ParserConfigurationException | IOException | SAXException e) {
-            System.out.println(e.getMessage());
+            level.addPathPositions(pathPositions);
+            level.addGrassPositions(grassPositions);
+            level.addTowerZonePositions(towerZonePositions);
+            level.addBoosterPositions(boosterPositions);
+            level.addQuicksandPositions(quicksandPositions);
+            level.addSwitchUpPositions(switchUpPositions);
+            level.addSwitchDownPositions(switchDownPositions);
+            level.addAllSwitchPositions(allSwitchPositions);
+            level.addLevels(allTiles);
+            levelsArrayList.add(level);
         }
     }
 

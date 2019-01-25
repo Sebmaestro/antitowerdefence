@@ -53,13 +53,15 @@ public class HighscoreHandler {
      */
     public void checkAndInsertHighscore(HighscoreInfo highscoreInfo) {
         if (l.isEmpty()) {
-            //If list is empty the highscore will be put in directly and return from function
+            //If list is empty the highscore will be put in directly and
+            // return from function
             l.add(0, highscoreInfo);
             return;
         }
 
         if (listFull()) {
-            //If list is full, insert new highscore if good enough and remove worst highscore
+            //If list is full, insert new highscore if good enough and remove
+            // worst highscore
             for (int i = 0; i < l.size(); i++) {
                 if (l.get(i).getFinishTime() > highscoreInfo.getFinishTime()) {
                     l.add(i, highscoreInfo);
@@ -68,11 +70,14 @@ public class HighscoreHandler {
                 }
             }
         } else if (!listFull() && !l.isEmpty() &&
-                highscoreInfo.getFinishTime() >= l.get(l.size() - 1).getFinishTime()) {
-                //If list is not full or empty and score is worst, insert in back of list
+                highscoreInfo.getFinishTime() >= l.get(l.size() - 1).
+                        getFinishTime()) {
+            //If list is not full or empty and score is worst, insert
+            // in back of list
             l.add(l.size(), highscoreInfo);
         } else {
-            //If list is not full or empty and the time is somewhere in the middle
+            //If list is not full or empty and the time is somewhere in
+            //the middle
             for (int i = 0; i < l.size(); i++) {
                 if (l.get(i).getFinishTime() >= highscoreInfo.getFinishTime()) {
                     l.add(i, highscoreInfo);

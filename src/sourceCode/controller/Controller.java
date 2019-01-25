@@ -1,5 +1,6 @@
 package sourceCode.controller;
 
+import org.xml.sax.SAXException;
 import sourceCode.model.LaserPositions;
 import sourceCode.model.Position;
 import sourceCode.model.database.Database;
@@ -10,8 +11,12 @@ import sourceCode.view.MainFrame;
 import sourceCode.view.PopupNewHighscoreSetter;
 import sourceCode.view.PopupShowHighscores;
 import sourceCode.view.StartMenuFrame;
+
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Timer;
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.InvocationTargetException;
@@ -58,11 +63,32 @@ public class Controller {
      */
     public Controller(String s) {
         xmlName = s;
-        db = new Database();
-        g = new Game(xmlName);
-
-
         start = new StartMenuFrame();
+        try {
+            db = new Database();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Could not connect to database");
+        } catch (ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Could not find driver for database");
+        }
+        try {
+            g = new Game(xmlName);
+        } catch (ClassNotFoundException | NoSuchMethodException |
+                InvocationTargetException | InstantiationException |
+                IllegalAccessException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error: custom xml not valid." +
+                    " Try a different one");
+            System.exit(1);
+        } catch (SAXException | ParserConfigurationException | IOException e) {
+            JOptionPane.showMessageDialog(null,
+                    "Error: Parsing xml file " +
+                    "failed");
+        }
+
+
         setStartmenuQuitButtonListener();
         setMap1Listener();
         setMap2Listener();
@@ -86,8 +112,8 @@ public class Controller {
     }
 
     /**
-     * The core gameloop of the program. Handles how troops and towers will interact
-     * with each other, kill troops, refresh ui, etc
+     * The core gameloop of the program. Handles how troops and towers will
+     * interact with each other, kill troops, refresh ui, etc
      */
     private void gameLoop() {
         elapsed = 0;
@@ -108,34 +134,59 @@ public class Controller {
                     if (!isPaused) {
 
                         if (timerTicker) {
-                            mainFrame.getButtonPanel().setGoalCounter(g.getGoalCounter());
-                            mainFrame.getButtonPanel().setMoneyField(g.getMoney());
+                            mainFrame.getButtonPanel().
+                                    setGoalCounter(g.getGoalCounter());
+                            mainFrame.getButtonPanel().
+                                    setMoneyField(g.getMoney());
                             g.getOverlayimgArr().updateImage();
-                            mainFrame.getScreen().updateOverlay(copyOff(g.getOverlayimgArr().getTheWholeShit()));
+                            mainFrame.getScreen().updateOverlay(
+                                    copyOff(g.getOverlayimgArr().
+                                            getTheWholeShit()));
                             mainFrame.getScreen().repaint();
 
                             laserPosList = g.shootTroops();
                             g.removeTroops();
                             g.moveTroops();
-                            mainFrame.getScreen().getLaser().setPositons(laserPosList);
+                            mainFrame.getScreen().getLaser().setPositons(
+                                    laserPosList);
                             mainFrame.getScreen().getLaser().setLasers();
                             mainFrame.getScreen().drawLaser();
 
                             if (g.getGoalCounter() > 20) {
                                 if (!gameWon) {
-                                    if (handler.getList().isEmpty() || !handler.listFull()
-                                            || (handler.getTimeAtEndOfList() > finishTime)) {
-                                        newHighscore = new PopupNewHighscoreSetter();
+                                    if (handler.getList().isEmpty() ||
+                                            !handler.listFull()
+                                            || (handler.getTimeAtEndOfList() >
+                                            finishTime)) {
+                                        newHighscore =
+                                                new PopupNewHighscoreSetter();
                                         setSubmitButtonListener();
                                     }
 
-                                    popupShowHighscores = new PopupShowHighscores("Highscores!");
+                                    popupShowHighscores =
+                                            new PopupShowHighscores(
+                                                    "Highscores!");
                                     popupShowHighscores.setColumns();
-                                    popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
-                                    popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
+                                    try {
+                                        popupShowHighscores.showHighscores(
+                                                db.getHighscores(
+                                                        "Level 1"),
+                                                "map1");
+                                        popupShowHighscores.
+                                                showHighscores(
+                                                        db.getHighscores(
+                                                                "Level 2"),
+                                                        "map2");
+                                    } catch (SQLException e) {
+                                        JOptionPane.showMessageDialog(
+                                                null,
+                                                "Could not show " +
+                                                        "highscore");
+                                    }
                                     gameWon = true;
                                     gameDone = true;
-                                    mainFrame.getGameMenu().setRestartNewGameText("New Game");
+                                    mainFrame.getGameMenu().
+                                            setRestartNewGameText("New Game");
                                     setStartMenuListener();
                                     setQuitButtonListener();
                                 }
@@ -143,8 +194,6 @@ public class Controller {
                         }
 
                         if (restartPressed) {
-                            System.out.println("restartar");
-
                             timer.cancel();
                             gameDone = true;
                             timer.cancel();
@@ -155,7 +204,8 @@ public class Controller {
                 });
 
             } catch (InterruptedException | InvocationTargetException e) {
-                mainFrame.notifyUser(e.getMessage());
+                JOptionPane.showMessageDialog(null,
+                        "Error: Could not update game in thread");
             }
 
             if (!isPaused) {
@@ -289,15 +339,42 @@ public class Controller {
                 popupShowHighscores.dispose();
             }
             start.dispose();
-            g = new Game(xmlName);
-            g.setLevel("Level 1");
+            try {
+                g = new Game(xmlName);
+            } catch (ClassNotFoundException | NoSuchMethodException |
+                    InvocationTargetException | InstantiationException |
+                    IllegalAccessException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Custom " +
+                        "xml file not valid. Try a different one");
+            } catch (SAXException | ParserConfigurationException |
+                    IOException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Parsing xml file " +
+                        "failed");
+            }
+            try {
+                g.setLevel("Level 1");
+            } catch (IOException | IllegalArgumentException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Could not read certain images");
+                System.exit(1);
+            }
             initMainframeAndSetListeners();
             setRestartListener();
             setPauseListener();
             mainFrame.getGameMenu().setRestartNewGameText("Restart");
             g.resetGame();
             gameWon = false;
-            handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
+            try {
+                if (db != null) {
+                    handler = new HighscoreHandler(
+                            db.getHighscores(g.getCurrentLevelname()));
+                }
+            } catch (SQLException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Database error: could not find highscore");
+            }
         }, "map1");
     }
 
@@ -313,15 +390,43 @@ public class Controller {
                 popupShowHighscores.dispose();
             }
             start.dispose();
-            g = new Game(xmlName);
-            g.setLevel("Level 2");
+            try {
+                g = new Game(xmlName);
+            } catch (ClassNotFoundException | NoSuchMethodException |
+                    InvocationTargetException | InstantiationException |
+                    IllegalAccessException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Custom " +
+                        "xml file not valid. Try a different one");
+            } catch (SAXException | ParserConfigurationException |
+                    IOException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Parsing xml file " +
+                        "failed");
+            }
+            try {
+                g.setLevel("Level 2");
+            } catch (IOException | IllegalArgumentException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Error: Could not read certain images");
+                System.exit(1);
+            }
             initMainframeAndSetListeners();
             setRestartListener();
             setPauseListener();
             mainFrame.getGameMenu().setRestartNewGameText("Restart");
             g.resetGame();
             gameWon = false;
-            handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
+            try {
+                if (db != null) {
+                    handler = new HighscoreHandler(db.getHighscores(
+                            g.getCurrentLevelname()));
+                }
+
+            } catch (SQLException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Database error: could not find highscore");
+            }
         }, "map2");
     }
 
@@ -332,8 +437,21 @@ public class Controller {
         start.addActionListener(e -> {
             popupShowHighscores = new PopupShowHighscores("Highscore");
             popupShowHighscores.setColumns();
-            popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
-            popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
+            try {
+                if (db != null) {
+                    popupShowHighscores.showHighscores(db.getHighscores(
+                            "Level 1"), "map1");
+                    popupShowHighscores.showHighscores(db.getHighscores(
+                            "Level 2"), "map2");
+
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Database error: could not find highscore");
+                }
+            } catch (SQLException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Database error: could not find highscore");
+            }
             start.dispose();
             setStartMenuListener();
             setQuitButtonListener();
@@ -345,14 +463,27 @@ public class Controller {
      */
     private void setSubmitButtonListener() {
         newHighscore.addActionListener(e -> {
-            handler.checkAndInsertHighscore(new HighscoreInfo(newHighscore.getTextfieldInfo(), finishTime));
+            handler.checkAndInsertHighscore(new HighscoreInfo(
+                    newHighscore.getTextfieldInfo(), finishTime));
             newHighscore.dispose();
-            db.saveHighscores(handler.getList(), g.getCurrentLevelname());
+            try {
+                db.saveHighscores(handler.getList(), g.getCurrentLevelname());
+            } catch (SQLException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Could not save highscore");
+            }
             popupShowHighscores.dispose();
             popupShowHighscores = new PopupShowHighscores("halloj");
             popupShowHighscores.setColumns();
-            popupShowHighscores.showHighscores(db.getHighscores("Level 1"), "map1");
-            popupShowHighscores.showHighscores(db.getHighscores("Level 2"), "map2");
+            try {
+                popupShowHighscores.showHighscores(db.getHighscores(
+                        "Level 1"), "map1");
+                popupShowHighscores.showHighscores(db.getHighscores(
+                        "Level 2"), "map2");
+            } catch (SQLException e1) {
+                JOptionPane.showMessageDialog(null,
+                        "Could not show highscore");
+            }
             setStartMenuListener();
             setQuitButtonListener();
         });
@@ -362,7 +493,8 @@ public class Controller {
      * Sets listener for highscores quit button
      */
     private void setQuitButtonListener() {
-        popupShowHighscores.addActionListener(e -> System.exit(0), "quit");
+        popupShowHighscores.addActionListener(e -> System.exit(0),
+                "quit");
     }
 
     private void setRegularTroopListener(){
@@ -403,7 +535,8 @@ public class Controller {
     private void setMenuQuitListener() {
         mainFrame.getGameMenu().setQuitListener(e -> {
             int choice = JOptionPane.showConfirmDialog(mainFrame,
-                    "Are you sure you want to exit?", "Confirm exit",
+                    "Are you sure you want to exit?",
+                    "Confirm exit",
                     JOptionPane.YES_NO_OPTION);
 
             if(choice == JOptionPane.YES_OPTION) {
@@ -427,9 +560,11 @@ public class Controller {
      * Sets listener for the about button in menu
      */
     private void setAboutListener() {
-        mainFrame.getGameMenu().setAboutListener(e -> JOptionPane.showMessageDialog(null,
+        mainFrame.getGameMenu().setAboutListener(
+                e -> JOptionPane.showMessageDialog(null,
                 "Made by:\n" +
-                "Simon Lundkvist, Sebastian Arledal, Dennis Karlman, David Eriksson","About",
+                "Simon Lundkvist, Sebastian Arledal, " +
+                        "Dennis Karlman, David Eriksson","About",
                 JOptionPane.INFORMATION_MESSAGE));
 
     }
@@ -438,12 +573,18 @@ public class Controller {
      * Sets listener for the help button in menu
      */
     private void setHelpListener() {
-        mainFrame.getGameMenu().setHelpListener(e -> JOptionPane.showMessageDialog(null,
-                "The goal is to get 20 troops to reach the goal alive as fast as possible.\n" +
-                        "You can send troops by using the buttons on the bottom of the screen.\n" +
-                        "Sending a troop costs credits, the cost is displayed on the associated buttons.\n" +
-                        "You can view your available credits on the bottom of the screen.\n" +
-                        "Every troop that reaches the goal alive will grant you credits."));
+        mainFrame.getGameMenu().setHelpListener(
+                e -> JOptionPane.showMessageDialog(null,
+                "The goal is to get 20 troops to reach the goal " +
+                        "alive as fast as possible.\n" +
+                        "You can send troops by using the buttons on the " +
+                        "bottom of the screen.\n" +
+                        "Sending a troop costs credits, the cost is " +
+                        "displayed on the associated buttons.\n" +
+                        "You can view your available credits on the bottom " +
+                        "of the screen.\n" +
+                        "Every troop that reaches the goal alive will grant" +
+                        " you credits."));
     }
 
     /**
@@ -468,22 +609,49 @@ public class Controller {
                     timer.cancel();
                     gameDone = true;
                     mainFrame.dispose();
-                    g = new Game(xmlName);
-                    g.setLevel(currentGame);
+                    try {
+                        g = new Game(xmlName);
+                    } catch (ClassNotFoundException | NoSuchMethodException |
+                            InvocationTargetException | InstantiationException |
+                            IllegalAccessException e1) {
+                        JOptionPane.showMessageDialog(null,
+                                "Error: Custom " +
+                                "xml file not valid. Try a different one");
+                    } catch (SAXException | ParserConfigurationException |
+                            IOException e1) {
+                        JOptionPane.showMessageDialog(null,
+                                "Error: Parsing xml file " +
+                                "failed");
+                    }
+                    try {
+                        g.setLevel(currentGame);
+                    } catch (IOException | IllegalArgumentException e1) {
+                        JOptionPane.showMessageDialog(null,
+                                "Error: Could not read certain images");
+                        System.exit(1);
+                    }
                     initMainframeAndSetListeners();
                     setRestartListener();
                     setPauseListener();
                     mainFrame.getGameMenu().setRestartNewGameText("Restart");
                     gameWon = false;
                     g.resetGame();
-                    handler = new HighscoreHandler(db.getHighscores(g.getCurrentLevelname()));
+                    try {
+                        handler = new HighscoreHandler(db.getHighscores(
+                                g.getCurrentLevelname()));
+                    } catch (SQLException e1) {
+                        JOptionPane.showMessageDialog(null,
+                                "Database error: could not find " +
+                                        "highscore");
+                    }
                 }
             }
         });
     }
 
     /**
-     * Help method to make code more readable. Initializes the mainframe and sets some listeners
+     * Help method to make code more readable. Initializes the mainframe and
+     * sets some listeners
      */
     private void initMainframeAndSetListeners() {
         mainFrame = new MainFrame(g.getUnderlay(), g.getOverlay());

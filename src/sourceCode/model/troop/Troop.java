@@ -215,15 +215,18 @@ public abstract class Troop implements Unit{
             setPosition(east);
             setGoalReached();
         }
-        else if(tileMap[south.getY()][south.getX()].getGraphic().equals("/goal.png")){
+        else if(tileMap[south.getY()][south.getX()].getGraphic().equals(
+                "/goal.png")){
             setPosition(south);
             setGoalReached();
         }
-        else if(tileMap[west.getY()][west.getX()].getGraphic().equals("/goal.png")){
+        else if(tileMap[west.getY()][west.getX()].getGraphic().equals(
+                "/goal.png")){
             setPosition(west);
             setGoalReached();
         }
-        else if(tileMap[north.getY()][north.getX()].getGraphic().equals("/goal.png")){
+        else if(tileMap[north.getY()][north.getX()].getGraphic().equals(
+                "/goal.png")){
             setPosition(north);
             setGoalReached();
         }
@@ -250,7 +253,8 @@ public abstract class Troop implements Unit{
 
         if(direction == Direction.EAST){
 
-            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("/start.png")) {
+            if (!tileMap[currentPosition.getY()][currentPosition.getX()].
+                    getGraphic().equals("/start.png")) {
                     checkIfGoal(tileMap);
             }
 
@@ -275,7 +279,8 @@ public abstract class Troop implements Unit{
 
         if(direction == Direction.SOUTH){
 
-            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("src/resources/start.png")) {
+            if (!tileMap[currentPosition.getY()][currentPosition.getX()].
+                    getGraphic().equals("src/resources/start.png")) {
                 checkIfGoal(tileMap);
             }
 
@@ -300,7 +305,8 @@ public abstract class Troop implements Unit{
 
         if(direction == Direction.WEST){
 
-            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("src/resources/start.png")) {
+            if (!tileMap[currentPosition.getY()][currentPosition.getX()].
+                    getGraphic().equals("src/resources/start.png")) {
                 checkIfGoal(tileMap);
             }
 
@@ -325,7 +331,8 @@ public abstract class Troop implements Unit{
 
         if(direction == Direction.NORTH){
 
-            if (!tileMap[currentPosition.getY()][currentPosition.getX()].getGraphic().equals("/start.png")) {
+            if (!tileMap[currentPosition.getY()][currentPosition.getX()].
+                    getGraphic().equals("/start.png")) {
                 checkIfGoal(tileMap);
             }
 

@@ -169,6 +169,7 @@ public class PopupShowHighscores extends JFrame {
         }
     }
 
+
     /**
      * adds actionlisteners to quit and play again buttons
      * @param e - actionlistener

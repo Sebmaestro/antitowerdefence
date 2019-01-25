@@ -1,5 +1,6 @@
 package sourceCode.model.logic;
 
+import org.xml.sax.SAXException;
 import sourceCode.model.*;
 import sourceCode.model.credit.Credit;
 import sourceCode.model.tile.*;
@@ -11,7 +12,11 @@ import sourceCode.model.troop.TeleporterTroop;
 import sourceCode.model.troop.Troop;
 import sourceCode.model.xmlparser.LevelParser;
 import sourceCode.model.xmlparser.Levels;
+
+import javax.xml.parsers.ParserConfigurationException;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -39,10 +44,22 @@ public class Game {
     private Credit money = new Credit();
 
     /**
-     * Constructor: Will initialize the Game
+     * Constructor: Will initialize the game
      * @param s - String that holds the xml-string
+     * @throws ClassNotFoundException - Exception if class is not found
+     * @throws NoSuchMethodException - Exception if methods arent found
+     * @throws InvocationTargetException - Exception when invoke goes wrong
+     * @throws InstantiationException - Exception when instantiation goes wrong
+     * @throws IllegalAccessException - Exception when using illegalAccess
+     * @throws IOException - Exception when IO goes wrong
+     * @throws SAXException - Exception with parsing
+     * @throws ParserConfigurationException - Exception when parse configuration
+     *                                        goes wrong
      */
-    public Game(String s){
+    public Game(String s) throws ClassNotFoundException, NoSuchMethodException,
+            InvocationTargetException, InstantiationException,
+            IllegalAccessException, IOException, SAXException,
+            ParserConfigurationException {
         levelsArrayList = new ArrayList<>();
         LevelParser levelP2 = new LevelParser();
         LevelParser.xmlparser(s);
@@ -82,8 +99,11 @@ public class Game {
     /**
      * Method that sets the level.
      * @param levelName - The level to be played
+     * @throws IOException - Exception when IO goes wrong
+     * @throws IllegalArgumentException - Exception when using illegal argument
      */
-    public void setLevel(String levelName) {
+    public void setLevel(String levelName) throws IOException,
+            IllegalArgumentException {
         for (Levels l:levelsArrayList) {
             if (l.getlevelName().equals(levelName)) {
                 currentLevelname = levelName;
@@ -91,10 +111,13 @@ public class Game {
 
                 ArrayList<Position> pathPosition = l.getPathPositions();
                 ArrayList<Position> towerPosition = l.getTowerZonePositions();
-                ArrayList<Position> quicksandPositions = l.getQuicksandPositions();
+                ArrayList<Position> quicksandPositions =
+                        l.getQuicksandPositions();
                 ArrayList<Position> boosterPositions = l.getBoosterPositions();
-                ArrayList<Position> switchUpPositions = l.getSwitchUpPositions();
-                ArrayList<Position> switchDownPositions = l.getSwitchDownPositions();
+                ArrayList<Position> switchUpPositions =
+                        l.getSwitchUpPositions();
+                ArrayList<Position> switchDownPositions =
+                        l.getSwitchDownPositions();
                 allSwitchPositions = l.getAllSwitchPositions();
 
                 startPos = l.getStartPos();
@@ -107,8 +130,10 @@ public class Game {
                 ImageArray imgArr = new ImageArray(l.getMapTiles());
                 imgArr.setTowerPics(towerPosition);
                 overlayimgArr = new OverlayImageArray(l.getMapTiles().length);
-                overlayimgArr.addPaths(pathPosition, quicksandPositions, boosterPositions,
-                        switchDownPositions, switchUpPositions, startPos, goalPos);
+                overlayimgArr.addPaths(pathPosition, quicksandPositions,
+                        boosterPositions,
+                        switchDownPositions, switchUpPositions, startPos,
+                        goalPos);
 
 
                 underlay = copyOff(imgArr.getTheWholeShit());
@@ -143,7 +168,8 @@ public class Game {
             tiles[p.getY()][p.getX()] = new Switchup(p);
             overlayimgArr.changeSwitchDownToUp(p);
         }
-        else if(tiles[p.getY()][p.getX()].getGraphic().equals("/switch-up.png")){
+        else if(tiles[p.getY()][p.getX()].getGraphic().equals(
+                "/switch-up.png")){
             tiles[p.getY()][p.getX()] = new Switchdown(p);
             overlayimgArr.changeSwitchUpToDown(p);
         }
@@ -157,25 +183,32 @@ public class Game {
         synchronized (troopListLock) {
             if (troopList.size() > 0) {
                 for(Troop troop: troopList){
-                    if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles()==0)){
+                    if(troop.getGraphic().equals("Teleporter") &&
+                            (troop.getNumberOfTeleportTiles()==0)){
 
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport(
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()] = new Teleport(
                                 troop.getPosition());
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()]
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()]
                                 .setDirectionAtExit(troop.getDirection());
                         overlayimgArr.addTeleportPic(troop.getPosition());
 
                         troop.setTeleportEntry(troop.getPosition());
                         troop.incrementNumberOfTeleportTiles();
                     }
-                    else if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles()==1)){
+                    else if(troop.getGraphic().equals("Teleporter") &&
+                            (troop.getNumberOfTeleportTiles()==1)){
 
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport(
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()] = new Teleport(
                                 troop.getPosition());
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].setDirectionAtExit(troop.getDirection());
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()].setDirectionAtExit(troop.getDirection());
                         overlayimgArr.addTeleportPic(troop.getPosition());
 
-                        tiles[troop.getTeleportEntry().getY()][troop.getTeleportEntry().getX()]
+                        tiles[troop.getTeleportEntry().getY()][troop.
+                                getTeleportEntry().getX()]
                                 .setExitTPosition(troop.getPosition());
 
 
@@ -268,20 +301,25 @@ public class Game {
             while(iter.hasNext()){
                 Troop troop = iter.next();
 
-                if(troop.getGraphic().equals("Teleporter") && (troop.getNumberOfTeleportTiles() == 1) &&
+                if(troop.getGraphic().equals("Teleporter") &&
+                        (troop.getNumberOfTeleportTiles() == 1) &&
                         (troop.isAlive())){
-                    tiles[troop.getPosition().getY()][troop.getPosition().getX()] = new Teleport(
+                    tiles[troop.getPosition().getY()]
+                            [troop.getPosition().getX()] = new Teleport(
                             troop.getPosition());
-                    tiles[troop.getPosition().getY()][troop.getPosition().getX()].setDirectionAtExit(troop.getDirection());
+                    tiles[troop.getPosition().getY()][troop.getPosition().
+                            getX()].setDirectionAtExit(troop.getDirection());
                     overlayimgArr.addTeleportPic(troop.getPosition());
 
-                    tiles[troop.getTeleportEntry().getY()][troop.getTeleportEntry().getX()]
+                    tiles[troop.getTeleportEntry().getY()][troop.
+                            getTeleportEntry().getX()]
                             .setExitTPosition(troop.getPosition());
 
                     troop.incrementNumberOfTeleportTiles();
                 }
 
-                if(troop.isGoalReached() || troop.isAlive() || troop.getNumberOfTeleportTiles()==2){
+                if(troop.isGoalReached() || troop.isAlive() ||
+                        troop.getNumberOfTeleportTiles()==2){
                     iter.remove();
                     if(troop.isGoalReached()) {
                         money.getGoalCredits();
@@ -301,21 +339,30 @@ public class Game {
             if(troopList.size() > 0) {
                 for (Troop troop : troopList) {
 
-                    if(troop.getGraphic().equals("Regular") && (troop.getUntilMove() == troop.getCurrentSpeed())){
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                    if(troop.getGraphic().equals("Regular") &&
+                            (troop.getUntilMove() == troop.getCurrentSpeed())){
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()].landOn(troop);
                         troop.move(tiles);
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()].landOn(troop);
                         troop.clearUntilMove();
                     }
-                    else if(troop.getGraphic().equals("Teleporter") && (troop.getUntilMove() == troop.getCurrentSpeed())){
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                    else if(troop.getGraphic().equals("Teleporter") && (
+                            troop.getUntilMove() == troop.getCurrentSpeed())){
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()].landOn(troop);
                         troop.move(tiles);
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()].landOn(troop);
                         troop.clearUntilMove();
-                    } else if (troop.getGraphic().equals("Tank") && (troop.getUntilMove() == troop.getCurrentSpeed())) {
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                    } else if (troop.getGraphic().equals("Tank") &&
+                            (troop.getUntilMove() == troop.getCurrentSpeed())){
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()].landOn(troop);
                         troop.move(tiles);
-                        tiles[troop.getPosition().getY()][troop.getPosition().getX()].landOn(troop);
+                        tiles[troop.getPosition().getY()][troop.getPosition().
+                                getX()].landOn(troop);
                         troop.clearUntilMove();
                     }
                     troop.incrementUntilMove();
@@ -340,7 +387,8 @@ public class Game {
                             if (i == 0) {
                                 i++;
                                 tower.addToAttackList(t);
-                                LaserPositions laserpos = new LaserPositions(tower.getPosition(), t.getPosition());
+                                LaserPositions laserpos = new LaserPositions(
+                                        tower.getPosition(), t.getPosition());
                                 laserPositionList.add(laserpos);
                             }
                         }
@@ -364,15 +412,12 @@ public class Game {
      */
     public static BufferedImage[][] copyOff(BufferedImage[][] original){
 
-        BufferedImage[][] copy = new BufferedImage[original.length][original.length];
+        BufferedImage[][] copy = new BufferedImage[original.length]
+                [original.length];
 
         for(int i=0; i<original.length; i++){
-            /*
-            for(int j=0; j<original.length; j++){
-                copy[i][j] = original[i][j];
-            }
-            */
-            System.arraycopy(original[i], 0, copy[i], 0, original.length);
+            System.arraycopy(original[i], 0, copy[i],
+                    0, original.length);
         }
         return copy;
     }
@@ -395,7 +440,6 @@ public class Game {
                 towers.add(new RegularTower(p));
             }
             else{
-
                iter.remove();
             }
 

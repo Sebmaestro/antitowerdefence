@@ -19,33 +19,33 @@ public class Reflection {
      * Constructor: Creates a new class with reflection
      * @param className - Name of class to create
      * @param p - position
+     * @throws ClassNotFoundException - Exception when class is not found
      */
-    public Reflection(String className, Position p) {
-        try {
-            klass = Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class not found");
-        }
+    public Reflection(String className, Position p) throws
+            ClassNotFoundException {
+        klass = Class.forName(className);
         this.p = p;
     }
 
     /**
      * Creates object from the class
+     * @throws InstantiationException - Exception when class cant be instatiated
      */
-    private void createObject() {
-        try {
-            Constructor<?> con = klass.getConstructor(Position.class);
-            newKlass = con.newInstance(p);
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            System.out.println(e.getMessage());
-        }
+    private void createObject() throws InstantiationException,
+            IllegalAccessException, NoSuchMethodException,
+            InvocationTargetException {
+        Constructor<?> con = klass.getConstructor(Position.class);
+        newKlass = con.newInstance(p);
     }
 
     /**
      * Gets the current tile as an object
      * @return newKlass - the object
+     * @throws InvocationTargetException - Exception when invocation goes wrong
      */
-    public Object getTile() {
+    public Object getTile() throws InvocationTargetException,
+            NoSuchMethodException, InstantiationException,
+            IllegalAccessException {
         createObject();
         return newKlass;
     }
