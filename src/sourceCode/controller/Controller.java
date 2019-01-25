@@ -53,7 +53,8 @@ public class Controller {
     private String xmlName;
 
     /**
-     * Constructor: Initializes some objects and startmenu
+     * Constructor: creates a controller
+     * @param s String representing the XML-name
      */
     public Controller(String s) {
         xmlName = s;

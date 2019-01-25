@@ -104,7 +104,7 @@ public abstract class Troop implements Unit{
 
     /**
      * returns true if the Troops hp is 0 or below that
-     * @return
+     * @return boolean
      */
     public boolean isAlive() {
         return hp <= 0;
@@ -183,7 +183,7 @@ public abstract class Troop implements Unit{
 
     /**
      * gets the number of TeleportTiles that exists within the game
-     * @return
+     * @return number of teleporter tiles
      */
     public int getNumberOfTeleportTiles(){
         return numberOfTeleportTiles;

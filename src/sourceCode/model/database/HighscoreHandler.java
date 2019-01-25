@@ -14,7 +14,8 @@ public class HighscoreHandler {
     private List<HighscoreInfo> l;
 
     /**
-     * Constructor
+     * Constructor: creates a Highscorehandler
+     * @param list List of HighscoreInfo
      */
     public HighscoreHandler(List<HighscoreInfo> list) {
         l = list;

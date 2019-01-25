@@ -44,7 +44,7 @@ public abstract class Tower implements Unit {
 
     /**
      * Gets the List with Troops to attack
-     * @return toAttack - an ArrayList<Troop>
+     * @return ArrayList of troops to attack
      */
     public ArrayList<Troop> getToAttackList() {
         return toAttack;

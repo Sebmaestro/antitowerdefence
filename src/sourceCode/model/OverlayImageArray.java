@@ -82,8 +82,8 @@ public class OverlayImageArray {
 
 
     /**
-     * sets an ArrayList<Troop>
-     * @param regTroopList - an ArrayList<Troop> to be set
+     * sets an ArrayList of troops
+     * @param regTroopList ArrayList of Troops to be set
      */
     public void addRegularTroopList(ArrayList<Troop> regTroopList){
         this.regTroopList = regTroopList;

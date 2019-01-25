@@ -38,7 +38,7 @@ public class Laser extends JLayeredPane{
 
     /**
      * Sets the positions of the lasers
-     * @param laserpossi - an ArrayList<LaserPositions> that holds all the
+     * @param laserpossi ArrayList that holds all the
      *                   positions of the lasers
      */
     public void setPositons(ArrayList<LaserPositions> laserpossi){

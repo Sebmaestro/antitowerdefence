@@ -9,7 +9,8 @@ import sourceCode.model.Position;
 public class RegularTower extends Tower{
 
     /**
-     * Constructor: Will initialize a RegularTower
+     * Constructor: creates a new RegularTower
+     * @param p Position to create the tower at.
      */
     public RegularTower (Position p){
         super (p);

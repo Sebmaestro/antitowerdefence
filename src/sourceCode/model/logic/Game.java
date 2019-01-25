@@ -67,7 +67,7 @@ public class Game {
 
     /**
      * gets all the positions of the Switches
-     * @return allSwitchPositions - an ArrayList<Position>
+     * @return ArrayList of all switch positions
      */
     public ArrayList <Position> getSwitchPos(){ return allSwitchPositions; }
 
@@ -327,7 +327,7 @@ public class Game {
 
     /**
      * Returns an ArrayList with positions to be drawn as laserbeams
-     * @return laserPositions - an ArrayList<LaserPositions>
+     * @return ArrayList of Laser Positions
      */
     public ArrayList<LaserPositions> shootTroops() {
         synchronized (towerListLock) {
